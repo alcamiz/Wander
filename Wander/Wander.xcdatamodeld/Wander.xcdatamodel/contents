@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="GameState" representedClassName="GameState" syncable="YES" codeGenerationType="class">
-        <attribute name="attribute" optional="YES"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="StoredGame" representedClassName="StoredGame" syncable="YES" codeGenerationType="class">
+        <attribute name="creation" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="descText" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="root" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="size" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tags" optional="YES" attributeType="Transformable"/>
+        <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredUser" inverseName="createdGames" inverseEntity="StoredUser"/>
+        <relationship name="stages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredTile" inverseName="game" inverseEntity="StoredTile"/>
+    </entity>
+    <entity name="StoredTile" representedClassName="StoredTile" syncable="YES" codeGenerationType="class">
+        <attribute name="children" optional="YES" attributeType="Transformable"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="options" optional="YES" attributeType="Transformable"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredGame" inverseName="stages" inverseEntity="StoredGame"/>
+    </entity>
+    <entity name="StoredUser" representedClassName="StoredUser" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+        <relationship name="createdGames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredGame" inverseName="author" inverseEntity="StoredGame"/>
     </entity>
 </model>
