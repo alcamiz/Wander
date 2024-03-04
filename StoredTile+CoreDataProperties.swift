@@ -2,7 +2,7 @@
 //  StoredTile+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Benjamin Gordon on 2/29/24.
+//  Created by Benjamin Gordon on 3/4/24.
 //
 //
 
@@ -16,11 +16,11 @@ extension StoredTile {
         return NSFetchRequest<StoredTile>(entityName: "StoredTile")
     }
 
+    @NSManaged public var children: NSObject?
     @NSManaged public var id: UUID?
+    @NSManaged public var options: NSObject?
     @NSManaged public var text: String?
     @NSManaged public var type: Int16
-    @NSManaged public var children: NSObject?
-    @NSManaged public var options: NSObject?
     @NSManaged public var game: StoredGame?
 
 }

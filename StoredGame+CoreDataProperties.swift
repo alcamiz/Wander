@@ -2,7 +2,7 @@
 //  StoredGame+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Benjamin Gordon on 2/29/24.
+//  Created by Benjamin Gordon on 3/4/24.
 //
 //
 
@@ -16,15 +16,15 @@ extension StoredGame {
         return NSFetchRequest<StoredGame>(entityName: "StoredGame")
     }
 
+    @NSManaged public var creation: Date?
+    @NSManaged public var descText: String?
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
-    @NSManaged public var descText: String?
-    @NSManaged public var creation: Date?
+    @NSManaged public var root: UUID?
     @NSManaged public var size: Int32
     @NSManaged public var tags: NSObject?
-    @NSManaged public var root: UUID?
-    @NSManaged public var stages: NSSet?
     @NSManaged public var author: StoredUser?
+    @NSManaged public var stages: NSSet?
 
 }
 

@@ -2,7 +2,7 @@
 //  StoredUser+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Benjamin Gordon on 2/29/24.
+//  Created by Benjamin Gordon on 3/4/24.
 //
 //
 
