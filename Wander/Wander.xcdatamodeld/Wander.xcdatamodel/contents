@@ -11,12 +11,15 @@
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredUser" inverseName="createdGames" inverseEntity="StoredUser"/>
         <relationship name="stages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredTile" inverseName="game" inverseEntity="StoredTile"/>
     </entity>
+    <entity name="StoredOption" representedClassName="StoredOption" syncable="YES" codeGenerationType="class">
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredTile" inverseName="children" inverseEntity="StoredTile"/>
+    </entity>
     <entity name="StoredTile" representedClassName=".StoredTile" syncable="YES">
-        <attribute name="children" optional="YES" attributeType="Transformable"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="options" optional="YES" attributeType="Transformable"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredOption" inverseName="parent" inverseEntity="StoredOption"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredGame" inverseName="stages" inverseEntity="StoredGame"/>
     </entity>
     <entity name="StoredUser" representedClassName=".StoredUser" syncable="YES">

@@ -2,7 +2,7 @@
 //  StoredTile+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Alex Cabrera on 3/6/24.
+//  Created by Benjamin Gordon on 3/4/24.
 //
 //
 
