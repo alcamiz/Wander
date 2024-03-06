@@ -2,7 +2,7 @@
 //  StoredTile+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Benjamin Gordon on 3/4/24.
+//  Created by Alex Cabrera on 3/6/24.
 //
 //
 
@@ -16,12 +16,28 @@ extension StoredTile {
         return NSFetchRequest<StoredTile>(entityName: "StoredTile")
     }
 
-    @NSManaged public var children: NSObject?
     @NSManaged public var id: UUID?
-    @NSManaged public var options: NSObject?
     @NSManaged public var text: String?
     @NSManaged public var type: Int16
     @NSManaged public var game: StoredGame?
+    @NSManaged public var children: NSSet?
+
+}
+
+// MARK: Generated accessors for children
+extension StoredTile {
+
+    @objc(addChildrenObject:)
+    @NSManaged public func addToChildren(_ value: StoredOption)
+
+    @objc(removeChildrenObject:)
+    @NSManaged public func removeFromChildren(_ value: StoredOption)
+
+    @objc(addChildren:)
+    @NSManaged public func addToChildren(_ values: NSSet)
+
+    @objc(removeChildren:)
+    @NSManaged public func removeFromChildren(_ values: NSSet)
 
 }
 
