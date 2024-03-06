@@ -5,6 +5,8 @@
 //  Created by Alex Cabrera on 2/28/24.
 //
 
+import Foundation
+
 enum TileType:Int16 {
     case win
     case lose
@@ -13,32 +15,53 @@ enum TileType:Int16 {
 }
 
 struct TileOption {
-    var id:UInt64
+    var id:UUID
     var text:String
-    var coreOption:StoredOption?
 }
 
-public class Stage {
+public class Tile {
     
-    let id:UInt64
-    var text:String
-    var children:[TileOption]
-    var type:TileType
+    let id:UUID
+    var text:String = ""
+    var children:[TileOption] = []
+    var type:TileType = .empty
     
     var coreTile:StoredTile?
     
-    init(id:UInt64) {
+    init(id:UUID) {
         self.id = id
         self.text = String()
         self.children = []
         self.type = TileType.empty
     }
     
-    init(id:UInt64, text:String, children:[TileOption], type:TileType) {
+    init(id:UUID, text:String, children:[TileOption], type:TileType) {
         self.id = id
         self.text = text
         self.children = children
         self.type = type
+    }
+    
+    
+    func loadFromCore() {
+        // use self.coreTile here
+        self.text = (self.coreTile?.text)!
+        self.type = TileType(rawValue: (self.coreTile?.type)!)!
+        self.children = []
+        if let optionIDs = self.coreTile?.childIDs,
+            let optionTexts = self.coreTile?.optionDescs  {
+            for i in 0...optionIDs.count {
+                children.append(TileOption(id: optionIDs[i], text: optionTexts[i]))
+            }
+        }
+        
+    }
+    
+    init(storedVersion: StoredTile) {
+        self.coreTile = storedVersion
+        self.id = storedVersion.id!
+        loadFromCore()
+        
     }
     
     func addCore(newCore: StoredTile) -> Bool {
@@ -60,10 +83,8 @@ public class Stage {
         coreTile?.type = self.type.rawValue
         
         for opt in self.children {
-            guard opt.coreOption != nil else {
-                return false
-            }
-            coreTile?.addToChildren(opt.coreOption!)
+            coreTile?.childIDs?.append(opt.id)
+            coreTile?.optionDescs?.append(opt.text)
         }
         
         do {
