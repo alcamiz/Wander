@@ -11,7 +11,7 @@
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredUser" inverseName="createdGames" inverseEntity="StoredUser"/>
         <relationship name="stages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredTile" inverseName="game" inverseEntity="StoredTile"/>
     </entity>
-    <entity name="StoredOption" representedClassName="StoredOption" syncable="YES" codeGenerationType="class">
+    <entity name="StoredOption" representedClassName=".StoredOption" syncable="YES">
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredTile" inverseName="children" inverseEntity="StoredTile"/>
     </entity>

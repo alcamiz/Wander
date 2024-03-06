@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-@objc(StoredOption)
+
 public class StoredOption: NSManagedObject {
 
 }

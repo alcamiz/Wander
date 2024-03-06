@@ -5,9 +5,7 @@
 //  Created by Alex Cabrera on 2/28/24.
 //
 
-import Foundation
-
-class Game {
+public class Game {
     
     
     var gameID:UInt64 // PK

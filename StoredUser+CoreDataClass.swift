@@ -2,7 +2,7 @@
 //  StoredUser+CoreDataClass.swift
 //  Wander
 //
-//  Created by Benjamin Gordon on 3/4/24.
+//  Created by Alex Cabrera on 3/6/24.
 //
 //
 
