@@ -9,8 +9,6 @@ import UIKit
 
 import CoreData
 
-
-
 class ViewController: UIViewController {
     
     var users: [NSManagedObject] = []
