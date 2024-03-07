@@ -22,26 +22,18 @@ struct TileOption {
 public class Tile {
     
     let id:UUID
+    let game:Game
     var text:String = ""
     var children:[TileOption] = []
     var type:TileType = .empty
+
     
     var coreTile:StoredTile?
     
-    init(id:UUID) {
-        self.id = id
-        self.text = String()
-        self.children = []
-        self.type = TileType.empty
+    init(game: Game) {
+        self.id = UUID()
+        self.game = game
     }
-    
-    init(id:UUID, text:String, children:[TileOption], type:TileType) {
-        self.id = id
-        self.text = text
-        self.children = children
-        self.type = type
-    }
-    
     
     func loadFromCore() {
         // use self.coreTile here
@@ -54,18 +46,31 @@ public class Tile {
                 children.append(TileOption(id: optionIDs[i], text: optionTexts[i]))
             }
         }
-        
     }
     
-    init(storedVersion: StoredTile) {
+    init(game: Game, storedVersion: StoredTile) {
         self.coreTile = storedVersion
         self.id = storedVersion.id!
+        self.game = game
         loadFromCore()
+    }
+    
+    
+    func addOption() {
         
     }
     
+    func loadInNext(index: Array.Index) {
+        guard index < children.count else {
+            return
+        }
+        // access core data with a predicate
+        
+    }
+    
+    
     func addCore(newCore: StoredTile) -> Bool {
-        guard coreTile == nil else {
+        guard coreTile != nil else {
             return false
         }
         

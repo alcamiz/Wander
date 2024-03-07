@@ -4,6 +4,7 @@
         <attribute name="creation" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="descText" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="root" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="size" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -14,6 +15,7 @@
     <entity name="StoredTile" representedClassName=".StoredTile" syncable="YES">
         <attribute name="childIDs" optional="YES" attributeType="Transformable" customClassName="[UUID]"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="optionDescs" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

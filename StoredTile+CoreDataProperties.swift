@@ -2,7 +2,7 @@
 //  StoredTile+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Benjamin Gordon on 3/6/24.
+//  Created by Benjamin Gordon on 3/7/24.
 //
 //
 
@@ -21,6 +21,7 @@ extension StoredTile {
     @NSManaged public var type: Int16
     @NSManaged public var childIDs: [UUID]?
     @NSManaged public var optionDescs: [String]?
+    @NSManaged public var image: Data?
     @NSManaged public var game: StoredGame?
 
 }

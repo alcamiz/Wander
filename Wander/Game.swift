@@ -5,30 +5,56 @@
 //  Created by Alex Cabrera on 2/28/24.
 //
 
+import Foundation
+
 public class Game {
     
     
-    var gameID:UInt64 // PK
+    let id:UUID // PK
 
     // Info
-    var creatorID:UInt64 // FK
-    var name:String
-    var description:String
-    var tags:[String]
+    let creatorID:UUID // FK
+    var name:String = ""
+    var description:String = ""
+    var tags:[String] = []
     
-    var rootID:UInt64? // FK
-    var stageCount:UInt32
+    var rootID:UUID? // FK
+    var stageCount:UInt32 = 0
     
-    init(gameID:UInt64, creatorID:UInt64, name:String) {
-        self.gameID = gameID
+    var coreGame: StoredGame?
+    
+    init(creatorID:UUID) {
+        self.id = UUID()
         self.creatorID = creatorID
-        self.name = name
-        self.description = String()
-        self.tags = []
-        self.stageCount = 0
     }
     
-    init(gameID:UInt64, creatorID:UInt64, name:String, description:String, tags:[String], rootID:UInt64, stageCount:UInt32) {
+    func loadFromCore() {
+        self.name = self.coreGame?.name ?? ""
+        // load in image
+        // get children 
+    }
+    
+    init(storedVersion: StoredGame) {
+        self.coreGame = storedVersion
+        self.id = storedVersion.id!
+        self.creatorID = (storedVersion.author?.id)!
+        loadFromCore()
+    }
+    
+    func saveToCore() -> Bool {
+        guard coreGame != nil else {
+            return false
+        }
+        
+        return true 
+        
+    }
+    
+    func publish() -> Bool {
+        return false 
+    }
+    
+    /*init(gameID:UUID, creatorID:UUID, name:String, description:String, tags:[String], rootID:UUID, stageCount:UInt32) {
         self.gameID = gameID
         self.creatorID = creatorID
         self.name = name
@@ -36,5 +62,5 @@ public class Game {
         self.tags = tags
         self.rootID = rootID
         self.stageCount = stageCount
-    }
+    }*/
 }
