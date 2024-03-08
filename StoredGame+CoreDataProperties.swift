@@ -2,7 +2,7 @@
 //  StoredGame+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Alex Cabrera on 3/6/24.
+//  Created by Benjamin Gordon on 3/7/24.
 //
 //
 
@@ -19,29 +19,30 @@ extension StoredGame {
     @NSManaged public var creation: Date?
     @NSManaged public var descText: String?
     @NSManaged public var id: UUID?
+    @NSManaged public var image: Data?
     @NSManaged public var name: String?
     @NSManaged public var root: UUID?
     @NSManaged public var size: Int32
-    @NSManaged public var tags: NSObject?
+    @NSManaged public var tags: [String]?
     @NSManaged public var author: StoredUser?
-    @NSManaged public var stages: NSSet?
+    @NSManaged public var tiles: NSSet?
 
 }
 
-// MARK: Generated accessors for stages
+// MARK: Generated accessors for tiles
 extension StoredGame {
 
-    @objc(addStagesObject:)
-    @NSManaged public func addToStages(_ value: StoredTile)
+    @objc(addTilesObject:)
+    @NSManaged public func addToTiles(_ value: StoredTile)
 
-    @objc(removeStagesObject:)
-    @NSManaged public func removeFromStages(_ value: StoredTile)
+    @objc(removeTilesObject:)
+    @NSManaged public func removeFromTiles(_ value: StoredTile)
 
-    @objc(addStages:)
-    @NSManaged public func addToStages(_ values: NSSet)
+    @objc(addTiles:)
+    @NSManaged public func addToTiles(_ values: NSSet)
 
-    @objc(removeStages:)
-    @NSManaged public func removeFromStages(_ values: NSSet)
+    @objc(removeTiles:)
+    @NSManaged public func removeFromTiles(_ values: NSSet)
 
 }
 

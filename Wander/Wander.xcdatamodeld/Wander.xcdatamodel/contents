@@ -4,23 +4,23 @@
         <attribute name="creation" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="descText" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="root" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="size" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="tags" optional="YES" attributeType="Transformable"/>
+        <attribute name="tags" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredUser" inverseName="createdGames" inverseEntity="StoredUser"/>
-        <relationship name="stages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredTile" inverseName="game" inverseEntity="StoredTile"/>
-    </entity>
-    <entity name="StoredOption" representedClassName=".StoredOption" syncable="YES">
-        <attribute name="text" optional="YES" attributeType="String"/>
-        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredTile" inverseName="children" inverseEntity="StoredTile"/>
+        <relationship name="tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredTile" inverseName="game" inverseEntity="StoredTile"/>
     </entity>
     <entity name="StoredTile" representedClassName=".StoredTile" syncable="YES">
+        <attribute name="childIDs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[UUID]"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="optionDescs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoredOption" inverseName="parent" inverseEntity="StoredOption"/>
-        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredGame" inverseName="stages" inverseEntity="StoredGame"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredGame" inverseName="tiles" inverseEntity="StoredGame"/>
     </entity>
     <entity name="StoredUser" representedClassName=".StoredUser" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>

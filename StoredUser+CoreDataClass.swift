@@ -11,5 +11,9 @@ import CoreData
 
 
 public class StoredUser: NSManagedObject {
-
+    convenience init(context: NSManagedObjectContext?, username: String) {
+        self.init(entity: NSEntityDescription.entity(forEntityName: "StoredUser", in: context!)!, insertInto: context)
+        self.id = UUID()
+        self.username = username
+    }
 }
