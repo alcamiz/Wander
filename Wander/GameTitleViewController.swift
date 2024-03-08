@@ -8,6 +8,8 @@
 import UIKit
 
 class GameTitleViewController: UIViewController {
+    
+    var delegate:UIViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
