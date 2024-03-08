@@ -10,10 +10,16 @@ import UIKit
 class GameTitleViewController: UIViewController {
     
     var delegate:UIViewController!
+    var game:StoredGame!
 
+    @IBOutlet weak var gameTitle: UILabel!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        gameTitle.text = game.name ?? "Invalid Game"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     

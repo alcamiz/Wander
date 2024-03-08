@@ -18,7 +18,9 @@ public class GameManager {
     
     func createGame(creator: StoredUser) -> StoredGame {
         
-        return StoredGame(context: self.context, creator: creator)
+        let newGame = StoredGame(context: self.context, creator: creator)
+        try! context.save()
+        return newGame
     }
     
     func fetchGame(gameID:UUID) -> StoredGame? {
