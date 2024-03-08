@@ -13,6 +13,7 @@
 		B68F56CC2B99234C00179D09 /* StoredTile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F56CA2B99234C00179D09 /* StoredTile+CoreDataProperties.swift */; };
 		B68F56CF2B99239800179D09 /* StoredGame+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F56CD2B99239800179D09 /* StoredGame+CoreDataClass.swift */; };
 		B68F56D02B99239800179D09 /* StoredGame+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F56CE2B99239800179D09 /* StoredGame+CoreDataProperties.swift */; };
+		B68F56D22B9A92A200179D09 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F56D12B9A92A200179D09 /* GameManager.swift */; };
 		FF9A35952B8D510700A38D62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9A35942B8D510700A38D62 /* AppDelegate.swift */; };
 		FF9A35972B8D510700A38D62 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9A35962B8D510700A38D62 /* SceneDelegate.swift */; };
 		FF9A35992B8D510700A38D62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9A35982B8D510700A38D62 /* ViewController.swift */; };
@@ -24,9 +25,6 @@
 		FFA96C112B98C9E50047819A /* StoredUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA96C092B98C9E50047819A /* StoredUser+CoreDataProperties.swift */; };
 		FFA96C122B98C9E50047819A /* StoredOption+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA96C0A2B98C9E50047819A /* StoredOption+CoreDataClass.swift */; };
 		FFA96C132B98C9E50047819A /* StoredOption+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA96C0B2B98C9E50047819A /* StoredOption+CoreDataProperties.swift */; };
-		FFA96C152B98CA260047819A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA96C142B98CA260047819A /* User.swift */; };
-		FFF9A77B2B8FCC7200117788 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF9A77A2B8FCC7200117788 /* Game.swift */; };
-		FFF9A77D2B8FCCF800117788 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF9A77C2B8FCCF800117788 /* Tile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +34,7 @@
 		B68F56CA2B99234C00179D09 /* StoredTile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredTile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B68F56CD2B99239800179D09 /* StoredGame+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredGame+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B68F56CE2B99239800179D09 /* StoredGame+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredGame+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B68F56D12B9A92A200179D09 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		FF9A35912B8D510700A38D62 /* Wander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9A35942B8D510700A38D62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF9A35962B8D510700A38D62 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,9 +48,6 @@
 		FFA96C092B98C9E50047819A /* StoredUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FFA96C0A2B98C9E50047819A /* StoredOption+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredOption+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FFA96C0B2B98C9E50047819A /* StoredOption+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredOption+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		FFA96C142B98CA260047819A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		FFF9A77A2B8FCC7200117788 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-		FFF9A77C2B8FCCF800117788 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,9 +91,7 @@
 				FF9A35942B8D510700A38D62 /* AppDelegate.swift */,
 				FF9A35962B8D510700A38D62 /* SceneDelegate.swift */,
 				FF9A35982B8D510700A38D62 /* ViewController.swift */,
-				FFF9A77C2B8FCCF800117788 /* Tile.swift */,
-				FFF9A77A2B8FCC7200117788 /* Game.swift */,
-				FFA96C142B98CA260047819A /* User.swift */,
+				B68F56D12B9A92A200179D09 /* GameManager.swift */,
 				FF9A359A2B8D510700A38D62 /* Main.storyboard */,
 				B66C78082B8FD4C6005A736E /* EditorViewController.swift */,
 				B66C780A2B8FD4E0005A736E /* MapViewController.swift */,
@@ -181,17 +175,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B68F56CC2B99234C00179D09 /* StoredTile+CoreDataProperties.swift in Sources */,
+				B68F56D22B9A92A200179D09 /* GameManager.swift in Sources */,
 				FFA96C102B98C9E50047819A /* StoredUser+CoreDataClass.swift in Sources */,
-				FFF9A77D2B8FCCF800117788 /* Tile.swift in Sources */,
 				FFA96C112B98C9E50047819A /* StoredUser+CoreDataProperties.swift in Sources */,
 				FF9A359F2B8D510700A38D62 /* Wander.xcdatamodeld in Sources */,
 				FFA96C132B98C9E50047819A /* StoredOption+CoreDataProperties.swift in Sources */,
 				FF9A35992B8D510700A38D62 /* ViewController.swift in Sources */,
-				FFA96C152B98CA260047819A /* User.swift in Sources */,
 				B68F56CF2B99239800179D09 /* StoredGame+CoreDataClass.swift in Sources */,
 				B68F56D02B99239800179D09 /* StoredGame+CoreDataProperties.swift in Sources */,
 				FFA96C122B98C9E50047819A /* StoredOption+CoreDataClass.swift in Sources */,
-				FFF9A77B2B8FCC7200117788 /* Game.swift in Sources */,
 				FF9A35952B8D510700A38D62 /* AppDelegate.swift in Sources */,
 				FF9A35972B8D510700A38D62 /* SceneDelegate.swift in Sources */,
 				B68F56CB2B99234C00179D09 /* StoredTile+CoreDataClass.swift in Sources */,
