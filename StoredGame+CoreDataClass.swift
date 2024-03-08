@@ -23,13 +23,18 @@ public class StoredGame: NSManagedObject {
         self.descText = ""
     }
     
-    func addTile() {
+    func addTile() -> StoredTile {
         // call constructor
         let newTile = StoredTile(context: self.managedObjectContext, game: self)
         if self.size == 0 {
             self.root = newTile.id
         }
         self.size += 1
+        return newTile
+    }
+    
+    func getTiles() -> [StoredTile] {
+        return self.tiles?.allObjects as! [StoredTile]
     }
     
     func deleteTile(tile: StoredTile) -> Bool {

@@ -110,7 +110,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Edit"/>
                                 <connections>
-                                    <segue destination="4uw-EA-R6T" kind="show" id="CRj-G2-3UN"/>
+                                    <segue destination="4uw-EA-R6T" kind="show" identifier="EditGameSegue" id="CRj-G2-3UN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dOM-YR-cQC">
@@ -161,7 +161,7 @@
                                 <rect key="frame" x="30" y="407" width="334" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam gabs te conscient to factor tum poen legum odioque civiuda.</string>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam gabs te conscient to factor tum poen legum odioque civiuda.</mutableString>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -205,6 +205,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="fnx-PB-6lC"/>
+                    <connections>
+                        <outlet property="tileDescription" destination="7Qo-SO-vN9" id="BAl-iD-hjp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RbA-oj-W9h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -240,7 +243,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="ZPq-MD-RMk" kind="show" id="X48-q3-r0z"/>
+                                            <segue destination="ZPq-MD-RMk" kind="show" identifier="OpenTileSegue" id="X48-q3-r0z"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -258,7 +261,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Create New Tile"/>
                                 <connections>
-                                    <segue destination="ZPq-MD-RMk" kind="show" id="G4A-Hk-eSg"/>
+                                    <segue destination="ZPq-MD-RMk" kind="show" identifier="CreateTileSegue" id="G4A-Hk-eSg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -266,6 +269,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="c1K-xe-Mro"/>
+                    <connections>
+                        <outlet property="allTilesTableView" destination="hYx-Vi-AEI" id="lx4-y0-CDw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k0K-Lc-3KT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -291,7 +297,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="X48-q3-r0z"/>
+        <segue reference="G4A-Hk-eSg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.circle.fill" catalog="system" width="128" height="123"/>

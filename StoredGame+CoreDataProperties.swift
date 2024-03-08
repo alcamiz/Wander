@@ -19,11 +19,11 @@ extension StoredGame {
     @NSManaged public var creation: Date?
     @NSManaged public var descText: String?
     @NSManaged public var id: UUID?
+    @NSManaged public var image: Data?
     @NSManaged public var name: String?
     @NSManaged public var root: UUID?
     @NSManaged public var size: Int32
     @NSManaged public var tags: [String]?
-    @NSManaged public var image: Data?
     @NSManaged public var author: StoredUser?
     @NSManaged public var tiles: NSSet?
 

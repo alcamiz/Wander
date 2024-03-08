@@ -23,6 +23,7 @@ public class StoredTile: NSManagedObject {
         self.id = UUID()
         self.game = game
         self.text = ""
+        self.title = "New Tile"
         self.type = TileType.empty.rawValue
         self.childIDs = []
         self.optionDescs = []

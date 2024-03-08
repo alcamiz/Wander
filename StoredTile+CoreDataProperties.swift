@@ -16,12 +16,13 @@ extension StoredTile {
         return NSFetchRequest<StoredTile>(entityName: "StoredTile")
     }
 
+    @NSManaged public var childIDs: [UUID]?
     @NSManaged public var id: UUID?
+    @NSManaged public var image: Data?
+    @NSManaged public var optionDescs: [String]?
     @NSManaged public var text: String?
     @NSManaged public var type: Int16
-    @NSManaged public var childIDs: [UUID]?
-    @NSManaged public var optionDescs: [String]?
-    @NSManaged public var image: Data?
+    @NSManaged public var title: String?
     @NSManaged public var game: StoredGame?
 
 }
