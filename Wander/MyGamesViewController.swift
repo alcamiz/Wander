@@ -50,8 +50,6 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
             user = StoredUser(context: managedContext, username: "testUser")
         }
         allGamesTableView.reloadData()
-        
-        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
