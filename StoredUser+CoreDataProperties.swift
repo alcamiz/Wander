@@ -2,7 +2,7 @@
 //  StoredUser+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Alex Cabrera on 3/6/24.
+//  Created by Alex Cabrera on 3/15/24.
 //
 //
 
@@ -18,6 +18,8 @@ extension StoredUser {
 
     @NSManaged public var id: UUID?
     @NSManaged public var username: String?
+    @NSManaged public var createdOn: Date?
+    @NSManaged public var createCount: Int32
     @NSManaged public var createdGames: NSSet?
 
 }

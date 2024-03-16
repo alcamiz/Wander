@@ -8,8 +8,6 @@
 import UIKit
 import CoreData
 
-//var exampleGames:[String] = ["Cool Game #1", "Cool Game #2", "Cool Game #3"]
-
 class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var allGamesTableView: UITableView!
@@ -17,41 +15,29 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
     var textCellIdentifier = "GameCell"
     let segueID = "GameTitleSegueIdentifier"
     var gameList:[StoredGame] = []
-    var manager:GameManager?
     var user:StoredUser?
+    
+    func getUser(managedContext: NSManagedObjectContext) -> StoredUser? {
+        let res = try? managedContext.fetch(StoredUser.fetchRequest())
+        return res != nil && res!.count > 0 ? res![0] : nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         allGamesTableView.delegate = self
         allGamesTableView.dataSource = self
-        // Do any additional setup after loading the view.
-    }
-    
-    func getUser(managedContext: NSManagedObjectContext) -> StoredUser? {
-        do {
-            let res = try managedContext.fetch(StoredUser.fetchRequest())
-            return res.count > 0 ? res[0] : nil
-        }
-        catch {
-            return nil
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-             return
-        }
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
-        manager = GameManager(context: managedContext)
-        gameList = manager?.fetchAllGames() ?? []
+
         if let appUser = getUser(managedContext: managedContext) {
             user = appUser
         } else {
             user = StoredUser(context: managedContext, username: "testUser")
         }
+        
+        gameList = user?.fetchAllGames() ?? []
         allGamesTableView.reloadData()
-        
-        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -75,8 +61,9 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func addGame(_ sender: Any) {
-        let newGame = manager?.createGame(creator: user!)
+        let newGame = user?.createGame(creator: user!)
         gameList.append(newGame!)
-        allGamesTableView.reloadData()
+        let idxPath = IndexPath(row: allGamesTableView.numberOfRows(inSection: 0), section: 0)
+        allGamesTableView.insertRows(at: [idxPath], with: .automatic)
     }
 }

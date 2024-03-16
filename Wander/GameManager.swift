@@ -10,40 +10,21 @@ import CoreData
 
 public class GameManager {
     var context:NSManagedObjectContext
-//    var creator: StoredUser
     
     init(context: NSManagedObjectContext) {
         self.context = context
     }
     
-    func createGame(creator: StoredUser) -> StoredGame {
-        
-        let newGame = StoredGame(context: self.context, creator: creator)
-        try! context.save()
-        return newGame
-    }
-    
     func fetchGame(gameID:UUID) -> StoredGame? {
+        let request = StoredGame.fetchRequest() as NSFetchRequest<StoredGame>
+        let predicate = NSPredicate(format: "id == %@", gameID as CVarArg)
+        request.predicate = predicate
         
-        do {
-            let request = StoredGame.fetchRequest() as NSFetchRequest<StoredGame>
-            let predicate = NSPredicate(format: "id == %@", gameID as CVarArg)
-            request.predicate = predicate
-            let res = try self.context.fetch(request)
-            return res[0]
-        }
-        catch {
-            return nil
-        }
+        let res = try? self.context.fetch(request)
+        return res != nil && res!.count > 0 ? res![0] : nil
     }
     
     func fetchAllGames() -> [StoredGame]? {
-        do {
-            let res = try self.context.fetch(StoredGame.fetchRequest())
-            return res
-        }
-        catch {
-            return nil
-        }
+        return try? self.context.fetch(StoredGame.fetchRequest())
     }
 }

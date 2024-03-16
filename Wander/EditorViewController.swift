@@ -9,14 +9,13 @@ import UIKit
 
 class EditorViewController: UIViewController, UITextViewDelegate {
     var tile: StoredTile!
+    var empty: Bool = false
     
     @IBOutlet weak var tileDescription: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tileDescription.delegate = self
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,6 +24,16 @@ class EditorViewController: UIViewController, UITextViewDelegate {
         if tileDescription.text == "" {
             tileDescription.text = "Placeholder"
             tileDescription.textColor = UIColor.lightGray
+            empty = true
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent {
+            if !empty {tile.text = tileDescription.text}
+            try! tile.managedObjectContext?.save()
         }
     }
     
@@ -32,6 +41,7 @@ class EditorViewController: UIViewController, UITextViewDelegate {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = UIColor.black
+            empty = false
         }
     }
     
@@ -39,26 +49,7 @@ class EditorViewController: UIViewController, UITextViewDelegate {
         if textView.text == "" {
             textView.text = "Placeholder"
             textView.textColor = UIColor.lightGray
+            empty = true
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        if self.isMovingFromParent {
-            tile.text = tileDescription.text
-            try! tile.managedObjectContext?.save()
-        }
-    }
-
 }

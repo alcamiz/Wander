@@ -12,48 +12,40 @@ import UIKit
 
 
 public class StoredGame: NSManagedObject {
-    convenience init(context: NSManagedObjectContext?, creator: StoredUser) {
-        self.init(entity: NSEntityDescription.entity(forEntityName: "StoredGame", in: context!)!, insertInto: context)
+    convenience init(creator: StoredUser) {
+        self.init(context: creator.managedObjectContext!)
         self.id = UUID()
         self.author = creator
-        //let existingGames = creator.createdGames?.count ?? 0
-        self.name = "Untitled"
-        self.size = 0
+        self.name = "Game #\(creator.createCount)"
         self.tags = []
-        self.descText = ""
+        self.desc = ""
+        self.createCount = 0
+        self.createdOn = Date()
     }
     
-    func addTile() -> StoredTile {
-        // call constructor
-        let newTile = StoredTile(context: self.managedObjectContext, game: self)
-        if self.size == 0 {
-            self.root = newTile.id
-        }
-        self.size += 1
+    func createTile() -> StoredTile {
+        let newTile = StoredTile(game: self)
+        self.root = tiles?.count == 0 ? newTile : nil
+        self.createCount += 1
+        try! self.managedObjectContext?.save()
         return newTile
     }
     
-    func getTiles() -> [StoredTile] {
-        return self.tiles?.allObjects as! [StoredTile]
+    func fetchTile(tileID: UUID) -> StoredTile? {
+        let predicate = NSPredicate(format: "id == %@", tileID as CVarArg)
+        let res = self.tiles?.filtered(using: predicate) as? Set<StoredTile>
+        return res != nil && res!.isEmpty ? res!.first : nil
     }
     
+    func fetchAllTiles() -> [StoredTile]? {
+        return (self.tiles?.allObjects as? [StoredTile])?.sorted(by:{ $0.createdOn ?? Date.distantPast < $1.createdOn ?? Date.distantPast })
+    }
+
     func deleteTile(tile: StoredTile) -> Bool {
-        
-        guard tile.game == self else {
-            return false
-        }
-        
-        guard self.managedObjectContext != nil else {
-            return false
-        }
-        
+        guard tile.game == self else {return false}
         self.managedObjectContext?.delete(tile)
-        self.size -= 1
+        try! self.managedObjectContext?.save()
         return true
-    }
-    
-    func publish() {
-        self.creation = Date()
     }
     
     func addImage(image: UIImage) {

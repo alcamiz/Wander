@@ -17,35 +17,48 @@ enum TileType:Int16 {
     case empty
 }
 
+struct TileOption {
+    var id:UUID
+    var text:String
+}
+
 public class StoredTile: NSManagedObject {
-    convenience init(context: NSManagedObjectContext?, game: StoredGame) {
-        self.init(entity: NSEntityDescription.entity(forEntityName: "StoredTile", in: context!)!, insertInto: context)
+    
+    convenience init(game: StoredGame) {
+        self.init(context: game.managedObjectContext!)
         self.id = UUID()
         self.game = game
         self.text = ""
-        self.title = "New Tile"
+        self.title = "Tile #\(game.createCount)"
         self.type = TileType.empty.rawValue
-        self.childIDs = []
-        self.optionDescs = []
+        self.createdOn = Date()
     }
     
-    func fetchChild(childID: UUID) -> StoredTile? {
-        do {
-            let request = StoredTile.fetchRequest() as NSFetchRequest<StoredTile>
-            let predicate = NSPredicate(format: "id == %@", childID as CVarArg)
-            request.predicate = predicate
-            let res = try self.managedObjectContext?.fetch(request)
-            return res![0]
-            
-        }
-        catch {
-            return nil
-        }
+    func getType() -> TileType {
+        return TileType(rawValue: self.type)!
     }
     
-    func addOption(childID: UUID, childDesc: String) {
-        childIDs?.append(childID)
-        optionDescs?.append(childDesc)
+    func createOption(parent: StoredTile, child: StoredTile, desc: String) -> StoredOption {
+        let opt = StoredOption(parent: parent, child: child, desc: desc)
+        self.addToOptions(opt)
+        return opt
+    }
+    
+    func fetchOption(optionID : UUID) -> StoredOption? {
+        let predicate = NSPredicate(format: "id == %@", optionID as CVarArg)
+        let res = self.options?.filtered(using: predicate) as? Set<StoredOption>
+        return res != nil && res!.isEmpty ? res!.first : nil
+    }
+    
+    func fetchAllOptions() -> [StoredOption]? {
+        return (self.options?.allObjects as? [StoredOption])?.sorted(by:{ $0.createdOn ?? Date.distantPast < $1.createdOn ?? Date.distantPast })
+    }
+    
+    func deleteOption(option: StoredOption) -> Bool {
+        guard option.parent == self else {return false}
+        self.managedObjectContext?.delete(option)
+        try! self.managedObjectContext?.save()
+        return true
     }
     
     func addImage(image: UIImage) {
