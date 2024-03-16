@@ -18,6 +18,10 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     let defaultText = "Enter text here..."
     var currentText: String! // Saved text displayed in TextView
     
+    var titleTextField: UITextField!
+    let defaultTitle = "Unnamed Tile"
+    var tileTitle: String! // Saved tile title displayed on navigation bar
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,6 +48,44 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         textView.layer.borderColor = UIColor.black.cgColor
         if currentText == nil {
             setDefaultText()
+        }
+        
+        // Tile Title
+        // Create a UITextField and set it as the titleView of the navigationItem
+        titleTextField = UITextField()
+        titleTextField.text = "New Tile"
+        titleTextField.textAlignment = .center
+        
+        // Set the font to navigation bar text style (bold, point 17)
+        titleTextField.font = UIFont.boldSystemFont(ofSize: 17)
+        
+        titleTextField.delegate = self
+        navigationItem.titleView = titleTextField
+        
+        // Add a tap gesture recognizer to the navigation bar to handle editing
+        let titleTapGesture = UITapGestureRecognizer(target: self, action: #selector(tileTitleTapped(_:)))
+        view.addGestureRecognizer(titleTapGesture)
+    }
+    
+    // Enables editing when title (in navigation bar) is tapped, and saves text to tileTitle when editing is done
+    @objc func tileTitleTapped(_ sender: UITapGestureRecognizer) {
+        // Enable editing when the title is tapped
+        let location = sender.location(in: view)
+        titleTextField.isUserInteractionEnabled = true
+        
+        // When user taps outside of titleTextField, update tileTitle
+        if !titleTextField.frame.contains(location) {
+            titleTextField.resignFirstResponder()
+            
+            // Save the text from the text field into the titleText variable
+            if let text = titleTextField.text, text.isEmpty {
+                // titleTextField is empty
+                tileTitle = defaultTitle
+                titleTextField.text = defaultTitle
+            } else {
+                // titleTextField is not empty
+                tileTitle = titleTextField.text
+            }
         }
     }
     
