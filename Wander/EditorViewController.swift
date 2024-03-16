@@ -66,46 +66,57 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         present(alertController, animated: true, completion: nil)
     }
 
+    // When image selected from UIImagePickerController, dismiss and start cropping image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else {
             return
         }
-        // Image selected
-        selectedImage = image
-        imageView.image = image
+        
+        picker.dismiss(animated: true, completion: nil) // Dismiss UIImagePickerController
+        showCrop(image: image) // Crop image in CropViewController
+    }
+
+    // Dismiss UIImagePickerController when "Cancel" tapped
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    // Set up ViewController for cropping image
+    func showCrop(image: UIImage) {
+        let cropVC = CropViewController(croppingStyle: .default, image: image)
+        cropVC.toolbarPosition = .top
+        
+        // Aspect ratio
+        cropVC.aspectRatioPreset = .presetSquare
+        cropVC.aspectRatioLockEnabled = true
+        
+        // Done button
+        cropVC.doneButtonTitle = "Done"
+        cropVC.doneButtonColor = .systemRed
+        
+        // Cancel button
+        cropVC.cancelButtonTitle = "Back"
+        cropVC.cancelButtonColor = .systemRed
+     
+        cropVC.delegate = self
+        present(cropVC, animated: true)
+    }
+    
+    // Dismiss CropViewController if "Cancel" tapped
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true)
+    }
+    
+    // When "Done" tapped, dismiss CropViewController and update imageView and selectedImage
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        cropViewController.dismiss(animated: true)
         
         // Do not show default settings
         imageView.layer.borderWidth = 0
         imagePlaceholder.isHidden = true
         
-        picker.dismiss(animated: true, completion: nil)
-//        showCrop(image: image)
+        // Update imageView and selectedImage with newly cropped image
+        imageView.image = image
+        selectedImage = image
     }
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    /*
-    func showCrop(image: UIImage) {
-        let cropVC = CropViewController(croppingStyle: .default, image: image)
-        cropVC.aspectRatioPreset = .presetSquare
-        cropVC.aspectRatioLockEnabled = true
-        cropVC.toolbarPosition = .top
-        cropVC.doneButtonColor = .systemRed
-        cropVC.cancelButtonColor = .systemRed
-        cropVC.doneButtonTitle = "Done"
-        cropVC.cancelButtonTitle = "Back"
-        cropVC.delegate = self
-        present(cropVC, animated: true)
-    }
-    
-    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
-        cropViewController.dismiss(animated: true)
-    }
-    
-    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
-        cropViewController.dismiss(animated: true)
-        print("cropped")
-    }
-     */
 }
