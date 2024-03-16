@@ -51,6 +51,16 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { action, view, handler in
+            _ = self.user?.deleteGame(game: self.gameList[indexPath.row])
+            self.gameList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            handler(true)
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueID,
            let nextVC = segue.destination as? GameTitleViewController {

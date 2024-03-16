@@ -51,4 +51,14 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         cell.textLabel?.text = tileList[row].title
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { action, view, handler in
+            _ = self.game?.deleteTile (tile: self.tileList[indexPath.row])
+            self.tileList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            handler(true)
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
