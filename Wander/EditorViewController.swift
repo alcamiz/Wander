@@ -11,24 +11,26 @@ import UIKit
 class EditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
-    var selectedImage: UIImage!
+    var selectedImage: UIImage! // Saved image displayed in ImageView
     @IBOutlet weak var imagePlaceholder: UILabel!
     
     @IBOutlet weak var textView: UITextView!
     let defaultText = "Enter text here..."
-    var currentText: String!
+    var currentText: String! // Saved text displayed in TextView
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initially display ImageView with no image
-        imagePlaceholder.text = "Image Here" // Placeholder text for where image is
-        imagePlaceholder.textColor = UIColor.gray
-        imagePlaceholder.isHidden = false
-        
-        // With no image in ImageView, add gray border to ImageView
-        imageView.layer.borderWidth = 3
-        imageView.layer.borderColor = UIColor.gray.cgColor
+        if selectedImage == nil {
+            // Initially display ImageView with no image
+            imagePlaceholder.text = "Image Here" // Placeholder text for where image is
+            imagePlaceholder.textColor = UIColor.gray
+            imagePlaceholder.isHidden = false
+            
+            // With no image in ImageView, add gray border to ImageView
+            imageView.layer.borderWidth = 3
+            imageView.layer.borderColor = UIColor.gray.cgColor
+        }
         
         // ImageView tappable; when tapped, can add image
         let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
