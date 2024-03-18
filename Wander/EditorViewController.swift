@@ -381,4 +381,8 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         try? self.tile.managedObjectContext?.save()
     }
+
+    @IBAction func manualSave(_ sender: Any) {
+        saveToCore()
+    }
 }
