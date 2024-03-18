@@ -9,7 +9,6 @@ import UIKit
 
 class EditorViewController: UIViewController, UITextViewDelegate {
     var tile: StoredTile!
-    var tileList:[StoredTile] = []
     
     @IBOutlet weak var tileDescription: UITextView!
     
@@ -18,8 +17,6 @@ class EditorViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tileDescription.delegate = self
-        
-        //self.tileList = tileList
 
         // Do any additional setup after loading the view.
     }
