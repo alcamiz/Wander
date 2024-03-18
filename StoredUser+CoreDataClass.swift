@@ -42,4 +42,12 @@ public class StoredUser: NSManagedObject {
         try! self.managedObjectContext?.save()
         return true
     }
+    
+    func deleteAllGames() -> Bool {
+        for game in self.createdGames! {
+            self.managedObjectContext?.delete(game as! StoredGame)
+        }
+        try! self.managedObjectContext?.save()
+        return true
+    }
 }

@@ -48,6 +48,14 @@ public class StoredGame: NSManagedObject {
         return true
     }
     
+    func deleteAllTile() -> Bool {
+        for tile in self.tiles! {
+            self.managedObjectContext?.delete(tile as! StoredTile)
+        }
+        try! self.managedObjectContext?.save()
+        return true
+    }
+    
     func addImage(image: UIImage) {
         self.image = image.pngData()
     }

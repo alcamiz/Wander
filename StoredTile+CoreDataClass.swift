@@ -61,6 +61,14 @@ public class StoredTile: NSManagedObject {
         return true
     }
     
+    func deleteAllOptions() -> Bool {
+        for option in self.options! {
+            self.managedObjectContext?.delete(option as! StoredOption)
+        }
+        try! self.managedObjectContext?.save()
+        return true
+    }
+    
     func addImage(image: UIImage) {
         self.image = image.pngData()
     }
