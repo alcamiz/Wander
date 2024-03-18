@@ -18,7 +18,7 @@ public class StoredGame: NSManagedObject {
         self.author = creator
         self.name = "Game #\(creator.createCount)"
         self.tags = []
-        self.desc = ""
+        self.desc = nil
         self.createCount = 0
         self.createdOn = Date()
     }
@@ -60,4 +60,7 @@ public class StoredGame: NSManagedObject {
         self.image = image.pngData()
     }
 
+    func fetchImage() -> UIImage? {
+        return self.image != nil ? UIImage(data: self.image!) : nil
+    }
 }

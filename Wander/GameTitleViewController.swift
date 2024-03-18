@@ -31,7 +31,7 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gameTitleLabel.text = defaultGameTitle
+        gameTitleLabel.text = game.name
         gameTitleLabel.isHidden = false // Display title
         gameTitleLabel.textAlignment = .center
         
@@ -49,7 +49,7 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
         gameTitleLabel.addGestureRecognizer(gameTitleTapGesture)
         
         
-        if gameImage == nil {
+        if game.image == nil {
             // Initially display ImageView with no image
             gameImagePlaceholder.text = "Image Here" // Placeholder text for where image is
             gameImagePlaceholder.textColor = UIColor.gray
@@ -58,6 +58,9 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
             // With no image in ImageView, add gray border to ImageView
             gameImageView.layer.borderWidth = 3
             gameImageView.layer.borderColor = UIColor.gray.cgColor
+        } else {
+            gameImageView.image = game.fetchImage()
+            gameImagePlaceholder.isHidden = true
         }
         
         // ImageView tappable; when tapped, can add image
@@ -153,6 +156,8 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
         // Update imageView and selectedImage with newly cropped image
         gameImageView.image = image
         gameImage = image
+        game.addImage(image: image)
+        try? game.managedObjectContext?.save()
     }
     
     // When game title label is tapped, in edit mode
@@ -177,6 +182,8 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
             else {
                 gameTitle = textField.text! // Save text in text field
                 gameTitleLabel.text = gameTitle // Display new game title
+                game.name = gameTitle
+                try? game.managedObjectContext?.save()
             }
             
             gameTitleLabel.isHidden = false // Display label

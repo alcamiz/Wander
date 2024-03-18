@@ -366,19 +366,15 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         if tileTitle != nil {
             tile.title = tileTitle
         }
-        
         if currentText != nil {
             tile.text = currentText
         }
-        
         if selectedImage != nil {
             tile.addImage(image: selectedImage)
         }
-        
         if button1Option != nil && button1Title != nil {
             button1Option?.desc = button1Title
         }
-        
         if button2Option != nil && button2Title != nil {
             button2Option?.desc = button2Title
         }

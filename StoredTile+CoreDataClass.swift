@@ -28,7 +28,7 @@ public class StoredTile: NSManagedObject {
         self.init(context: game.managedObjectContext!)
         self.id = UUID()
         self.game = game
-        self.text = ""
+        self.text = nil
         self.title = "Tile #\(game.createCount)"
         self.type = TileType.empty.rawValue
         self.createdOn = Date()
