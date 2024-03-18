@@ -11,7 +11,10 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var allTilesTableView: UITableView!
     
-    var linkTitle = ""
+    @IBOutlet weak var linkingNavigationItem: UINavigationItem!
+    
+    
+    var linkTitle: String!
     var tileList:[StoredTile] = []
     var textCellIdentifier = "TileCell"
     
@@ -19,6 +22,8 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         allTilesTableView.delegate = self
         allTilesTableView.dataSource = self
+        
+        linkingNavigationItem.title = "Link for \(linkTitle ?? "ERROR")"
 
         // Do any additional setup after loading the view.
     }

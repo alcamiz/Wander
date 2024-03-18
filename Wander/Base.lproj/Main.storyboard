@@ -350,6 +350,7 @@
                     <navigationItem key="navigationItem" id="TNg-TK-Byy"/>
                     <connections>
                         <outlet property="allTilesTableView" destination="Hqk-Fy-CSQ" id="HOA-T4-ZhY"/>
+                        <outlet property="linkingNavigationItem" destination="dgq-SB-sVD" id="91y-m5-31H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t1m-vi-DN4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
