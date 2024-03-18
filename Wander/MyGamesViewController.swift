@@ -16,6 +16,7 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
     let segueID = "GameTitleSegueIdentifier"
     var gameList:[StoredGame] = []
     var user:StoredUser?
+    var selectedGameIndex: IndexPath?
     
     func getUser(managedContext: NSManagedObjectContext) -> StoredUser? {
         let res = try? managedContext.fetch(StoredUser.fetchRequest())
@@ -38,6 +39,13 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         gameList = user?.fetchAllGames() ?? []
         allGamesTableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if selectedGameIndex != nil {
+            allGamesTableView.reloadRows(at: [selectedGameIndex!], with: .automatic)
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,18 +70,23 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == segueID,
-           let nextVC = segue.destination as? GameTitleViewController {
-            nextVC.delegate = self
-            let gameIndex = allGamesTableView.indexPathForSelectedRow?.row
-            nextVC.game = gameList[gameIndex!]
+        
+        if let nextVC = segue.destination as? GameTitleViewController {
+            
+            if segue.identifier == "CreateGameSegue"{
+                let newGame = user?.createGame()
+                gameList.append(newGame!)
+                let idxPath = IndexPath(row: allGamesTableView.numberOfRows(inSection: 0), section: 0)
+                allGamesTableView.insertRows(at: [idxPath], with: .automatic)
+                nextVC.game = newGame
+                selectedGameIndex = idxPath
+                
+            } else if segue.identifier == "OpenGameSegue" {
+                let gameIndex = allGamesTableView.indexPathForSelectedRow?.row
+                let idxPath = IndexPath(row: gameIndex!, section: 0)
+                nextVC.game = gameList[gameIndex!]
+                selectedGameIndex = idxPath
+            }
         }
-    }
-    
-    @IBAction func addGame(_ sender: Any) {
-        let newGame = user?.createGame(creator: user!)
-        gameList.append(newGame!)
-        let idxPath = IndexPath(row: allGamesTableView.numberOfRows(inSection: 0), section: 0)
-        allGamesTableView.insertRows(at: [idxPath], with: .automatic)
     }
 }

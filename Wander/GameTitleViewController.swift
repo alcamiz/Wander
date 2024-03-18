@@ -10,7 +10,7 @@ import CropViewController
 
 class GameTitleViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     
-    var delegate:UIViewController!
+    var game:StoredGame!
     
     // Label and text field for game title
     @IBOutlet weak var gameTitleLabel: UILabel!
@@ -23,11 +23,10 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
     @IBOutlet weak var gameImageView: UIImageView!
     var gameImage: UIImage!
     @IBOutlet weak var gameImagePlaceholder: UILabel!
-    var game:StoredGame!
     
-    override func viewWillAppear(_ animated: Bool) {
-        gameTitle.text = game.name ?? "Invalid Game"
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        gameTitle.text = game.name ?? "Invalid Game"
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

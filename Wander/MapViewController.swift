@@ -8,7 +8,7 @@
 import UIKit
 
 class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var game:StoredGame!
+    var game:StoredGame?
     var tileList:[StoredTile] = []
     var textCellIdentifier = "TileCell"
     var selectedTileIndex:IndexPath?
@@ -28,27 +28,6 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         super.viewWillAppear(animated)
         if selectedTileIndex != nil {
             allTilesTableView.reloadRows(at: [selectedTileIndex!], with: .automatic)
-        }
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if let nextVC = segue.destination as? EditorViewController {
-
-            if segue.identifier == "CreateTileSegue"{
-                let newTile = game.createTile()
-                tileList.append(newTile)
-                let idxPath = IndexPath(row: allTilesTableView.numberOfRows(inSection: 0), section: 0)
-                allTilesTableView.insertRows(at: [idxPath], with: .automatic)
-                nextVC.tile = newTile
-                selectedTileIndex = idxPath
-
-            } else if segue.identifier == "OpenTileSegue" {
-                let tileIndex = allTilesTableView.indexPathForSelectedRow?.row
-                let idxPath = IndexPath(row: tileIndex!, section: 0)
-                nextVC.tile = tileList[tileIndex!]
-                selectedTileIndex = idxPath
-            }
         }
     }
     
@@ -71,5 +50,26 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             handler(true)
         }
         return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let nextVC = segue.destination as? EditorViewController {
+
+            if segue.identifier == "CreateTileSegue"{
+                let newTile = game?.createTile()
+                tileList.append(newTile!)
+                let idxPath = IndexPath(row: allTilesTableView.numberOfRows(inSection: 0), section: 0)
+                allTilesTableView.insertRows(at: [idxPath], with: .automatic)
+                nextVC.tile = newTile
+                selectedTileIndex = idxPath
+
+            } else if segue.identifier == "OpenTileSegue" {
+                let tileIndex = allTilesTableView.indexPathForSelectedRow?.row
+                let idxPath = IndexPath(row: tileIndex!, section: 0)
+                nextVC.tile = tileList[tileIndex!]
+                selectedTileIndex = idxPath
+            }
+        }
     }
 }

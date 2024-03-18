@@ -19,8 +19,8 @@ public class StoredUser: NSManagedObject {
         self.createdOn = Date()
     }
     
-    func createGame(creator: StoredUser) -> StoredGame {
-        let newGame = StoredGame(creator: creator)
+    func createGame() -> StoredGame {
+        let newGame = StoredGame(creator: self)
         self.createCount += 1
         try! self.managedObjectContext?.save()
         return newGame

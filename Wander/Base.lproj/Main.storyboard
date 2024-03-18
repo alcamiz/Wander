@@ -25,7 +25,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UHH-ul-HN8">
-                                <rect key="frame" x="0.0" y="103" width="393" height="649"/>
+                                <rect key="frame" x="-2" y="158" width="393" height="689"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -46,18 +46,18 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Xyg-YJ-fxt" kind="show" identifier="GameTitleSegueIdentifier" id="wpS-gn-cUI"/>
+                                            <segue destination="Xyg-YJ-fxt" kind="show" identifier="OpenGameSegue" id="wpS-gn-cUI"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lss-6I-h0D">
-                                <rect key="frame" x="112" y="760" width="169" height="35"/>
+                                <rect key="frame" x="61" y="120" width="271" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="New Game"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Create New Game"/>
                                 <connections>
-                                    <action selector="addGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yF8-7M-Csa"/>
+                                    <segue destination="Xyg-YJ-fxt" kind="show" identifier="CreateGameSegue" id="8gi-D9-aUj"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -279,7 +279,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hYx-Vi-AEI">
-                                <rect key="frame" x="0.0" y="163" width="393" height="655"/>
+                                <rect key="frame" x="0.0" y="163" width="393" height="689"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -355,6 +355,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="X48-q3-r0z"/>
+        <segue reference="wpS-gn-cUI"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.circle.fill" catalog="system" width="128" height="123"/>
