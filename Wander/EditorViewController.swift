@@ -10,6 +10,8 @@ import UIKit
 
 class EditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
+    var tile: StoredTile! // Incoming tile from MapView
+    
     var titleTextField: UITextField!
     let defaultTitle = "Unnamed Tile"
     var tileTitle: String! // Saved tile title displayed on navigation bar
