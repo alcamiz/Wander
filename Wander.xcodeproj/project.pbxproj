@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53A70C922BA4DAA0008FC76C /* LinkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */; };
 		53B010BE2B9922BB008C0BA8 /* GameTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B010BD2B9922BB008C0BA8 /* GameTitleViewController.swift */; };
 		B66C78092B8FD4C6005A736E /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C78082B8FD4C6005A736E /* EditorViewController.swift */; };
 		B66C780B2B8FD4E0005A736E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C780A2B8FD4E0005A736E /* MapViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingViewController.swift; sourceTree = "<group>"; };
 		53B010BD2B9922BB008C0BA8 /* GameTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTitleViewController.swift; sourceTree = "<group>"; };
 		B66C78082B8FD4C6005A736E /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		B66C780A2B8FD4E0005A736E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				53B010BD2B9922BB008C0BA8 /* GameTitleViewController.swift */,
 				B66C78082B8FD4C6005A736E /* EditorViewController.swift */,
 				B66C780A2B8FD4E0005A736E /* MapViewController.swift */,
+				53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */,
 				FF9A35A02B8D510900A38D62 /* Assets.xcassets */,
 				FF9A35A22B8D510900A38D62 /* LaunchScreen.storyboard */,
 				FF9A35A52B8D510900A38D62 /* Info.plist */,
@@ -191,6 +194,7 @@
 				FF9A35972B8D510700A38D62 /* SceneDelegate.swift in Sources */,
 				B68F56CB2B99234C00179D09 /* StoredTile+CoreDataClass.swift in Sources */,
 				B66C78092B8FD4C6005A736E /* EditorViewController.swift in Sources */,
+				53A70C922BA4DAA0008FC76C /* LinkingViewController.swift in Sources */,
 				B66C780B2B8FD4E0005A736E /* MapViewController.swift in Sources */,
 				53B010BE2B9922BB008C0BA8 /* GameTitleViewController.swift in Sources */,
 			);

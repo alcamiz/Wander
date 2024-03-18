@@ -37,6 +37,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
            let nextVC = segue.destination as? EditorViewController {
             let newTile = game.addTile()
             nextVC.tile = newTile
+            nextVC.tileList = self.tileList
             tileList.append(newTile)
         } else if segue.identifier == "OpenTileSegue",
             let nextVC = segue.destination as? EditorViewController{

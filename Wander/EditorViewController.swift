@@ -9,12 +9,17 @@ import UIKit
 
 class EditorViewController: UIViewController, UITextViewDelegate {
     var tile: StoredTile!
+    var tileList:[StoredTile] = []
     
     @IBOutlet weak var tileDescription: UITextView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tileDescription.delegate = self
+        
+        //self.tileList = tileList
 
         // Do any additional setup after loading the view.
     }
@@ -41,16 +46,6 @@ class EditorViewController: UIViewController, UITextViewDelegate {
             textView.textColor = UIColor.lightGray
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -60,5 +55,36 @@ class EditorViewController: UIViewController, UITextViewDelegate {
             try! tile.managedObjectContext?.save()
         }
     }
+    
+    @IBAction func linkButtonPressed(_ sender: Any) {
+        let controller = UIAlertController(
+            title: "Linking Tiles",
+            message: "Select a button to link",
+            preferredStyle: .alert)
+        controller.addAction(UIAlertAction(
+            title: "Button One",
+            style: .default,
+            handler: {  (alert) in self.performSegue(withIdentifier: "LinkButtonOneSegue", sender: self)   }  ))
+        controller.addAction(UIAlertAction(
+            title: "Button Two",
+            style: .default,
+            handler: {  (alert) in self.performSegue(withIdentifier: "LinkButtonTwoSegue", sender: self)   }  ))
+        present(controller, animated: true)
+    }
+    
+    
+    // MARK: - Navigation
 
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "LinkButtonOneSegue",
+           let nextVC = segue.destination as? LinkingViewController {
+            nextVC.linkTitle = "Button One"
+        } else if segue.identifier == "LinkButtonTwoSegue",
+            let nextVC = segue.destination as? LinkingViewController{
+            nextVC.linkTitle = "Button Two"
+        }
+    }
+    
+    
 }
