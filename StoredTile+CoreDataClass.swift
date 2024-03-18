@@ -38,8 +38,8 @@ public class StoredTile: NSManagedObject {
         return TileType(rawValue: self.type)!
     }
     
-    func createOption(parent: StoredTile, child: StoredTile, desc: String) -> StoredOption {
-        let opt = StoredOption(parent: parent, child: child, desc: desc)
+    func createOption(tile: StoredTile?, desc: String) -> StoredOption {
+        let opt = StoredOption(parent: self, child: tile, desc: desc)
         self.addToOptions(opt)
         return opt
     }
@@ -71,5 +71,9 @@ public class StoredTile: NSManagedObject {
     
     func addImage(image: UIImage) {
         self.image = image.pngData()
+    }
+    
+    func fetchImage() -> UIImage? {
+        return self.image != nil ? UIImage(data: self.image!) : nil
     }
 }

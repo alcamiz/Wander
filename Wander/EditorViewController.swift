@@ -32,11 +32,13 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     var button2Title: String!
     let defaultButton1 = "Button 1"
     let defaultButton2 = "Button 2"
+    var button1Option: StoredOption?
+    var button2Option: StoredOption?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if selectedImage == nil {
+        if tile.image == nil {
             // Initially display ImageView with no image
             imagePlaceholder.text = "Image Here" // Placeholder text for where image is
             imagePlaceholder.textColor = UIColor.gray
@@ -45,6 +47,9 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
             // With no image in ImageView, add gray border to ImageView
             imageView.layer.borderWidth = 3
             imageView.layer.borderColor = UIColor.gray.cgColor
+        } else {
+            imageView.image = tile.fetchImage()
+            imagePlaceholder.isHidden = true
         }
         
         // ImageView tappable; when tapped, can add image
@@ -58,14 +63,17 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Add border to textView
         textView.layer.borderWidth = 3
         textView.layer.borderColor = UIColor.black.cgColor
-        if currentText == nil {
+        if tile.text == nil {
             setDefaultText()
+        } else {
+            currentText = tile.text
+            textView.text = tile.text
         }
         
         // Tile Title
         // Create a UITextField and set it as the titleView of the navigationItem
         titleTextField = UITextField()
-        titleTextField.text = "New Tile"
+        titleTextField.text = tile.title
         titleTextField.textAlignment = .center
         
         // Set the font to navigation bar text style (bold, point 17)
@@ -82,20 +90,36 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         let mainViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(mainViewTapped(_:)))
         view.addGestureRecognizer(mainViewTapGesture)
         
+        if (tile.options != nil && tile.options!.count >= 2) {
+            let opts = tile.fetchAllOptions()
+            button1Option = opts?[0]
+            button2Option = opts?[1]
+        } else {
+            button1Option = tile.createOption(tile: nil, desc: defaultButton1)
+            button2Option = tile.createOption(tile: nil, desc: defaultButton2)
+        }
+        
         // Create a UITextField with the same frame as the UIButtons
         button1TextField = UITextField(frame: button1.frame)
-        button1.titleLabel?.text = defaultButton1
+        button1Title = button1Option?.desc ?? defaultButton1
+        button1.titleLabel?.text = button1Title
         button1TextField.isHidden = true
         button1TextField.delegate = self
         button1TextField.textAlignment = .center
         view.addSubview(button1TextField)
         
         button2TextField = UITextField(frame: button2.frame)
-        button2.titleLabel?.text = defaultButton2
+        button2Title = button2Option?.desc ?? defaultButton2
+        button2.titleLabel?.text = button2Title
         button2TextField.isHidden = true
         button2TextField.delegate = self
         button2TextField.textAlignment = .center
         view.addSubview(button2TextField)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        saveToCore()
+        super.viewWillDisappear(animated)
     }
     
     // Enables editing when title (in navigation bar) is tapped, and saves text to tileTitle when editing is done
@@ -336,5 +360,29 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     // Called when the user clicks on the view outside of any of the UITextFields
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    func saveToCore() {
+        if tileTitle != nil {
+            tile.title = tileTitle
+        }
+        
+        if currentText != nil {
+            tile.text = currentText
+        }
+        
+        if selectedImage != nil {
+            tile.addImage(image: selectedImage)
+        }
+        
+        if button1Option != nil && button1Title != nil {
+            button1Option?.desc = button1Title
+        }
+        
+        if button2Option != nil && button2Title != nil {
+            button2Option?.desc = button2Title
+        }
+        
+        try? self.tile.managedObjectContext?.save()
     }
 }

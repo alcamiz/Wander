@@ -11,7 +11,7 @@ import CoreData
 
 @objc(StoredOption)
 public class StoredOption: NSManagedObject {
-    convenience init(parent: StoredTile, child: StoredTile, desc: String) {
+    convenience init(parent: StoredTile, child: StoredTile?, desc: String) {
         self.init(context: parent.managedObjectContext!)
         self.parent = parent
         self.child = child

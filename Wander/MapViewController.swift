@@ -11,6 +11,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     var game:StoredGame!
     var tileList:[StoredTile] = []
     var textCellIdentifier = "TileCell"
+    var selectedTileIndex:IndexPath?
+    
     @IBOutlet weak var allTilesTableView: UITableView!
     
     override func viewDidLoad() {
@@ -20,6 +22,13 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         tileList = game?.fetchAllTiles() ?? []
         allTilesTableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if selectedTileIndex != nil {
+            allTilesTableView.reloadRows(at: [selectedTileIndex!], with: .automatic)
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -32,12 +41,14 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 let idxPath = IndexPath(row: allTilesTableView.numberOfRows(inSection: 0), section: 0)
                 allTilesTableView.insertRows(at: [idxPath], with: .automatic)
                 nextVC.tile = newTile
+                selectedTileIndex = idxPath
 
             } else if segue.identifier == "OpenTileSegue" {
                 let tileIndex = allTilesTableView.indexPathForSelectedRow?.row
+                let idxPath = IndexPath(row: tileIndex!, section: 0)
                 nextVC.tile = tileList[tileIndex!]
+                selectedTileIndex = idxPath
             }
-            
         }
     }
     
