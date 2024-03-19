@@ -101,7 +101,6 @@
 				53B010BD2B9922BB008C0BA8 /* GameTitleViewController.swift */,
 				B66C780A2B8FD4E0005A736E /* MapViewController.swift */,
 				B66C78082B8FD4C6005A736E /* EditorViewController.swift */,
-				B66C780A2B8FD4E0005A736E /* MapViewController.swift */,
 				53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */,
 				FF9A35A02B8D510900A38D62 /* Assets.xcassets */,
 				FF9A359A2B8D510700A38D62 /* Main.storyboard */,

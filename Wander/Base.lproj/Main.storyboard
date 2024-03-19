@@ -275,8 +275,8 @@
                         <outlet property="imagePlaceholder" destination="I2z-ib-FhY" id="m5A-ZB-NRz"/>
                         <outlet property="imageView" destination="QlU-vE-c5D" id="fFE-Tj-9UL"/>
                         <outlet property="textView" destination="7Qo-SO-vN9" id="iOM-tk-KkV"/>
-                        <segue destination="d7W-Sl-Zwk" kind="show" identifier="LinkButtonOneSegue" id="PTd-q9-nyU"/>
-                        <segue destination="d7W-Sl-Zwk" kind="show" identifier="LinkButtonTwoSegue" id="npG-xH-dlG"/>
+                        <segue destination="d7W-Sl-Zwk" kind="presentation" identifier="LinkButtonOneSegue" id="PTd-q9-nyU"/>
+                        <segue destination="d7W-Sl-Zwk" kind="presentation" identifier="LinkButtonTwoSegue" id="npG-xH-dlG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RbA-oj-W9h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -370,11 +370,11 @@
             <objects>
                 <viewController id="d7W-Sl-Zwk" customClass="LinkingViewController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JO8-Ed-v4x">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Hqk-Fy-CSQ">
-                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="749"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -420,7 +420,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="PTd-q9-nyU"/>
+        <segue reference="npG-xH-dlG"/>
         <segue reference="X48-q3-r0z"/>
         <segue reference="wpS-gn-cUI"/>
     </inferredMetricsTieBreakers>

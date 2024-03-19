@@ -10,13 +10,14 @@ import UIKit
 class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var allTilesTableView: UITableView!
-    
     @IBOutlet weak var linkingNavigationItem: UINavigationItem!
     
     
     var linkTitle: String!
     var tileList:[StoredTile] = []
     var textCellIdentifier = "TileCell"
+    var parentTile:StoredTile?
+    var delegate:EditorViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,7 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
         allTilesTableView.dataSource = self
         
         linkingNavigationItem.title = "Link for \(linkTitle ?? "ERROR")"
+        tileList = parentTile?.game?.fetchAllTiles() ?? []
 
         // Do any additional setup after loading the view.
     }
@@ -42,6 +44,23 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
         let row = indexPath.row
         cell.textLabel?.text = tileList[row].title
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedTile = tileList[indexPath.row]
+        
+        switch (linkTitle) {
+            case "Button One":
+                delegate?.button1Option?.child = selectedTile
+                try? parentTile?.managedObjectContext?.save()
+                self.dismiss(animated: true)
+            case "Button Two":
+                delegate?.button2Option?.child = selectedTile
+                try? parentTile?.managedObjectContext?.save()
+                self.dismiss(animated: true)
+            default:
+                break
+        }
     }
     
 

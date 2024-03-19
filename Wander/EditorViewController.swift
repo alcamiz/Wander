@@ -409,10 +409,16 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "LinkButtonOneSegue",
            let nextVC = segue.destination as? LinkingViewController {
+            nextVC.parentTile = self.tile
+            nextVC.delegate = self
             nextVC.linkTitle = "Button One"
+            saveToCore()
         } else if segue.identifier == "LinkButtonTwoSegue",
-            let nextVC = segue.destination as? LinkingViewController{
+            let nextVC = segue.destination as? LinkingViewController {
+            nextVC.parentTile = self.tile
+            nextVC.delegate = self
             nextVC.linkTitle = "Button Two"
+            saveToCore()
         }
     }
     
