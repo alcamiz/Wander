@@ -103,6 +103,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         button1TextField = UITextField(frame: button1.frame)
         button1Title = button1Option?.desc ?? defaultButton1
         button1.titleLabel?.text = button1Title
+        button1.setTitle(button1Title, for: .normal)
         button1TextField.isHidden = true
         button1TextField.delegate = self
         button1TextField.textAlignment = .center
@@ -111,6 +112,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         button2TextField = UITextField(frame: button2.frame)
         button2Title = button2Option?.desc ?? defaultButton2
         button2.titleLabel?.text = button2Title
+        button2.setTitle(button2Title, for: .normal)
         button2TextField.isHidden = true
         button2TextField.delegate = self
         button2TextField.textAlignment = .center
