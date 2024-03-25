@@ -92,3 +92,5 @@ iOSInjectionProject/
 .DS_Store
 */.DS_Store
 
+
+Wander.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
