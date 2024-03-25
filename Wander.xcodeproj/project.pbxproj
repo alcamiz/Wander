@@ -40,9 +40,8 @@
 		B66C78092B8FD4C6005A736E /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C78082B8FD4C6005A736E /* EditorViewController.swift */; };
 		B66C780B2B8FD4E0005A736E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C780A2B8FD4E0005A736E /* MapViewController.swift */; };
 		B68F56D22B9A92A200179D09 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F56D12B9A92A200179D09 /* GameManager.swift */; };
-		FF0999EF2BAE228700B1CF96 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF0999EE2BAE228700B1CF96 /* CropViewController */; };
-		FF0999F12BAE228700B1CF96 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF0999F02BAE228700B1CF96 /* TOCropViewController */; };
-		FF668A722BADFB2600198C46 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF668A712BADFB2600198C46 /* TOCropViewController */; };
+		FF7880CF2BB0F60F00689BEC /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880CE2BB0F60F00689BEC /* CropViewController */; };
+		FF7880D12BB0F60F00689BEC /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880D02BB0F60F00689BEC /* TOCropViewController */; };
 		FF94C44C2BA9468A0089E47C /* StoredGame+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */; };
 		FF94C44D2BA9468A0089E47C /* StoredOption+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94C4452BA9468A0089E47C /* StoredOption+CoreDataClass.swift */; };
 		FF94C44E2BA9468A0089E47C /* StoredOption+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94C4462BA9468A0089E47C /* StoredOption+CoreDataProperties.swift */; };
@@ -106,9 +105,7 @@
 				B6552B822BAE2A5600D06004 /* FirebaseStorage in Frameworks */,
 				B6552B7C2BAE2A5600D06004 /* FirebasePerformance in Frameworks */,
 				B6552B682BAE2A5600D06004 /* FirebaseFirestore in Frameworks */,
-				FF668A722BADFB2600198C46 /* TOCropViewController in Frameworks */,
 				B6552B722BAE2A5600D06004 /* FirebaseInAppMessaging-Beta in Frameworks */,
-				FF0999F12BAE228700B1CF96 /* TOCropViewController in Frameworks */,
 				B6552B522BAE2A5600D06004 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				B6552B802BAE2A5600D06004 /* FirebaseRemoteConfigSwift in Frameworks */,
 				B6552B5E2BAE2A5600D06004 /* FirebaseAuthCombine-Community in Frameworks */,
@@ -118,10 +115,11 @@
 				B6552B6A2BAE2A5600D06004 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				B6552B502BAE2A5600D06004 /* FirebaseAnalytics in Frameworks */,
 				B6552B602BAE2A5600D06004 /* FirebaseCrashlytics in Frameworks */,
-				FF0999EF2BAE228700B1CF96 /* CropViewController in Frameworks */,
 				B6552B5A2BAE2A5600D06004 /* FirebaseAppDistribution-Beta in Frameworks */,
 				B6552B662BAE2A5600D06004 /* FirebaseDynamicLinks in Frameworks */,
 				B6552B6C2BAE2A5600D06004 /* FirebaseFirestoreSwift in Frameworks */,
+				FF7880D12BB0F60F00689BEC /* TOCropViewController in Frameworks */,
+				FF7880CF2BB0F60F00689BEC /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,9 +197,6 @@
 			);
 			name = Wander;
 			packageProductDependencies = (
-				FF668A712BADFB2600198C46 /* TOCropViewController */,
-				FF0999EE2BAE228700B1CF96 /* CropViewController */,
-				FF0999F02BAE228700B1CF96 /* TOCropViewController */,
 				B6552B4F2BAE2A5600D06004 /* FirebaseAnalytics */,
 				B6552B512BAE2A5600D06004 /* FirebaseAnalyticsOnDeviceConversion */,
 				B6552B532BAE2A5600D06004 /* FirebaseAnalyticsSwift */,
@@ -229,6 +224,8 @@
 				B6552B7F2BAE2A5600D06004 /* FirebaseRemoteConfigSwift */,
 				B6552B812BAE2A5600D06004 /* FirebaseStorage */,
 				B6552B832BAE2A5600D06004 /* FirebaseStorageCombine-Community */,
+				FF7880CE2BB0F60F00689BEC /* CropViewController */,
+				FF7880D02BB0F60F00689BEC /* TOCropViewController */,
 			);
 			productName = Wander;
 			productReference = FF9A35912B8D510700A38D62 /* Wander.app */;
@@ -259,8 +256,8 @@
 			);
 			mainGroup = FF9A35882B8D510600A38D62;
 			packageReferences = (
-				03BD1E1E2BA507D7000C977F /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 				B6552B4E2BAE2A5600D06004 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				FF7880CD2BB0F60F00689BEC /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = FF9A35922B8D510700A38D62 /* Products */;
 			projectDirPath = "";
@@ -533,12 +530,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		03BD1E1E2BA507D7000C977F /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+		FF7880CD2BB0F60F00689BEC /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.6.1;
 			};
 		};
 		B6552B4E2BAE2A5600D06004 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -687,16 +684,14 @@
 			package = B6552B4E2BAE2A5600D06004 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
 		};
-		FF0999EE2BAE228700B1CF96 /* CropViewController */ = {
+		FF7880CE2BB0F60F00689BEC /* CropViewController */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = FF7880CD2BB0F60F00689BEC /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = CropViewController;
 		};
-		FF0999F02BAE228700B1CF96 /* TOCropViewController */ = {
+		FF7880D02BB0F60F00689BEC /* TOCropViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = TOCropViewController;
-		};
-		FF668A712BADFB2600198C46 /* TOCropViewController */ = {
-			isa = XCSwiftPackageProductDependency;
+			package = FF7880CD2BB0F60F00689BEC /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = TOCropViewController;
 		};
 /* End XCSwiftPackageProductDependency section */
