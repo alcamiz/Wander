@@ -8,6 +8,12 @@
 import UIKit
 import CropViewController
 
+import FirebaseFirestore
+import FirebaseStorage
+
+private var db = Firestore.firestore()
+private var storage = Storage.storage().reference()
+
 class GameTitleViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     
     var game:StoredGame!
@@ -207,5 +213,8 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
            let nextVC = segue.destination as? MapViewController {
             nextVC.game = game
         }
+    }
+    @IBAction func publishButtonPressed(_ sender: Any) {
+        print(game.uploadToFirebase(db, storage))
     }
 }
