@@ -10,7 +10,7 @@
         <scene sceneID="UUX-lY-kp3">
             <objects>
                 <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="myGamesNavigation" id="X3V-TX-ope" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Games" image="gamecontroller" catalog="system" id="SGl-jM-gAH"/>
+                    <tabBarItem key="tabBarItem" title="My Games" image="gamecontroller.fill" catalog="system" id="SGl-jM-gAH"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i3j-5w-1jn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -19,11 +19,10 @@
         <!--Tab Bar Controller-->
         <scene sceneID="716-US-YUh">
             <objects>
-                <tabBarController id="aiA-vC-rAc" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="meb-0m-Eht">
+                <tabBarController id="aiA-vC-rAc" customClass="TabBarController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="meb-0m-Eht">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="Pat-rP-WmI" kind="relationship" relationship="viewControllers" id="1Yf-B0-7pd"/>
@@ -49,7 +48,7 @@
         <scene sceneID="qat-tJ-uHB">
             <objects>
                 <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="profileController" id="usa-fB-OHu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="vA2-wr-Y9b"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" id="vA2-wr-Y9b"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGT-bP-eS3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -57,8 +56,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gamecontroller" catalog="system" width="128" height="79"/>
+        <image name="gamecontroller.fill" catalog="system" width="128" height="79"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
-        <image name="person" catalog="system" width="128" height="121"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
     </resources>
 </document>
