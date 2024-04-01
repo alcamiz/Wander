@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aiA-vC-rAc">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--myGamesNavigation-->
+        <scene sceneID="UUX-lY-kp3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="myGamesNavigation" id="X3V-TX-ope" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Games" image="gamecontroller" catalog="system" id="SGl-jM-gAH"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i3j-5w-1jn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-262" y="363"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="716-US-YUh">
+            <objects>
+                <tabBarController id="aiA-vC-rAc" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="meb-0m-Eht">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Pat-rP-WmI" kind="relationship" relationship="viewControllers" id="1Yf-B0-7pd"/>
+                        <segue destination="X3V-TX-ope" kind="relationship" relationship="viewControllers" id="QKG-Nb-xGb"/>
+                        <segue destination="usa-fB-OHu" kind="relationship" relationship="viewControllers" id="z9I-Qx-7gs"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="42l-uB-XsT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-261" y="-53"/>
+        </scene>
+        <!--exploreFlowController-->
+        <scene sceneID="zMh-td-NIW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ExploreFlow" referencedIdentifier="exploreFlowController" id="Pat-rP-WmI" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Explore" image="magnifyingglass" catalog="system" id="91G-Pc-c6K"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PTE-Ya-Xf6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="519" y="-67"/>
+        </scene>
+        <!--profileController-->
+        <scene sceneID="qat-tJ-uHB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="profileController" id="usa-fB-OHu" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="vA2-wr-Y9b"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dGT-bP-eS3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="544" y="-11"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="gamecontroller" catalog="system" width="128" height="79"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="person" catalog="system" width="128" height="121"/>
+    </resources>
+</document>
