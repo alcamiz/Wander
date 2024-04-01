@@ -41,6 +41,7 @@ public class StoredGame: NSManagedObject {
     }
     
     func fetchAllTiles() -> [StoredTile]? {
+        // topological sort for now
         return (self.tiles?.allObjects as? [StoredTile])?.sorted(by:{ $0.createdOn ?? Date.distantPast < $1.createdOn ?? Date.distantPast })
     }
 
@@ -76,14 +77,16 @@ public class StoredGame: NSManagedObject {
         var data = [
             "name": self.name ?? "",
             "desc": self.desc ?? "",
-            "image": "",
             "tags": self.tags ?? [],
-            "createdOn": self.createdOn ?? Date(),
             "createCount": self.createCount,
             "author": self.author?.id?.uuidString ?? "",
             "tiles": tileIDs,
             "root": self.root?.id?.uuidString ?? "-1",
         ] as [String : Any]
+        
+        if let dateObj = self.createdOn {
+            data["createdOn"] = dateObj
+        }
         
         // todo better use of async
         if let pic = self.image {
@@ -106,7 +109,8 @@ public class StoredGame: NSManagedObject {
         } else {
             db.collection("games").document(docString).setData(data)
         }
-        // todo upload pictures
+
+        tiles.forEach { $0.uploadToFirebase(db, storage) }
         
         return "Success"
     }
