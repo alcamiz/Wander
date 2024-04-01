@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		039EE9992BBA360400E67A61 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039EE9982BBA360400E67A61 /* Profile.storyboard */; };
 		53A70C922BA4DAA0008FC76C /* LinkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */; };
 		53B010BE2B9922BB008C0BA8 /* GameTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B010BD2B9922BB008C0BA8 /* GameTitleViewController.swift */; };
 		B66C78092B8FD4C6005A736E /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C78082B8FD4C6005A736E /* EditorViewController.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		039EE9982BBA360400E67A61 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingViewController.swift; sourceTree = "<group>"; };
 		53B010BD2B9922BB008C0BA8 /* GameTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTitleViewController.swift; sourceTree = "<group>"; };
 		B66C78082B8FD4C6005A736E /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */,
 				FF9A35A02B8D510900A38D62 /* Assets.xcassets */,
 				FF9A359A2B8D510700A38D62 /* Main.storyboard */,
+				039EE9982BBA360400E67A61 /* Profile.storyboard */,
 				FF9A35A22B8D510900A38D62 /* LaunchScreen.storyboard */,
 				FF9A359D2B8D510700A38D62 /* Wander.xcdatamodeld */,
 				FF9A35A52B8D510900A38D62 /* Info.plist */,
@@ -188,6 +191,7 @@
 			files = (
 				FF9A35A42B8D510900A38D62 /* LaunchScreen.storyboard in Resources */,
 				FF9A35A12B8D510900A38D62 /* Assets.xcassets in Resources */,
+				039EE9992BBA360400E67A61 /* Profile.storyboard in Resources */,
 				FF9A359C2B8D510700A38D62 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
