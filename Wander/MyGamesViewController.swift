@@ -38,6 +38,7 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         gameList = user?.fetchAllGames() ?? []
+        GameManager.queryGames()
         allGamesTableView.reloadData()
     }
     

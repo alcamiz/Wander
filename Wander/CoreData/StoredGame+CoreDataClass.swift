@@ -28,7 +28,9 @@ public class StoredGame: NSManagedObject {
     
     func createTile() -> StoredTile {
         let newTile = StoredTile(game: self)
-        self.root = tiles?.count == 0 ? newTile : nil
+        if self.root == nil  {
+            self.root = newTile
+        }
         self.createCount += 1
         try! self.managedObjectContext?.save()
         return newTile
@@ -42,6 +44,7 @@ public class StoredGame: NSManagedObject {
     
     func fetchAllTiles() -> [StoredTile]? {
         // topological sort for now
+        
         return (self.tiles?.allObjects as? [StoredTile])?.sorted(by:{ $0.createdOn ?? Date.distantPast < $1.createdOn ?? Date.distantPast })
     }
 

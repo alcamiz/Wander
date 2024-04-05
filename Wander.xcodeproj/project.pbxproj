@@ -40,6 +40,7 @@
 		B66C78092B8FD4C6005A736E /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C78082B8FD4C6005A736E /* EditorViewController.swift */; };
 		B66C780B2B8FD4E0005A736E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C780A2B8FD4E0005A736E /* MapViewController.swift */; };
 		B68F56D22B9A92A200179D09 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F56D12B9A92A200179D09 /* GameManager.swift */; };
+		B6953E7B2BC0857900CE543D /* FirebaseGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6953E7A2BC0857900CE543D /* FirebaseGame.swift */; };
 		FF7880CF2BB0F60F00689BEC /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880CE2BB0F60F00689BEC /* CropViewController */; };
 		FF7880D12BB0F60F00689BEC /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880D02BB0F60F00689BEC /* TOCropViewController */; };
 		FF94C44C2BA9468A0089E47C /* StoredGame+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */; };
@@ -67,6 +68,7 @@
 		B66C78082B8FD4C6005A736E /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		B66C780A2B8FD4E0005A736E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B68F56D12B9A92A200179D09 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		B6953E7A2BC0857900CE543D /* FirebaseGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseGame.swift; sourceTree = "<group>"; };
 		FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredGame+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF94C4452BA9468A0089E47C /* StoredOption+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredOption+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF94C4462BA9468A0089E47C /* StoredOption+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredOption+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				FF94C4492BA9468A0089E47C /* StoredTile+CoreDataProperties.swift */,
 				FF94C44B2BA9468A0089E47C /* StoredUser+CoreDataClass.swift */,
 				FF94C4482BA9468A0089E47C /* StoredUser+CoreDataProperties.swift */,
+				B6953E7A2BC0857900CE543D /* FirebaseGame.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6953E7B2BC0857900CE543D /* FirebaseGame.swift in Sources */,
 				B68F56D22B9A92A200179D09 /* GameManager.swift in Sources */,
 				FF94C4502BA9468A0089E47C /* StoredUser+CoreDataProperties.swift in Sources */,
 				FF94C4512BA9468A0089E47C /* StoredTile+CoreDataProperties.swift in Sources */,
@@ -530,20 +534,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FF7880CD2BB0F60F00689BEC /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/TimOliver/TOCropViewController";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.1;
-			};
-		};
 		B6552B4E2BAE2A5600D06004 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.23.0;
+			};
+		};
+		FF7880CD2BB0F60F00689BEC /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
