@@ -47,7 +47,7 @@
 		B6953E8A2BC0A3B100CE543D /* LoginFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6953E862BC0A3B100CE543D /* LoginFlow.storyboard */; };
 		B6953E8C2BC0A3B100CE543D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6953E882BC0A3B100CE543D /* SignupViewController.swift */; };
 		B6953E8D2BC0A3B100CE543D /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6953E892BC0A3B100CE543D /* LandingViewController.swift */; };
-		B6953E8F2BC0A3DE00CE543D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6953E8E2BC0A3DE00CE543D /* LoginViewController.swift */; };
+		B6CF7DC72BC1E3350044AED4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CF7DC62BC1E3350044AED4 /* LoginViewController.swift */; };
 		FF7880CF2BB0F60F00689BEC /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880CE2BB0F60F00689BEC /* CropViewController */; };
 		FF7880D12BB0F60F00689BEC /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880D02BB0F60F00689BEC /* TOCropViewController */; };
 		FF94C44C2BA9468A0089E47C /* StoredGame+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */; };
@@ -82,7 +82,7 @@
 		B6953E862BC0A3B100CE543D /* LoginFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginFlow.storyboard; sourceTree = "<group>"; };
 		B6953E882BC0A3B100CE543D /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		B6953E892BC0A3B100CE543D /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
-		B6953E8E2BC0A3DE00CE543D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = "../../../wander-container/Login/LoginViewController.swift"; sourceTree = "<group>"; };
+		B6CF7DC62BC1E3350044AED4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredGame+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF94C4452BA9468A0089E47C /* StoredOption+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredOption+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF94C4462BA9468A0089E47C /* StoredOption+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredOption+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				B6953E892BC0A3B100CE543D /* LandingViewController.swift */,
-				B6953E8E2BC0A3DE00CE543D /* LoginViewController.swift */,
+				B6CF7DC62BC1E3350044AED4 /* LoginViewController.swift */,
 				B6953E862BC0A3B100CE543D /* LoginFlow.storyboard */,
 				B6953E882BC0A3B100CE543D /* SignupViewController.swift */,
 			);
@@ -340,7 +340,6 @@
 				B6953E7B2BC0857900CE543D /* FirebaseGame.swift in Sources */,
 				B6953E8C2BC0A3B100CE543D /* SignupViewController.swift in Sources */,
 				B68F56D22B9A92A200179D09 /* GameManager.swift in Sources */,
-				B6953E8F2BC0A3DE00CE543D /* LoginViewController.swift in Sources */,
 				B6953E8D2BC0A3B100CE543D /* LandingViewController.swift in Sources */,
 				FF94C4502BA9468A0089E47C /* StoredUser+CoreDataProperties.swift in Sources */,
 				FF94C4512BA9468A0089E47C /* StoredTile+CoreDataProperties.swift in Sources */,
@@ -349,6 +348,7 @@
 				FF94C4522BA9468A0089E47C /* StoredGame+CoreDataProperties.swift in Sources */,
 				534AEF222BBDF87A00890812 /* ProfileViewController.swift in Sources */,
 				FF94C44F2BA9468A0089E47C /* StoredTile+CoreDataClass.swift in Sources */,
+				B6CF7DC72BC1E3350044AED4 /* LoginViewController.swift in Sources */,
 				FF94C44D2BA9468A0089E47C /* StoredOption+CoreDataClass.swift in Sources */,
 				FF94C4532BA9468A0089E47C /* StoredUser+CoreDataClass.swift in Sources */,
 				FF9A35992B8D510700A38D62 /* MyGamesViewController.swift in Sources */,
@@ -516,7 +516,7 @@
 				INFOPLIST_FILE = Wander/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = LoginFlow;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -545,7 +545,7 @@
 				INFOPLIST_FILE = Wander/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = LoginFlow;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
