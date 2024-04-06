@@ -25,9 +25,19 @@ class SignupViewController: UIViewController {
     
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor = Color.primary
+        
+        signupButton.tintColor = Color.secondary
+        signupButton.configuration?.baseForegroundColor = Color.background
+        
+        loginButton.tintColor = Color.background
+        loginButton.configuration?.baseForegroundColor = Color.secondary
+        
+        formatTextField(usernameTextField)
+        formatTextField(emailTextField)
+        formatTextField(passwordTextField)
     }
     
     func showAlert(message: String) {
@@ -63,6 +73,15 @@ class SignupViewController: UIViewController {
             self.showAlert(message: "Please enter both username and password.")
         }
         print("wow!")
+    }
+    
+    
+    func formatTextField(_ textField: UITextField) {
+        // Adjust corner radius to make it rounded
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 17
+        textField.layer.masksToBounds = true
+        textField.textAlignment = .left
     }
     /*
     // MARK: - Navigation
