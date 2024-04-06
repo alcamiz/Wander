@@ -34,8 +34,9 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let appUser = getUser(managedContext: managedContext) {
             user = appUser
         } else {
-            user = StoredUser(context: managedContext, username: "testUser")
+            //user = StoredUser(context: managedContext, username: "testUser")
         }
+        
         
         gameList = user?.fetchAllGames() ?? []
         GameManager.queryGames()

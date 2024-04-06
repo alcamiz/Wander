@@ -7,6 +7,12 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseCore
+import FirebaseFirestore
+import CoreData
+
+private var db = Firestore.firestore()
+
 
 class SignupViewController: UIViewController {
     
@@ -35,11 +41,24 @@ class SignupViewController: UIViewController {
                     self.showAlert(message: "Invalid username or password.")
                 } else {
                     //self.performSegue(withIdentifier: self.loginSegue, sender: nil)
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let managedContext = appDelegate.persistentContainer.viewContext
+
+                    if let userInfo = Auth.auth().currentUser,
+                        let username = self.usernameTextField.text {
+                        db.collection("users").document(userInfo.uid).setData([
+                            "email": userInfo.email!,
+                            "username": username,
+                        ])
+                        storeAfterSignIn(managedContext: managedContext, userInfo: userInfo, username: username)
+                    }
+
                 }
             }
         } else {
             self.showAlert(message: "Please enter both username and password.")
         }
+        print("wow!")
     }
     
     func showAlert(message: String) {
