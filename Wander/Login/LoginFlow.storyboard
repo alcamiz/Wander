@@ -125,11 +125,22 @@
                         <outlet property="loginButton" destination="5MX-ee-bKg" id="nuH-gi-CjL"/>
                         <outlet property="passwordTextField" destination="D9X-Jo-BYR" id="9eK-q5-bjP"/>
                         <outlet property="signupButton" destination="6Ww-7H-4mQ" id="rTt-na-hes"/>
+                        <segue destination="9VO-GT-4xr" kind="presentation" identifier="SuccessfulLoginSegue" modalPresentationStyle="fullScreen" id="CfG-Aa-stl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vEC-Ni-YBf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1862" y="-267"/>
+        </scene>
+        <!--TabBar-->
+        <scene sceneID="Gef-xM-M0F">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TabBar" id="9VO-GT-4xr" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Qg7-bF-zH7"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Eh-ey-ymS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2529" y="1"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="3Yx-FI-w9K">
@@ -148,7 +159,7 @@
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="onLoginPressed:" destination="KrT-BW-cFS" eventType="touchUpInside" id="giU-k0-NDk"/>
+                                    <action selector="onSignupPressed:" destination="KrT-BW-cFS" eventType="touchUpInside" id="vtF-r8-OmZ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dn5-cd-ZTW">
@@ -161,7 +172,6 @@
                                     <color key="baseForegroundColor" red="0.098039215690000001" green="0.098039215690000001" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="onSigninPressed:" destination="KrT-BW-cFS" eventType="touchUpInside" id="aEz-ar-YZy"/>
                                     <segue destination="efQ-dp-e5t" kind="presentation" modalPresentationStyle="fullScreen" id="Cdy-i4-48n"/>
                                 </connections>
                             </button>
@@ -208,6 +218,7 @@
                         <outlet property="passwordTextField" destination="gle-lJ-8F1" id="Hjc-9x-H1B"/>
                         <outlet property="signupButton" destination="dn5-cd-ZTW" id="qKe-IK-9hm"/>
                         <outlet property="usernameTextField" destination="9MC-6g-Jlz" id="DQC-23-f6z"/>
+                        <segue destination="9VO-GT-4xr" kind="presentation" identifier="SuccessfulSignupSegue" modalPresentationStyle="fullScreen" id="1DU-rq-IYn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AmH-Cl-fLL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -235,6 +246,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="SeY-Qy-0cN"/>
-        <segue reference="L7s-D4-Oon"/>
+        <segue reference="1DU-rq-IYn"/>
+        <segue reference="Cdy-i4-48n"/>
     </inferredMetricsTieBreakers>
 </document>

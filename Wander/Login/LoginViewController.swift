@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
                 if (error as NSError?) != nil {
                     self.showAlert(message: "Invalid username or password")
                 } else {
-                    //self.performSegue(withIdentifier: self.loginSegue, sender: nil)
+                    self.performSegue(withIdentifier: "SuccessfulLoginSegue", sender: nil)
                 }
             }
         } else {

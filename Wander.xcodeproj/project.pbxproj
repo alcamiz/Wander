@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		039EE9992BBA360400E67A61 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039EE9982BBA360400E67A61 /* Profile.storyboard */; };
 		534AEF222BBDF87A00890812 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534AEF212BBDF87A00890812 /* ProfileViewController.swift */; };
+		039EE9932BBA2C6500E67A61 /* TabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039EE9922BBA2C6500E67A61 /* TabBar.storyboard */; };
+		039EE9952BBA2F6900E67A61 /* ExploreFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039EE9942BBA2F6900E67A61 /* ExploreFlow.storyboard */; };
+		039EE99D2BBA3C9000E67A61 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039EE99C2BBA3C9000E67A61 /* TabBarController.swift */; };
+		039EE99F2BBA43E100E67A61 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039EE99E2BBA43E100E67A61 /* UIColor+Extensions.swift */; };
 		53A70C922BA4DAA0008FC76C /* LinkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */; };
 		53B010BE2B9922BB008C0BA8 /* GameTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B010BD2B9922BB008C0BA8 /* GameTitleViewController.swift */; };
 		B6552B4D2BAE29F300D06004 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6552B4C2BAE29F300D06004 /* GoogleService-Info.plist */; };
@@ -71,6 +75,10 @@
 /* Begin PBXFileReference section */
 		039EE9982BBA360400E67A61 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		534AEF212BBDF87A00890812 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		039EE9922BBA2C6500E67A61 /* TabBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabBar.storyboard; sourceTree = "<group>"; };
+		039EE9942BBA2F6900E67A61 /* ExploreFlow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ExploreFlow.storyboard; sourceTree = "<group>"; };
+		039EE99C2BBA3C9000E67A61 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		039EE99E2BBA43E100E67A61 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingViewController.swift; sourceTree = "<group>"; };
 		53B010BD2B9922BB008C0BA8 /* GameTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTitleViewController.swift; sourceTree = "<group>"; };
 		B6552B4C2BAE29F300D06004 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -224,6 +232,11 @@
 				53A70C912BA4DAA0008FC76C /* LinkingViewController.swift */,
 				FF9A35A02B8D510900A38D62 /* Assets.xcassets */,
 				FF9A359A2B8D510700A38D62 /* Main.storyboard */,
+				039EE9922BBA2C6500E67A61 /* TabBar.storyboard */,
+				039EE99C2BBA3C9000E67A61 /* TabBarController.swift */,
+				039EE99E2BBA43E100E67A61 /* UIColor+Extensions.swift */,
+				039EE9962BBA332C00E67A61 /* Profile.storyboard */,
+				039EE9942BBA2F6900E67A61 /* ExploreFlow.storyboard */,
 				FF9A35A22B8D510900A38D62 /* LaunchScreen.storyboard */,
 				FF9A359D2B8D510700A38D62 /* Wander.xcdatamodeld */,
 				FF9A35A52B8D510900A38D62 /* Info.plist */,
@@ -324,6 +337,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				039EE9972BBA332C00E67A61 /* Profile.storyboard in Resources */,
+				039EE9952BBA2F6900E67A61 /* ExploreFlow.storyboard in Resources */,
+				039EE9932BBA2C6500E67A61 /* TabBar.storyboard in Resources */,
 				FF9A35A42B8D510900A38D62 /* LaunchScreen.storyboard in Resources */,
 				B6552B4D2BAE29F300D06004 /* GoogleService-Info.plist in Resources */,
 				FF9A35A12B8D510900A38D62 /* Assets.xcassets in Resources */,
@@ -346,6 +362,7 @@
 				B6CF7DCB2BC1F4990044AED4 /* StoredUser+CoreDataProperties.swift in Sources */,
 				B6953E8D2BC0A3B100CE543D /* LandingViewController.swift in Sources */,
 				FF94C4512BA9468A0089E47C /* StoredTile+CoreDataProperties.swift in Sources */,
+				039EE99D2BBA3C9000E67A61 /* TabBarController.swift in Sources */,
 				FF9A359F2B8D510700A38D62 /* Wander.xcdatamodeld in Sources */,
 				FF94C44C2BA9468A0089E47C /* StoredGame+CoreDataClass.swift in Sources */,
 				FF94C4522BA9468A0089E47C /* StoredGame+CoreDataProperties.swift in Sources */,
@@ -354,6 +371,7 @@
 				B6CF7DC72BC1E3350044AED4 /* LoginViewController.swift in Sources */,
 				FF94C44D2BA9468A0089E47C /* StoredOption+CoreDataClass.swift in Sources */,
 				FF94C4532BA9468A0089E47C /* StoredUser+CoreDataClass.swift in Sources */,
+				039EE99F2BBA43E100E67A61 /* UIColor+Extensions.swift in Sources */,
 				FF9A35992B8D510700A38D62 /* MyGamesViewController.swift in Sources */,
 				B6CF7DC92BC1EC860044AED4 /* AuthActions.swift in Sources */,
 				FF9A35952B8D510700A38D62 /* AppDelegate.swift in Sources */,
