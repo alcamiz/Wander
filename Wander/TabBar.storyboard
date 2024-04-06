@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aiA-vC-rAc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aiA-vC-rAc">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,10 +35,10 @@
             </objects>
             <point key="canvasLocation" x="-261" y="-53"/>
         </scene>
-        <!--exploreFlowController-->
+        <!--exploreViewController-->
         <scene sceneID="zMh-td-NIW">
             <objects>
-                <viewControllerPlaceholder storyboardName="ExploreFlow" referencedIdentifier="exploreFlowController" id="Pat-rP-WmI" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="ExploreFlow" referencedIdentifier="exploreViewController" id="Pat-rP-WmI" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Explore" image="magnifyingglass" catalog="system" id="91G-Pc-c6K"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PTE-Ya-Xf6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
