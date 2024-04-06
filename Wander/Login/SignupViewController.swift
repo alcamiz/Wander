@@ -40,17 +40,19 @@ class SignupViewController: UIViewController {
         formatTextField(passwordTextField)
     }
     
-    @IBAction func onLoginPressed(_ sender: Any) {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Invalid Login", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
-    
-    @IBAction func onSigninPressed(_ sender: Any) {
+
+    @IBAction func onSignupPressed(_ sender: Any) {
         if(emailTextField.text != nil && passwordTextField.text != nil) {
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) {
                 (authResult, error) in
                 if (error as NSError?) != nil {
                     self.showAlert(message: "Invalid username or password.")
                 } else {
-                    //self.performSegue(withIdentifier: self.loginSegue, sender: nil)
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
                     let managedContext = appDelegate.persistentContainer.viewContext
 
@@ -61,6 +63,8 @@ class SignupViewController: UIViewController {
                             "username": username,
                         ])
                         storeAfterSignIn(managedContext: managedContext, userInfo: userInfo, username: username)
+                        self.performSegue(withIdentifier: "SuccessfulSignupSegue", sender: nil)
+
                     }
 
                 }
@@ -71,12 +75,6 @@ class SignupViewController: UIViewController {
         print("wow!")
     }
     
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Invalid Login", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     func formatTextField(_ textField: UITextField) {
         // Adjust corner radius to make it rounded
         textField.borderStyle = .roundedRect
@@ -84,7 +82,6 @@ class SignupViewController: UIViewController {
         textField.layer.masksToBounds = true
         textField.textAlignment = .left
     }
-
     /*
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation

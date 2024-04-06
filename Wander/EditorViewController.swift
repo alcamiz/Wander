@@ -55,7 +55,17 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         // ImageView tappable; when tapped, can add image
         let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(imageTapGesture)
+        
+        // Check if imageView is nil
+        if let imageView = imageView {
+            // imageView properly initialized, add gesture recognizer
+            imageView.addGestureRecognizer(imageTapGesture)
+        }
+        else {
+            // imageView is nil
+            print("Error: imageView is nil")
+            return
+        }
         
         // TextView
         textView.delegate = self
