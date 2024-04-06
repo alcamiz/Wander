@@ -11,9 +11,9 @@ import CoreData
 
 
 public class StoredUser: NSManagedObject {
-    convenience init(context: NSManagedObjectContext, username: String) {
+    convenience init(context: NSManagedObjectContext, username: String, id: String) {
         self.init(context: context)
-        self.id = UUID()
+        self.id = id
         self.username = username
         self.createCount = 0
         self.createdOn = Date()

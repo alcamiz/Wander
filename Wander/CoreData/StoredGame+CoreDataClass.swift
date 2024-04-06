@@ -82,7 +82,7 @@ public class StoredGame: NSManagedObject {
             "desc": self.desc ?? "",
             "tags": self.tags ?? [],
             "createCount": self.createCount,
-            "author": self.author?.id?.uuidString ?? "",
+            "author": self.author?.id ?? "",
             "tiles": tileIDs,
             "root": self.root?.id?.uuidString ?? "-1",
         ] as [String : Any]
