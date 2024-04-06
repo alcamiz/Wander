@@ -19,12 +19,13 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Color.primary
+        self.view.backgroundColor = Color.primary
         loginButton.tintColor = Color.secondary
         
         formatTextField(emailTextField)
         formatTextField(passwordTextField)
 
+        //view.setNeedsDisplay()
         // Do any additional setup after loading the view.
     }
     
