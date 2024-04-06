@@ -25,9 +25,19 @@ class SignupViewController: UIViewController {
     
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor = Color.primary
+        
+        signupButton.tintColor = Color.secondary
+        signupButton.configuration?.baseForegroundColor = Color.background
+        
+        loginButton.tintColor = Color.background
+        loginButton.configuration?.baseForegroundColor = Color.secondary
+        
+        formatTextField(usernameTextField)
+        formatTextField(emailTextField)
+        formatTextField(passwordTextField)
     }
     
     @IBAction func onLoginPressed(_ sender: Any) {
@@ -65,6 +75,14 @@ class SignupViewController: UIViewController {
         let alert = UIAlertController(title: "Invalid Login", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func formatTextField(_ textField: UITextField) {
+        // Adjust corner radius to make it rounded
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 17
+        textField.layer.masksToBounds = true
+        textField.textAlignment = .left
     }
 
     /*

@@ -17,16 +17,18 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         
+        super.viewDidLoad()
         self.view.backgroundColor = Color.primary
+        
         loginButton.tintColor = Color.secondary
+        loginButton.configuration?.baseForegroundColor = Color.background
+        
+        signupButton.tintColor = Color.background
+        signupButton.configuration?.baseForegroundColor = Color.secondary
         
         formatTextField(emailTextField)
         formatTextField(passwordTextField)
-
-        //view.setNeedsDisplay()
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func onLoginPressed(_ sender: Any) {
@@ -57,9 +59,9 @@ class LoginViewController: UIViewController {
     func formatTextField(_ textField: UITextField) {
         // Adjust corner radius to make it rounded
         textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = 10 // You can adjust the value as per your preference
+        textField.layer.cornerRadius = 17
         textField.layer.masksToBounds = true
-        textField.textAlignment = .center
+        textField.textAlignment = .left
     }
     
     /*
