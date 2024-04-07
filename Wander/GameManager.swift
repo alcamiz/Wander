@@ -35,7 +35,7 @@ public class GameManager {
         return try? self.context.fetch(StoredGame.fetchRequest())
     }
     
-    func queryGames(query: String, tag: String, sort: String) -> [FirebaseGame] {
+    static func queryGames(query: String?, tag: String?, sort: String?) -> [FirebaseGame] {
         var queriedGames: [FirebaseGame] = []
         var queryObj = db.collection("games").whereField("name", notIn: [""])
         if (query.count > 0) {

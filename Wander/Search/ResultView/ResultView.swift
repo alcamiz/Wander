@@ -33,6 +33,12 @@ class ResultView: UITableViewController {
         self.tableCellId = UUID().uuidString
         tableView.register(UINib(nibName: "ResultCell", bundle: nil), forCellReuseIdentifier: self.tableCellId)
     }
+    
+    func reloadQuery() {
+        // TODO: Load queried games (FirebaseGame), using query, filter, sort
+        queriedGames = GameManager.queryGames(query: query, tag: selectedFilter, sort: selectedSort)
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
