@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 import UIKit
-
 import FirebaseFirestore
 import FirebaseStorage
 
@@ -24,13 +23,13 @@ public class StoredGame: NSManagedObject {
         self.desc = nil
         self.createCount = 0
         self.createdOn = Date()
+        
+        self.root = createTile()
+        self.root?.type = TileType.root.rawValue
     }
     
     func createTile() -> StoredTile {
         let newTile = StoredTile(game: self)
-        if self.root == nil  {
-            self.root = newTile
-        }
         self.createCount += 1
         try! self.managedObjectContext?.save()
         return newTile
@@ -39,12 +38,10 @@ public class StoredGame: NSManagedObject {
     func fetchTile(tileID: UUID) -> StoredTile? {
         let predicate = NSPredicate(format: "id == %@", tileID as CVarArg)
         let res = self.tiles?.filtered(using: predicate) as? Set<StoredTile>
-        return res != nil && res!.isEmpty ? res!.first : nil
+        return res != nil && !res!.isEmpty ? res!.first : nil
     }
     
     func fetchAllTiles() -> [StoredTile]? {
-        // topological sort for now
-        
         return (self.tiles?.allObjects as? [StoredTile])?.sorted(by:{ $0.createdOn ?? Date.distantPast < $1.createdOn ?? Date.distantPast })
     }
 
@@ -70,7 +67,7 @@ public class StoredGame: NSManagedObject {
     func fetchImage() -> UIImage? {
         return self.image != nil ? UIImage(data: self.image!) : nil
     }
-    
+
     func uploadToFirebase(_ db: Firestore, _ storage: StorageReference) -> String {
         let docString: String = self.id!.uuidString
         let tiles = fetchAllTiles() ?? []
@@ -118,3 +115,7 @@ public class StoredGame: NSManagedObject {
         return "Success"
     }
 }
+
+
+
+

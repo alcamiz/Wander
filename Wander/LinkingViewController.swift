@@ -42,12 +42,23 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
         let row = indexPath.row
-        cell.textLabel?.text = tileList[row].title
+        
+        
+        if tileList[row].getType().rawValue == TileType.root.rawValue {
+            cell.textLabel?.text = "\(tileList[row].title!) (root)"
+        }
+        else {
+            cell.textLabel?.text = tileList[row].title
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedTile = tileList[indexPath.row]
+        
+        if parentTile?.getType().rawValue != TileType.root.rawValue {
+            parentTile?.type = TileType.between.rawValue
+        }
         
         switch (linkTitle) {
             case "Button One":

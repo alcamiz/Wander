@@ -10,11 +10,12 @@ import CropViewController
 
 import FirebaseFirestore
 import FirebaseStorage
-
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
 class GameTitleViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
+    
+    var delegate: MyGamesViewController!
     
     var game:StoredGame!
     
@@ -207,14 +208,41 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    
+    
+    @IBAction func deleteGameButtonPressed(_ sender: Any) {
+        let deleteAlertVC = UIAlertController(
+            title: "Are you sure?",
+            message: "If you delete the game \"\(self.game.name!)\", it cannot be undone.",
+            preferredStyle: .alert)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+            (alert) in
+            let myGamesVC = self.delegate as! DeleteGameDelegate
+            myGamesVC.deleteGame(game: self.game)
+            self.navigationController?.popViewController(animated: true)
+        })
+        deleteAlertVC.addAction(deleteAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        deleteAlertVC.addAction(cancelAction)
+        
+        present(deleteAlertVC, animated: true)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditGameSegue",
            let nextVC = segue.destination as? MapViewController {
             nextVC.game = game
         }
+        else if segue.identifier == "PlaytestGameSegue", let nextVC = segue.destination as? PlaymodeViewController {
+            nextVC.game = game
+            nextVC.currentTile = game.root
+            nextVC.currentTileID = game.root?.id
+        }
     }
     @IBAction func publishButtonPressed(_ sender: Any) {
-        print(game.uploadToFirebase(db, storage))
+        game.uploadToFirebase(db, storage)
+        
     }
 }

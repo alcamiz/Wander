@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--myGamesNavigation-->
+        <!--Main-->
         <scene sceneID="UUX-lY-kp3">
             <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="myGamesNavigation" id="X3V-TX-ope" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Main" id="X3V-TX-ope" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Games" image="gamecontroller.fill" catalog="system" id="SGl-jM-gAH"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i3j-5w-1jn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

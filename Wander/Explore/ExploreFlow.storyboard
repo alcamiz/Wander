@@ -144,11 +144,11 @@
             </objects>
             <point key="canvasLocation" x="1782" y="4"/>
         </scene>
-        <!--Explore Navigation-->
+        <!--Explore-->
         <scene sceneID="NRz-GU-3zF">
             <objects>
                 <navigationController storyboardIdentifier="exploreViewController" automaticallyAdjustsScrollViewInsets="NO" id="QgP-NA-UZe" customClass="ExploreNavigation" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="GbP-3U-i8f"/>
+                    <tabBarItem key="tabBarItem" title="Explore" image="magnifyingglass" catalog="system" id="GbP-3U-i8f"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nx8-cI-bER">

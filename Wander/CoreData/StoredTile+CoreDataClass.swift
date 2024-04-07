@@ -14,6 +14,7 @@ import FirebaseStorage
 
 
 enum TileType:Int16 {
+    case root
     case win
     case lose
     case between
@@ -101,9 +102,6 @@ public class StoredTile: NSManagedObject {
             data["children"] = childIDs
             data["options"] = buttonTexts
         }
-       
-        
-      
         
         if let dateObj = self.createdOn {
             data["createdOn"] = dateObj
@@ -127,8 +125,6 @@ public class StoredTile: NSManagedObject {
         } else {
             db.collection("tiles").document(docString).setData(data)
         }
-
-        
     }
     
 }
