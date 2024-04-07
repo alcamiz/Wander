@@ -62,7 +62,10 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let results = searchControl.searchResultsController as! ResultView
         results.query = searchBar.text ?? ""
+        print(results.query)
         searchControl.showsSearchResultsController = true
+        
+        results.queryGames()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

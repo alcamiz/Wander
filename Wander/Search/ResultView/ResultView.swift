@@ -74,12 +74,6 @@ class ResultView: UITableViewController {
             }
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // TODO: Load queried games (FirebaseGame), using query, filter, sort
-        queryGames()
-    }
 
     // MARK: - Table view data source
 
