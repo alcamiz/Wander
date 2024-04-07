@@ -12,6 +12,11 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     var tile: StoredTile! // Incoming tile from MapView
     
+    @IBOutlet weak var tileTypeSegCtrl: UISegmentedControl!
+    let segCtrlDefault = 0
+    let segCtrlWin = 1
+    let segCtrlLose = 2
+    
     var titleTextField: UITextField!
     let defaultTitle = "Unnamed Tile"
     var tileTitle: String! // Saved tile title displayed on navigation bar
@@ -35,8 +40,24 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     var button1Option: StoredOption?
     var button2Option: StoredOption?
     
+    @IBOutlet weak var linkingButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Initialie tileType
+        let tileType = tile.getType()
+        
+        if tileType == TileType.win {
+            tileTypeSegCtrl.selectedSegmentIndex = segCtrlWin
+        }
+        else if tileType == TileType.lose {
+            tileTypeSegCtrl.selectedSegmentIndex = segCtrlLose
+        }
+        else {
+            tileTypeSegCtrl.selectedSegmentIndex = segCtrlDefault
+        }
+        setTileType(type: tileType)
         
         if tile.image == nil {
             // Initially display ImageView with no image
@@ -138,6 +159,33 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         let location = sender.location(in: view)
         if !titleTextField.frame.contains(location) {
             titleTextField.resignFirstResponder()
+        }
+    }
+    
+    // Segmented Control for TileType
+    @IBAction func onTileTypeChanged(_ sender: Any) {
+        switch tileTypeSegCtrl.selectedSegmentIndex {
+        case 0:
+            setTileType(type: TileType.empty)
+        case 1:
+            setTileType(type: TileType.win)
+        case 2:
+            setTileType(type: TileType.lose)
+        default:
+            print("This shouldn't happen!")
+        }
+    }
+    
+    func setTileType(type: TileType) {
+        if type == TileType.win || type == TileType.lose {
+            button1.isHidden = true
+            button2.isHidden = true
+            linkingButton.isHidden = true
+        }
+        else {
+            button1.isHidden = false
+            button2.isHidden = false
+            linkingButton.isHidden = false
         }
     }
     
@@ -379,6 +427,13 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
         if button2Option != nil && button2Title != nil {
             button2Option?.desc = button2Title
+        }
+        
+        if tileTypeSegCtrl.selectedSegmentIndex == segCtrlWin {
+            tile.type = TileType.win.rawValue
+        }
+        else if tileTypeSegCtrl.selectedSegmentIndex == segCtrlLose {
+            tile.type = TileType.lose.rawValue
         }
         
         try? self.tile.managedObjectContext?.save()

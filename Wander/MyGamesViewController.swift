@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DeleteGameDelegate {
     
     @IBOutlet weak var allGamesTableView: UITableView!
     
@@ -34,7 +34,7 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let appUser = getUser(managedContext: managedContext) {
             user = appUser
         } else {
-            user = StoredUser(context: managedContext, username: "testUser")
+            //user = StoredUser(context: managedContext, username: "testUser")
         }
         
         gameList = user?.fetchAllGames() ?? []
@@ -61,10 +61,26 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive, title: "Delete") { action, view, handler in
-            _ = self.user?.deleteGame(game: self.gameList[indexPath.row])
-            self.gameList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            handler(true)
+            
+            let deleteAlertVC = UIAlertController(
+                title: "Are you sure?",
+                message: "If you delete the game \"\(self.gameList[indexPath.row].name!)\", it cannot be undone.",
+                preferredStyle: .alert)
+            
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                (alert) in
+                _ = self.user?.deleteGame(game: self.gameList[indexPath.row])
+                self.gameList.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                handler(true)
+            })
+            deleteAlertVC.addAction(deleteAction)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            deleteAlertVC.addAction(cancelAction)
+            
+            self.present(deleteAlertVC, animated: true)
+            
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
@@ -72,7 +88,7 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let nextVC = segue.destination as? GameTitleViewController {
-            
+            nextVC.delegate = self
             if segue.identifier == "CreateGameSegue"{
                 let newGame = user?.createGame()
                 gameList.append(newGame!)
@@ -87,6 +103,22 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
                 nextVC.game = gameList[gameIndex!]
                 selectedGameIndex = idxPath
             }
+        }
+    }
+    
+    func deleteGame(game: StoredGame) {
+        if let gameIndex = allGamesTableView.indexPathForSelectedRow?.row {
+            // Deleting game that was not just created
+            let idxPath = IndexPath(row: gameIndex, section: 0)
+            _ = self.user?.deleteGame(game: self.gameList[idxPath.row])
+            self.gameList.remove(at: idxPath.row)
+            allGamesTableView.reloadData()
+        }
+        else {
+            // Deleting game that was just created
+            _ = self.user?.deleteGame(game: game)
+            self.gameList.remove(at: gameList.count - 1)
+            allGamesTableView.reloadData()
         }
     }
 }

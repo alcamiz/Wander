@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 import UIKit
+import FirebaseFirestore
+import FirebaseStorage
 
 
 public class StoredGame: NSManagedObject {
@@ -21,11 +23,13 @@ public class StoredGame: NSManagedObject {
         self.desc = nil
         self.createCount = 0
         self.createdOn = Date()
+        
+        self.root = createTile()
+        self.root?.type = TileType.root.rawValue
     }
     
     func createTile() -> StoredTile {
         let newTile = StoredTile(game: self)
-        self.root = tiles?.count == 0 ? newTile : nil
         self.createCount += 1
         try! self.managedObjectContext?.save()
         return newTile
@@ -34,7 +38,7 @@ public class StoredGame: NSManagedObject {
     func fetchTile(tileID: UUID) -> StoredTile? {
         let predicate = NSPredicate(format: "id == %@", tileID as CVarArg)
         let res = self.tiles?.filtered(using: predicate) as? Set<StoredTile>
-        return res != nil && res!.isEmpty ? res!.first : nil
+        return res != nil && !res!.isEmpty ? res!.first : nil
     }
     
     func fetchAllTiles() -> [StoredTile]? {
@@ -63,4 +67,55 @@ public class StoredGame: NSManagedObject {
     func fetchImage() -> UIImage? {
         return self.image != nil ? UIImage(data: self.image!) : nil
     }
+
+    func uploadToFirebase(_ db: Firestore, _ storage: StorageReference) -> String {
+        let docString: String = self.id!.uuidString
+        let tiles = fetchAllTiles() ?? []
+        var tileIDs = tiles.map { ($0.id ?? UUID()).uuidString }
+        let imagePathRef = storage.child("gamePreviews/\(docString).png")
+        
+        var data = [
+            "name": self.name ?? "",
+            "desc": self.desc ?? "",
+            "tags": self.tags ?? [],
+            "createCount": self.createCount,
+            "author": self.author?.id ?? "",
+            "tiles": tileIDs,
+            "root": self.root?.id?.uuidString ?? "-1",
+        ] as [String : Any]
+        
+        if let dateObj = self.createdOn {
+            data["createdOn"] = dateObj
+        }
+        
+        // todo better use of async
+        if let pic = self.image {
+            let _ = imagePathRef.putData(pic, metadata: nil) { (metadata, error) in
+              guard let metadata = metadata else {
+                // Uh-oh, an error occurred!
+                return
+              }
+              // You can also access to download URL after upload.
+                imagePathRef.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                  // Uh-oh, an error occurred!
+                  return
+                }
+                let picURL = downloadURL.absoluteString
+                data["image"] = picURL
+                db.collection("games").document(docString).setData(data)
+              }
+            }
+        } else {
+            db.collection("games").document(docString).setData(data)
+        }
+
+        tiles.forEach { $0.uploadToFirebase(db, storage) }
+        
+        return "Success"
+    }
 }
+
+
+
+

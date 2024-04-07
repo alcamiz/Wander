@@ -29,6 +29,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         if selectedTileIndex != nil {
             allTilesTableView.reloadRows(at: [selectedTileIndex!], with: .automatic)
         }
+        allTilesTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,16 +39,34 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
         let row = indexPath.row
-        cell.textLabel?.text = tileList[row].title
+        
+        if tileList[row].getType().rawValue == TileType.root.rawValue {
+            cell.textLabel?.text = "\(tileList[row].title!) (root)"
+        }
+        else {
+            cell.textLabel?.text = tileList[row].title
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive, title: "Delete") { action, view, handler in
-            _ = self.game?.deleteTile (tile: self.tileList[indexPath.row])
-            self.tileList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            handler(true)
+            
+            if self.tileList[indexPath.row].type == TileType.root.rawValue {
+                let alertVC = UIAlertController(
+                    title: "Cannot Delete Root",
+                    message: "This is the root tile, which cannot be deleted.",
+                    preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alertVC.addAction(okAction)
+                self.present(alertVC, animated: true)
+            }
+            else {
+                _ = self.game?.deleteTile (tile: self.tileList[indexPath.row])
+                self.tileList.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                handler(true)
+            }
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
