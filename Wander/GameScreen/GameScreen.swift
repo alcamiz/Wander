@@ -18,7 +18,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var tagHeight: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    var game: StoredGame?
+    var game: FirebaseGame?
     var tags: [String]?
     var tagID: String = UUID().uuidString
     
@@ -34,7 +34,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         
         if !debug {
             titleLabel.text = game?.name
-            authorLabel.text = game?.author?.username
+            authorLabel.text = game?.author
             
             if game?.image == nil {
                 imageScreen.image = UIImage(systemName: "italic")
@@ -42,7 +42,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
                 imageScreen.image = UIImage(data: game!.image!)
             }
             
-            if game!.tags == nil || game!.tags!.count == 0 {
+            if game!.tags.count == 0 {
                 tagHeight.constant = 0
             } else {
                 tags = game!.tags

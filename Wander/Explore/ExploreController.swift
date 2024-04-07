@@ -35,8 +35,8 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     @IBOutlet weak var wanderLabel: UILabel!
     
     // TODO: Change to FirebaseGame
-    let popularGames: [StoredGame] = []
-    let newGames: [StoredGame] = []
+    let popularGames: [FirebaseGame] = []
+    let newGames: [FirebaseGame] = []
     let debug = true
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -60,7 +60,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         
         // TODO: Change to FirebaseGame
         if !debug {
-            var game: StoredGame
+            var game: FirebaseGame
             switch collectionView.accessibilityIdentifier {
                 case "popularView":
                     game = popularGames[indexPath.row]
@@ -101,7 +101,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         let gameScreen = storyboard.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
         
         if !debug {
-            var tArray: [StoredGame] // TODO: Change to FirebaseGame
+            var tArray: [FirebaseGame] // TODO: Change to FirebaseGame
             switch collectionView.accessibilityIdentifier {
                 case "popularView":
                     tArray = popularGames

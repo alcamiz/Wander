@@ -19,6 +19,7 @@ public class FirebaseGame: Codable {
     var desc: String
     var tiles: [String]
     var tags: [String]
+    var image: Data?
     
     func downloadTiles() {
         

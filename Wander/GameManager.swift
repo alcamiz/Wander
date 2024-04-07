@@ -34,39 +34,5 @@ public class GameManager {
     func fetchAllGames() -> [StoredGame]? {
         return try? self.context.fetch(StoredGame.fetchRequest())
     }
-    
-    static func queryGames() {
-        db.collection("games").getDocuments(){
-            querySnapshot, err in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents{
-                    do {
-                        let gameObj = try document.data(as: FirebaseGame.self)
-                        print("we did it yay")
-                    } catch {
-                        print("meow")
-                    }
-                    print(document.data()["name"]!)
-                    let path = "gamePreviews/\(document.documentID).png"
-                    let reference = storage.child(path)
-                    reference.getData(maxSize: (64 * 1024 * 1024)) { (data, error) in
-                        if let _ = error {
-                            print("no image found for \(document.documentID)")
-                        } else {
-                            if let image = data {
-                                print("image found for \(document.documentID)")
-                                // let myImage: UIImage! = UIImage(data: image)
-                                
-                                 // Use Image
-                            }
-                        }
-                    }
 
-                }
-                
-            }
-        }
-    }
 }
