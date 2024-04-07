@@ -33,47 +33,6 @@ class ResultView: UITableViewController {
         self.tableCellId = UUID().uuidString
         tableView.register(UINib(nibName: "ResultCell", bundle: nil), forCellReuseIdentifier: self.tableCellId)
     }
-    
-    func queryGames() {
-        var queryObj = db.collection("games").whereField("name", notIn: [""])
-        print("query: \(query)")
-        if (query.count > 0) {
-            var truncatedQuery = query.prefix(query.count - 1)
-            let lastChar = (query.last?.unicodeScalars.first!.value)! + 1
-            truncatedQuery.append(Character(UnicodeScalar(lastChar)!))
-            print(truncatedQuery)
-            queryObj = queryObj.whereField("name", isGreaterThanOrEqualTo: query)
-                .whereField("name", isLessThan: truncatedQuery)
-        }
-       queryObj.getDocuments() {querySnapshot, err in
-            guard err == nil else {
-                return
-            }
-            for document in querySnapshot!.documents {
-                do {
-                    let gameObj = try document.data(as: FirebaseGame.self)
-                    let path = "gamePreviews/\(document.documentID).png"
-                    let reference = storage.child(path)
-                    reference.getData(maxSize: (64 * 1024 * 1024)) { (data, error) in
-                        if let image = data {
-                            print("image found for \(document.documentID)")
-                            // let myImage: UIImage! = UIImage(data: image)
-                            gameObj.image = image
-                            self.queriedGames.append(gameObj)
-                            self.tableView.reloadData()
-                             // Use Image
-                        } else {
-                            self.queriedGames.append(gameObj)
-                            self.tableView.reloadData()
-
-                        }
-                        
-                    }
-                } catch {
-                }
-            }
-        }
-    }
 
     // MARK: - Table view data source
 
