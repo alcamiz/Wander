@@ -14,7 +14,7 @@ class ResultView: UITableViewController {
     var selectedSort: String?
     
     // TODO: Change to FirebaseGame
-    var queriedGames: [StoredGame] = []
+    var queriedGames: [FirebaseGame] = []
     var tableCellId = ""
 
     var localSuperView: UIViewController?
@@ -26,9 +26,9 @@ class ResultView: UITableViewController {
         tableView.register(UINib(nibName: "ResultCell", bundle: nil), forCellReuseIdentifier: self.tableCellId)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func reloadQuery() {
         // TODO: Load queried games (FirebaseGame), using query, filter, sort
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -46,13 +46,13 @@ class ResultView: UITableViewController {
         // TODO: Change to FirebaseGame
         if !debug {
             let curGame = queriedGames[indexPath.row]
-            cell.titleLabel.text = curGame.name ?? "Untitled"
-            cell.authorLabel.text = curGame.author?.username ?? "Unknown"
-            cell.imageScreen.image = if curGame.image != nil {
-                UIImage.init(data: curGame.image!)
-            } else {
-                UIImage(systemName: "italic")
-            }
+            cell.titleLabel.text = curGame.name
+            cell.authorLabel.text = curGame.author
+//            cell.imageScreen.image = if curGame.image != nil {
+//                UIImage.init(data: curGame.image!)
+//            } else {
+//                UIImage(systemName: "italic")
+//            }
         } else {
             cell.titleLabel.text = "Untitled"
             cell.authorLabel.text = "Unknown"
@@ -70,7 +70,7 @@ class ResultView: UITableViewController {
         if !debug {
             gameScreen.game = queriedGames[indexPath.row]
         }
-        
+
         self.localSuperView?.navigationController?.pushViewController(gameScreen, animated: true)
     }
     
