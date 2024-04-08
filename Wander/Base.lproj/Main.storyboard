@@ -337,7 +337,7 @@
                         <outlet property="imageView" destination="QlU-vE-c5D" id="fFE-Tj-9UL"/>
                         <outlet property="linkingButton" destination="VRb-k6-u68" id="FhI-Oi-C6X"/>
                         <outlet property="textView" destination="7Qo-SO-vN9" id="iOM-tk-KkV"/>
-                        <outlet property="tileTypeSegCtrl" destination="H58-Iq-XlT" id="7Ol-XT-DEl"/>
+                        <outlet property="tileTypeSegCtrl" destination="H58-Iq-XlT" id="TDp-qz-D2a"/>
                         <segue destination="d7W-Sl-Zwk" kind="presentation" identifier="LinkButtonOneSegue" id="PTd-q9-nyU"/>
                         <segue destination="d7W-Sl-Zwk" kind="presentation" identifier="LinkButtonTwoSegue" id="npG-xH-dlG"/>
                     </connections>
