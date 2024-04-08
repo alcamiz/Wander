@@ -37,7 +37,8 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
         searchControl.showsSearchResultsController = false
         searchControl.searchBar.showsBookmarkButton = true
         searchControl.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
-
+        
+        resultView.localSuperView = self
         messageLabel.textColor = .lightGray
         messageLabel.text = "Search for something, dummy"
     }
@@ -74,9 +75,6 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-//        filterView.modalTransitionStyle = .partialCurl
-//        filterView.modalPresentationStyle = .popover
-        resultView.localSuperView = self
         filterView.resultView = self.resultView
         self.present(filterView, animated: true)
     }

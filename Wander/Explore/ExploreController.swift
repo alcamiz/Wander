@@ -26,10 +26,23 @@ extension UIColor {
    }
 }
 
+//func storedToFirebase(gameList: [StoredGame]) -> [FirebaseGame] {
+//    let newList: [FirebaseGame] = []
+//    for game in gameList {
+//        let newGame = FirebaseGame()
+//        newGame.name = game.name
+//        newGame.author = game.author?.username
+//        
+//        newList.append(newGame)
+//    }
+//    return newList
+//}
+
 class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var popularView: UICollectionView!
     @IBOutlet weak var newView: UICollectionView!
+    @IBOutlet weak var historyView: UICollectionView!
     
     @IBOutlet weak var wanderButton: UIButton!
     @IBOutlet weak var wanderLabel: UILabel!
@@ -37,10 +50,12 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     // TODO: Change to FirebaseGame
     let popularGames: [FirebaseGame] = []
     let newGames: [FirebaseGame] = []
+    let historyGames: [FirebaseGame] = []
+    
+    let searchController = UISearchController(searchResultsController: nil)
     let debug = true
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         
         if !debug {
             switch collectionView.accessibilityIdentifier {
@@ -48,6 +63,8 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
                     return popularGames.count
                 case "newView":
                     return newGames.count
+                case "historyView":
+                    return historyGames.count
                 default:
                     return 0
             }
@@ -66,17 +83,19 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
                     game = popularGames[indexPath.row]
                 case "newView":
                     game = newGames[indexPath.row]
+                case "historyView":
+                    game = historyGames[indexPath.row]
                 default:
                     return cell
             }
             
             cell.titleLabel.text = game.name
             cell.imageView.backgroundColor = .lightGray
-            cell.imageView.image = if game.image != nil {
-                UIImage(data: game.image!)
-            } else {
-                UIImage(systemName: "italic")
-            }
+//            cell.imageView.image = if game.image != nil {
+//                UIImage(data: game.image!)
+//            } else {
+//                UIImage(systemName: "italic")
+//            }
         } else {
             cell.titleLabel.text = "Test"
             cell.imageView.backgroundColor = .lightGray
@@ -107,6 +126,8 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
                     tArray = popularGames
                 case "newView":
                     tArray = newGames
+                case "historyView":
+                    tArray = historyGames
                 default:
                     tArray = []
             }
@@ -114,12 +135,12 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         }
         self.navigationController?.pushViewController(gameScreen, animated: true)
     }
-    
-    let searchController = UISearchController(searchResultsController: nil)
  
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Explore"
+        
+        // TODO: Query game lists
 
         wanderButton.layer.cornerRadius = 8
         wanderButton.backgroundColor = UIColor(rgb: 0x0DCAD6)
@@ -128,12 +149,15 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         
         popularView.accessibilityIdentifier = "popularView"
         newView.accessibilityIdentifier = "newView"
+        historyView.accessibilityIdentifier = "historyView"
         
         popularView.layer.cornerRadius = 12
         newView.layer.cornerRadius = 12
+        historyView.layer.cornerRadius = 12
 
         popularView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
         newView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
+        historyView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
                 
         popularView.dataSource = self
         popularView.delegate = self
@@ -142,6 +166,10 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         newView.dataSource = self
         newView.delegate = self
         newView.backgroundColor = Color.primary
+        
+        historyView.dataSource = self
+        historyView.delegate = self
+        historyView.backgroundColor = Color.primary
     
     }
     

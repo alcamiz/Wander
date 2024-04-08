@@ -106,7 +106,7 @@ class ResultView: UITableViewController {
         if !debug {
             gameScreen.game = queriedGames[indexPath.row]
         }
-        
+
         self.localSuperView?.navigationController?.pushViewController(gameScreen, animated: true)
     }
     

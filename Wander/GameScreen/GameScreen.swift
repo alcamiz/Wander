@@ -14,11 +14,11 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var tagView: UICollectionView!
     @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var tagHeight: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
     
     var game: FirebaseGame?
+    var storedGame: StoredGame?
     var tags: [String]?
     var tagID: String = UUID().uuidString
     
@@ -36,11 +36,11 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             titleLabel.text = game?.name
             authorLabel.text = game?.author
             
-            if game?.image == nil {
-                imageScreen.image = UIImage(systemName: "italic")
-            } else {
-                imageScreen.image = UIImage(data: game!.image!)
-            }
+//            if game?.image == nil {
+//                imageScreen.image = UIImage(systemName: "italic")
+//            } else {
+//                imageScreen.image = UIImage(data: game!.image!)
+//            }
             
             if game!.tags.count == 0 {
                 tagHeight.constant = 0
@@ -60,15 +60,18 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         tagView.delegate = self
         tagView.dataSource = self
         playButton.tintColor = UIColor(rgb: 0x191970)
-        saveButton.tintColor = UIColor(rgb: 0x191970)
     }
     
     @IBAction func playAction(_ sender: Any) {
-        // TODO: Segue to gameplay
-    }
-    
-    @IBAction func saveAction(_ sender: Any) {
-        // TODO: Not sure... (placeholder button for now)
+        let storyboard = UIStoryboard(name: "Playmode", bundle: nil)
+        let playMode = storyboard.instantiateViewController(withIdentifier: "PlaymodeViewController") as! PlaymodeViewController
+        
+        // TODO: Download game
+        if !debug {
+            playMode.game = self.storedGame
+        }
+        
+        self.navigationController?.pushViewController(playMode, animated: true)
     }
     
     @IBAction func showDescription(_ sender: UITapGestureRecognizer) {

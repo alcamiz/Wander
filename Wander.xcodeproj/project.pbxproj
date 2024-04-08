@@ -229,10 +229,10 @@
 		B6CF7E692BC209A50044AED4 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
-				B6CF7E6A2BC209A50044AED4 /* ExploreNavigation.swift */,
 				B6CF7E6B2BC209A50044AED4 /* ExploreCell */,
-				B6CF7E6E2BC209A50044AED4 /* ExploreController.swift */,
 				B6CF7E6F2BC209A50044AED4 /* ExploreFlow.storyboard */,
+				B6CF7E6A2BC209A50044AED4 /* ExploreNavigation.swift */,
+				B6CF7E6E2BC209A50044AED4 /* ExploreController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -249,8 +249,8 @@
 		B6CF7E752BC209AB0044AED4 /* GameScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B6CF7E762BC209AB0044AED4 /* GameScreen.swift */,
 				B6CF7E772BC209AB0044AED4 /* GameScreen.storyboard */,
+				B6CF7E762BC209AB0044AED4 /* GameScreen.swift */,
 			);
 			path = GameScreen;
 			sourceTree = "<group>";
@@ -261,10 +261,10 @@
 				B6CF7E7B2BC209B40044AED4 /* FilterView */,
 				B6CF7E7E2BC209B40044AED4 /* ContractionView */,
 				B6CF7E812BC209B40044AED4 /* ContractionCell */,
-				B6CF7E842BC209B40044AED4 /* SearchFlow.swift */,
-				B6CF7E852BC209B40044AED4 /* ResultView */,
 				B6CF7E882BC209B40044AED4 /* ResultCell */,
+				B6CF7E852BC209B40044AED4 /* ResultView */,
 				B6CF7E8B2BC209B40044AED4 /* SearchFlow.storyboard */,
+				B6CF7E842BC209B40044AED4 /* SearchFlow.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -272,8 +272,8 @@
 		B6CF7E7B2BC209B40044AED4 /* FilterView */ = {
 			isa = PBXGroup;
 			children = (
-				B6CF7E7C2BC209B40044AED4 /* FilterView.swift */,
 				B6CF7E7D2BC209B40044AED4 /* FilterView.xib */,
+				B6CF7E7C2BC209B40044AED4 /* FilterView.swift */,
 			);
 			path = FilterView;
 			sourceTree = "<group>";
