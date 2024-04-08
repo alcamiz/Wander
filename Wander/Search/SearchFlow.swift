@@ -29,7 +29,7 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
         searchControl = UISearchController(searchResultsController: resultView)
         searchControl.searchBar.tintColor = .white
         let searchText = searchControl.searchBar.value(forKey: "searchField") as? UITextField
-        searchText?.backgroundColor = UIColor(rgb: 0xADDAE6)
+        searchText?.backgroundColor = Color.primary
 
         self.navigationItem.searchController = searchControl
         searchControl.delegate = self

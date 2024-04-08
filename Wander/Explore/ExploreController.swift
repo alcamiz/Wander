@@ -7,37 +7,6 @@
 
 import UIKit
 
-// Code from a kid named StackOverflow
-extension UIColor {
-   convenience init(red: Int, green: Int, blue: Int) {
-       assert(red >= 0 && red <= 255, "Invalid red component")
-       assert(green >= 0 && green <= 255, "Invalid green component")
-       assert(blue >= 0 && blue <= 255, "Invalid blue component")
-
-       self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-   }
-
-   convenience init(rgb: Int) {
-    self.init(
-           red: (rgb >> 16) & 0xFF,
-           green: (rgb >> 8) & 0xFF,
-           blue: rgb & 0xFF
-       )
-   }
-}
-
-//func storedToFirebase(gameList: [StoredGame]) -> [FirebaseGame] {
-//    let newList: [FirebaseGame] = []
-//    for game in gameList {
-//        let newGame = FirebaseGame()
-//        newGame.name = game.name
-//        newGame.author = game.author?.username
-//        
-//        newList.append(newGame)
-//    }
-//    return newList
-//}
-
 class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var popularView: UICollectionView!
@@ -50,7 +19,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     // TODO: Change to FirebaseGame
     let popularGames: [FirebaseGame] = []
     let newGames: [FirebaseGame] = []
-    let historyGames: [FirebaseGame] = []
+    let historyGames: [StoredGame] = []
     
     let searchController = UISearchController(searchResultsController: nil)
     let debug = true
@@ -75,27 +44,24 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reUsable", for: indexPath) as! ExploreCell
         
-        // TODO: Change to FirebaseGame
         if !debug {
-            var game: FirebaseGame
+            var game: InfoGame
             switch collectionView.accessibilityIdentifier {
+                    
                 case "popularView":
-                    game = popularGames[indexPath.row]
+                    game = InfoGame(firebaseGame: popularGames[indexPath.row])
                 case "newView":
-                    game = newGames[indexPath.row]
+                    game = InfoGame(firebaseGame: newGames[indexPath.row])
                 case "historyView":
-                    game = historyGames[indexPath.row]
+                    game = InfoGame(storedGame: historyGames[indexPath.row])
                 default:
                     return cell
             }
-            
-            cell.titleLabel.text = game.name
+
             cell.imageView.backgroundColor = .lightGray
-//            cell.imageView.image = if game.image != nil {
-//                UIImage(data: game.image!)
-//            } else {
-//                UIImage(systemName: "italic")
-//            }
+            cell.titleLabel.text = game.title
+            cell.imageView.image = game.image
+
         } else {
             cell.titleLabel.text = "Test"
             cell.imageView.backgroundColor = .lightGray
@@ -120,18 +86,16 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         let gameScreen = storyboard.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
         
         if !debug {
-            var tArray: [FirebaseGame] // TODO: Change to FirebaseGame
             switch collectionView.accessibilityIdentifier {
                 case "popularView":
-                    tArray = popularGames
+                    gameScreen.infoGame = InfoGame(firebaseGame: popularGames[indexPath.row])
                 case "newView":
-                    tArray = newGames
+                    gameScreen.infoGame = InfoGame(firebaseGame: newGames[indexPath.row])
                 case "historyView":
-                    tArray = historyGames
+                    gameScreen.infoGame = InfoGame(storedGame: historyGames[indexPath.row])
                 default:
-                    tArray = []
+                    break
             }
-            gameScreen.game = tArray[indexPath.row]
         }
         self.navigationController?.pushViewController(gameScreen, animated: true)
     }
@@ -143,7 +107,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         // TODO: Query game lists
 
         wanderButton.layer.cornerRadius = 8
-        wanderButton.backgroundColor = UIColor(rgb: 0x0DCAD6)
+        wanderButton.backgroundColor = UIColor(hex: "#0DCAD6")
         wanderButton.tintColor = .white
         wanderLabel.text = "Press the button to learn more about the app!"
         

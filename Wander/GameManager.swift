@@ -14,7 +14,6 @@ import FirebaseStorage
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-
 public class GameManager {
     var context:NSManagedObjectContext
     

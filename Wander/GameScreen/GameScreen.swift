@@ -19,9 +19,8 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var tagHeight: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    var game: FirebaseGame?
-    var storedGame: StoredGame?
-    var tags: [String]?
+    var infoGame: InfoGame?
+//    var tags: [String]?
     var tagID: String = UUID().uuidString
     
     let debug = false
@@ -35,22 +34,15 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         self.descriptionLabel.textColor = .gray
         
         if !debug {
-            titleLabel.text = game?.name
-            authorLabel.text = game?.author
-            
-            if game?.image == nil {
-                imageScreen.image = UIImage(systemName: "italic")
-            } else {
-                imageScreen.image = UIImage(data: game!.image!)
-            }
-            
-            if game!.tags.count == 0 {
+            titleLabel.text = infoGame!.title
+            authorLabel.text = infoGame!.author
+            imageScreen.image = infoGame!.image
+
+            if infoGame!.tags.count == 0 {
                 tagHeight.constant = 0
-            } else {
-                tags = game!.tags
             }
 
-            descriptionLabel.text = "\(game?.desc ?? "None")"
+            descriptionLabel.text = infoGame!.desc
 
         } else {
             titleLabel.text = "Empty"
@@ -61,7 +53,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
 
         tagView.delegate = self
         tagView.dataSource = self
-        playButton.tintColor = UIColor(rgb: 0x191970)
+        playButton.tintColor = Color.secondary
     }
     
     @IBAction func playAction(_ sender: Any) {
@@ -69,20 +61,30 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         let playMode = storyboard.instantiateViewController(withIdentifier: "PlaymodeViewController") as! PlaymodeViewController
         
         // TODO: Download game
-        Task {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let managedContext = appDelegate.persistentContainer.viewContext
-            var storedGame = await self.game?.download(managedContext: managedContext)
-            playMode.game = storedGame
-            if let rootTile = storedGame!.root {
-                playMode.currentTile = rootTile
-            } else {
-                let alert = UIAlertController(title: "Invalid Root tile", message: String(storedGame!.tiles!.count), preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
+       
             
             self.navigationController?.pushViewController(playMode, animated: true)
+        if !debug {
+            if infoGame!.inStore {
+                playMode.game = infoGame!.storedGame
+            } else if infoGame!.inFirebase {
+//                playMode.game = TODO: Take infoGame.firebaseGame and download it into a StoredGame object
+                Task {
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let managedContext = appDelegate.persistentContainer.viewContext
+                    var storedGame = await self.infoGame?.firebaseGame!.download(managedContext: managedContext)
+                    infoGame?.storedGame = storedGame
+                    infoGame?.inStore = true
+                    playMode.game = storedGame
+                    if let rootTile = storedGame!.root {
+                        playMode.currentTile = rootTile
+                    } else {
+                        let alert = UIAlertController(title: "Invalid Root tile", message: String(storedGame!.tiles!.count), preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
         }
       
     }
@@ -102,11 +104,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if (!debug) {
-            if tags == nil {
-                return 0
-            } else {
-                return tags!.count
-            }
+            return infoGame!.tags.count
         }
         return 10
     }
@@ -114,10 +112,8 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.tagID, for: indexPath) as! ContractionCell
         
-        if game != nil {
-            if tags != nil {
-                cell.mainLabel.text = tags![indexPath.row]
-            }
+        if !debug {
+            cell.mainLabel.text = infoGame!.tags[indexPath.row]
         } else {
             switch indexPath.row % 4 {
                 case 0:
