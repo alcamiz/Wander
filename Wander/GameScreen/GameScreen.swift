@@ -72,8 +72,16 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         Task {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let managedContext = appDelegate.persistentContainer.viewContext
-            playMode.game = await self.game?.download(managedContext: managedContext)
-            playMode.currentTileID = playMode.game!.root!.id
+            var storedGame = await self.game?.download(managedContext: managedContext)
+            playMode.game = storedGame
+            if let rootTile = storedGame!.root {
+                playMode.currentTile = rootTile
+            } else {
+                let alert = UIAlertController(title: "Invalid Root tile", message: String(storedGame!.tiles!.count), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            
             self.navigationController?.pushViewController(playMode, animated: true)
         }
       

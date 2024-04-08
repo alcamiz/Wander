@@ -47,7 +47,7 @@ public class FirebaseGame: Codable {
         var storedTiles: [StoredTile] = []
         for tileID in tiles {
             do {
-                let tileDoc = try await db.collection("games").document(tileID).getDocument()
+                let tileDoc = try await db.collection("tiles").document(tileID).getDocument()
                 let tileObj = try tileDoc.data(as: FirebaseTile.self)
                 firebaseTiles.append(tileObj)
                 storedTiles.append(StoredTile(game: storedGame, webVersion: tileObj))
@@ -64,7 +64,8 @@ public class FirebaseGame: Codable {
         for tile in tiles {
             
         }
-        
+        try! storedGame.managedObjectContext!.save()
+    
     }
     
     func download(managedContext: NSManagedObjectContext) async -> StoredGame {

@@ -32,7 +32,8 @@ public class StoredGame: NSManagedObject {
         self.init(context: managedContext)
         //self.author = webVersion.author (change model!)
         //self.root = something (fetch the tiles)
-        self.name = webVersion.name 
+        self.id = UUID(uuidString: webVersion.id!)
+        self.name = webVersion.name
         self.createCount = Int32(webVersion.createCount)
         self.createdOn = webVersion.createdOn
         self.image = webVersion.image
