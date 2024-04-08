@@ -39,8 +39,7 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         createNewGameButton.backgroundColor = Color.primary
-        createNewGameButton.setTitleColor(.white, for: .normal)
-        createNewGameButton.setTitleColor(Color.secondary, for: .highlighted)
+        createNewGameButton.tintColor = .white
                 
         gameList = user?.fetchAllGames() ?? []
         allGamesTableView.reloadData()

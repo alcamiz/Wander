@@ -31,7 +31,12 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
     var gameImage: UIImage!
     @IBOutlet weak var gameImagePlaceholder: UILabel!
     
-//    override func viewWillAppear(_ animated: Bool) {
+    
+    @IBOutlet weak var playtestGameButton: UIButton!
+    @IBOutlet weak var editGameButton: UIButton!
+    @IBOutlet weak var publishGameButton: UIButton!
+    
+    //    override func viewWillAppear(_ animated: Bool) {
 //        gameTitle.text = game.name ?? "Invalid Game"
 //    }
     
@@ -74,6 +79,14 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
         let gameImageTapGesture = UITapGestureRecognizer(target: self, action: #selector(gameImageViewTapped))
         gameImageView.isUserInteractionEnabled = true
         gameImageView.addGestureRecognizer(gameImageTapGesture)
+        
+        playtestGameButton.backgroundColor = Color.primary
+        editGameButton.backgroundColor = Color.primary
+        publishGameButton.backgroundColor = Color.primary
+        
+        playtestGameButton.tintColor = .white
+        editGameButton.tintColor = .white
+        publishGameButton.tintColor = .white
     }
     
     @objc func gameImageViewTapped(_ sender: UITapGestureRecognizer) {
