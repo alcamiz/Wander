@@ -37,6 +37,11 @@ class ResultView: UITableViewController {
     func reloadQuery() async {
         // TODO: Load queried games (FirebaseGame), using query, filter, sort
         queriedGames = await GameManager.queryGames(query: query, tag: selectedFilter, sort: selectedSort)
+        /*if queriedGames.count == 0 {
+            let alert = UIAlertController(title: "No games", message: "No games", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }*/
         tableView.reloadData()
         loadPictures()
     }
