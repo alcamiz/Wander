@@ -104,7 +104,7 @@ class ResultView: UITableViewController {
         
         // TODO: Change to FirebaseGame
         if !debug {
-            gameScreen.game = queriedGames[indexPath.row]
+            gameScreen.infoGame = InfoGame(firebaseGame: queriedGames[indexPath.row])
         }
 
         self.localSuperView?.navigationController?.pushViewController(gameScreen, animated: true)

@@ -15,10 +15,10 @@ class TabBarController: UITabBarController {
         self.tabBar.isTranslucent = false
         
         // Set the background color of the tab bar
-        self.tabBar.backgroundColor = UIColor(rgb: 0x191970)
+        self.tabBar.backgroundColor = Color.secondary
         
         // Set the selected tab item color
-        self.tabBar.tintColor = UIColor(rgb: 0xADDAE6)
+        self.tabBar.tintColor = Color.primary
         
         // Set the unselected tab item color
         self.tabBar.unselectedItemTintColor = .white

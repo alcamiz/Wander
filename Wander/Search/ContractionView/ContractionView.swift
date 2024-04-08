@@ -64,7 +64,7 @@ class ContractionView: UIView, UICollectionViewDelegate, UICollectionViewDelegat
         self.layer.backgroundColor = UIColor.white.cgColor
         self.layer.cornerRadius = 15
         self.layer.borderWidth = 4
-        self.layer.borderColor = UIColor(rgb: 0x389eb9).cgColor
+        self.layer.borderColor = UIColor(hex: "#389eb9").cgColor
     }
     
     func getSelectedData() -> String? {
