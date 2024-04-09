@@ -38,6 +38,24 @@ public class StoredTile: NSManagedObject {
         self.createdOn = Date()
     }
     
+    convenience init(game: StoredGame, webVersion: FirebaseTile) {
+        self.init(context: game.managedObjectContext!)
+        self.id = UUID(uuidString: webVersion.id!)
+        self.game = game
+        self.text = webVersion.text
+        self.title = webVersion.title
+        self.type = Int16(webVersion.type)
+        self.createdOn = Date()
+    }
+    
+    func initializeOptions(webVersion: FirebaseTile) {
+        guard webVersion.options.count > 0, webVersion.children.count == webVersion.options.count else {return}
+        for i in 0...webVersion.options.count-1 {
+            let childTile = game?.fetchTile(tileID: UUID(uuidString: webVersion.children[i])!)
+            createOption(tile: childTile, desc: webVersion.options[i])
+        }
+    }
+    
     func getType() -> TileType {
         return TileType(rawValue: self.type)!
     }
@@ -93,7 +111,7 @@ public class StoredTile: NSManagedObject {
             "title": self.title ?? "",
             "text": self.text ?? "",
             "type": self.type,
-            "root": self.game?.id?.uuidString ?? "-1",
+            "game": self.game?.id?.uuidString ?? "-1",
         ] as [String : Any]
         
         if let childOptions = fetchAllOptions() {
@@ -104,7 +122,7 @@ public class StoredTile: NSManagedObject {
         }
         
         if let dateObj = self.createdOn {
-            data["createdOn"] = dateObj
+            //data["createdOn"] = dateObj
         }
         
         // todo better use of async

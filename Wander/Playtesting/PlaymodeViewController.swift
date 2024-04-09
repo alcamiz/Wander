@@ -25,12 +25,14 @@ class PlaymodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let game = game {
+        if let gameObj = game {
             completeGameLabel.textColor = .red
         }
-        else {
-            print("game is nil")
-        }
+        /*else {
+            let alert = UIAlertController(title: "Invalid Game", message: "game is nil", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }*/
         
         // Create a custom back button
         let exitGameButton = UIBarButtonItem(title: "Exit Game", style: .plain, target: nil, action: nil)
@@ -42,10 +44,12 @@ class PlaymodeViewController: UIViewController {
         if let tileID = currentTile?.id {
             displayTile(tileID: tileID)
         }
-        else {
-            print("tileID is nil")
+        /*else {
+            let alert = UIAlertController(title: "Invalid Tile", message: "tile ID is nil", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
-        }
+        }*/
     }
     
     func displayTile(tileID: UUID) {

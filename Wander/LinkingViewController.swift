@@ -10,6 +10,7 @@ import UIKit
 class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var allTilesTableView: UITableView!
+    @IBOutlet weak var linkingNavigationBar: UINavigationBar!
     @IBOutlet weak var linkingNavigationItem: UINavigationItem!
     
     
@@ -26,8 +27,9 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         linkingNavigationItem.title = "Link for \(linkTitle ?? "ERROR")"
         tileList = parentTile?.game?.fetchAllTiles() ?? []
-
-        // Do any additional setup after loading the view.
+        
+        linkingNavigationBar.backgroundColor = Color.secondary
+        linkingNavigationItem.titleView?.tintColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,14 +44,7 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
         let row = indexPath.row
-        
-        
-        if tileList[row].getType().rawValue == TileType.root.rawValue {
-            cell.textLabel?.text = "\(tileList[row].title!) (root)"
-        }
-        else {
-            cell.textLabel?.text = tileList[row].title
-        }
+        cell.textLabel?.text = formatCellText(tile: tileList[row])
         return cell
     }
     
@@ -72,6 +67,26 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
             default:
                 break
         }
+    }
+    
+    func formatCellText(tile: StoredTile) -> String {
+        var cellText = tile.title!
+        if tile.getType().rawValue == TileType.root.rawValue {
+            cellText += " \n\tROOT TILE"
+        }
+        else if tile.getType().rawValue == TileType.win.rawValue {
+            cellText += "\n\tWIN TILE"
+        }
+        else if tile.getType().rawValue == TileType.lose.rawValue {
+            cellText += "\n\tLOSE TILE"
+        }
+        let tileChildren = tile.fetchAllChildren()
+        for (index, tileChild) in tileChildren.enumerated() {
+            if let tileChild = tileChild {
+                cellText += "\n\tButton \(index+1): \(tileChild.title!)"
+            }
+        }
+        return cellText
     }
     
 

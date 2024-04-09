@@ -28,6 +28,19 @@ public class StoredGame: NSManagedObject {
         self.root?.type = TileType.root.rawValue
     }
     
+    convenience init(webVersion: FirebaseGame, managedContext: NSManagedObjectContext) {
+        self.init(context: managedContext)
+        //self.author = webVersion.author (change model!)
+        //self.root = something (fetch the tiles)
+        self.id = UUID(uuidString: webVersion.id!)
+        self.name = webVersion.name
+        self.createCount = Int32(webVersion.createCount)
+        self.createdOn = webVersion.createdOn
+        self.image = webVersion.image
+        self.desc = webVersion.desc
+        self.tags = webVersion.tags
+    }
+    
     func createTile() -> StoredTile {
         let newTile = StoredTile(game: self)
         self.createCount += 1
@@ -102,7 +115,7 @@ public class StoredGame: NSManagedObject {
                   return
                 }
                 let picURL = downloadURL.absoluteString
-                data["image"] = picURL
+                //data["image"] = picURL
                 db.collection("games").document(docString).setData(data)
               }
             }

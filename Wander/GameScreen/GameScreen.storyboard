@@ -59,16 +59,11 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGa-5J-bqt">
-                                <rect key="frame" x="226" y="557" width="70" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Save?"/>
-                                <connections>
-                                    <action selector="saveAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="LN0-In-i5R"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3v-o3-RL3">
-                                <rect key="frame" x="96" y="557" width="70" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3v-o3-RL3">
+                                <rect key="frame" x="121.66666666666669" y="528.66666666666663" width="150" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="qQ6-UW-hrg"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Play"/>
                                 <connections>
@@ -92,21 +87,18 @@
                             <constraint firstItem="CCY-Di-4jH" firstAttribute="top" secondItem="JFl-Jx-YXE" secondAttribute="bottom" constant="20" id="19t-uW-dHC"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="CCY-Di-4jH" secondAttribute="trailing" constant="30" id="7CP-2F-Mqo"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="JFl-Jx-YXE" secondAttribute="trailing" constant="30" id="80g-Cb-ysZ"/>
-                            <constraint firstItem="r3v-o3-RL3" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" constant="-65" id="82J-w1-6rP"/>
-                            <constraint firstItem="eGa-5J-bqt" firstAttribute="width" secondItem="r3v-o3-RL3" secondAttribute="width" id="GdZ-2r-e3L"/>
+                            <constraint firstItem="r3v-o3-RL3" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="DPe-2i-rtP"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="QvN-uR-fTe" secondAttribute="trailing" constant="10" id="QK1-ro-vOa"/>
                             <constraint firstItem="QvN-uR-fTe" firstAttribute="top" secondItem="cyh-7O-OtK" secondAttribute="bottom" constant="20" id="YHM-6k-wpn"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="cyh-7O-OtK" secondAttribute="trailing" constant="76" id="Z8b-ZU-vWE"/>
-                            <constraint firstItem="eGa-5J-bqt" firstAttribute="top" secondItem="CCY-Di-4jH" secondAttribute="bottom" constant="35" id="ZnO-H5-qFZ"/>
                             <constraint firstItem="s3V-nP-eM0" firstAttribute="top" secondItem="QvN-uR-fTe" secondAttribute="bottom" constant="5" id="dnh-Iz-0Zw"/>
                             <constraint firstItem="cyh-7O-OtK" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="76" id="fOD-pz-2MB"/>
                             <constraint firstItem="cyh-7O-OtK" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="50" id="foN-oc-NNs"/>
                             <constraint firstItem="QvN-uR-fTe" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="hPU-Oe-Lz6"/>
-                            <constraint firstItem="r3v-o3-RL3" firstAttribute="top" secondItem="CCY-Di-4jH" secondAttribute="bottom" constant="35" id="hRY-Hq-EtS"/>
+                            <constraint firstItem="r3v-o3-RL3" firstAttribute="top" secondItem="CCY-Di-4jH" secondAttribute="bottom" constant="40" id="hRY-Hq-EtS"/>
                             <constraint firstItem="JFl-Jx-YXE" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="jy4-G2-C9I"/>
                             <constraint firstItem="JFl-Jx-YXE" firstAttribute="top" secondItem="s3V-nP-eM0" secondAttribute="bottom" constant="10" id="lr3-XA-TkC"/>
                             <constraint firstItem="CCY-Di-4jH" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="nrM-8M-1A8"/>
-                            <constraint firstItem="eGa-5J-bqt" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" constant="65" id="uH4-NV-ype"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="s3V-nP-eM0" secondAttribute="trailing" constant="10" id="ufe-Ks-jLS"/>
                             <constraint firstItem="s3V-nP-eM0" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="10" id="x94-la-4Hi"/>
                         </constraints>
@@ -116,7 +108,6 @@
                         <outlet property="descriptionLabel" destination="JFl-Jx-YXE" id="bYH-mR-hO7"/>
                         <outlet property="imageScreen" destination="cyh-7O-OtK" id="kdj-H5-Mzx"/>
                         <outlet property="playButton" destination="r3v-o3-RL3" id="3h9-nm-YmL"/>
-                        <outlet property="saveButton" destination="eGa-5J-bqt" id="P4I-F8-oef"/>
                         <outlet property="tagHeight" destination="S1q-WF-PZq" id="TZJ-pZ-MVw"/>
                         <outlet property="tagView" destination="CCY-Di-4jH" id="nZ7-VI-kem"/>
                         <outlet property="titleLabel" destination="QvN-uR-fTe" id="FfC-uN-tAy"/>

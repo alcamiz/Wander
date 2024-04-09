@@ -14,7 +14,6 @@ import FirebaseStorage
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-
 public class GameManager {
     var context:NSManagedObjectContext
     
@@ -35,38 +34,31 @@ public class GameManager {
         return try? self.context.fetch(StoredGame.fetchRequest())
     }
     
-    static func queryGames() {
-        db.collection("games").getDocuments(){
-            querySnapshot, err in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents{
-                    do {
-                        let gameObj = try document.data(as: FirebaseGame.self)
-                        print("we did it yay")
-                    } catch {
-                        print("meow")
-                    }
-                    print(document.data()["name"]!)
-                    let path = "gamePreviews/\(document.documentID).png"
-                    let reference = storage.child(path)
-                    reference.getData(maxSize: (64 * 1024 * 1024)) { (data, error) in
-                        if let _ = error {
-                            print("no image found for \(document.documentID)")
-                        } else {
-                            if let image = data {
-                                print("image found for \(document.documentID)")
-                                // let myImage: UIImage! = UIImage(data: image)
-                                
-                                 // Use Image
-                            }
-                        }
-                    }
-
-                }
-                
-            }
+    static func queryGames(query: String?, tag: String?, sort: String?) async -> [FirebaseGame] {
+        var queriedGames: [FirebaseGame] = []
+        var queryObj = db.collection("games").whereField("name", notIn: [""])
+        if let queryString = query, queryString.count > 0 {
+            var truncatedQuery = queryString.prefix(queryString.count - 1)
+            let lastChar = (queryString.last?.unicodeScalars.first!.value)! + 1
+            truncatedQuery.append(Character(UnicodeScalar(lastChar)!))
+//            print(truncatedQuery)
+            queryObj = queryObj.whereField("name", isGreaterThanOrEqualTo: queryString)
+                .whereField("name", isLessThan: truncatedQuery)
         }
+        do {
+            let querySnapshot = try await queryObj.getDocuments()
+             
+            for document in querySnapshot.documents {
+                do {
+                    let gameObj = try document.data(as: FirebaseGame.self)
+                    queriedGames.append(gameObj)
+                } catch {
+                }
+            }
+        
+        } catch {}
+        
+        return queriedGames
     }
+
 }

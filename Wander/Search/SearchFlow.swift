@@ -29,7 +29,7 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
         searchControl = UISearchController(searchResultsController: resultView)
         searchControl.searchBar.tintColor = .white
         let searchText = searchControl.searchBar.value(forKey: "searchField") as? UITextField
-        searchText?.backgroundColor = UIColor(rgb: 0xADDAE6)
+        searchText?.backgroundColor = Color.primary
 
         self.navigationItem.searchController = searchControl
         searchControl.delegate = self
@@ -37,7 +37,8 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
         searchControl.showsSearchResultsController = false
         searchControl.searchBar.showsBookmarkButton = true
         searchControl.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
-
+        
+        resultView.localSuperView = self
         messageLabel.textColor = .lightGray
         messageLabel.text = "Search for something, dummy"
     }
@@ -62,7 +63,10 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let results = searchControl.searchResultsController as! ResultView
         results.query = searchBar.text ?? ""
-        searchControl.showsSearchResultsController = true
+        Task {
+            await results.reloadQuery()
+            searchControl.showsSearchResultsController = true
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -71,9 +75,6 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-//        filterView.modalTransitionStyle = .partialCurl
-//        filterView.modalPresentationStyle = .popover
-        resultView.localSuperView = self
         filterView.resultView = self.resultView
         self.present(filterView, animated: true)
     }

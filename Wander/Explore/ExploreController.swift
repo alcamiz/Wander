@@ -6,41 +6,34 @@
 //
 
 import UIKit
+import CoreData
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseStorage
 
-// Code from a kid named StackOverflow
-extension UIColor {
-   convenience init(red: Int, green: Int, blue: Int) {
-       assert(red >= 0 && red <= 255, "Invalid red component")
-       assert(green >= 0 && green <= 255, "Invalid green component")
-       assert(blue >= 0 && blue <= 255, "Invalid blue component")
+private var db = Firestore.firestore()
+private var storage = Storage.storage().reference()
 
-       self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-   }
 
-   convenience init(rgb: Int) {
-    self.init(
-           red: (rgb >> 16) & 0xFF,
-           green: (rgb >> 8) & 0xFF,
-           blue: rgb & 0xFF
-       )
-   }
-}
 
-class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var popularView: UICollectionView!
     @IBOutlet weak var newView: UICollectionView!
+    @IBOutlet weak var historyView: UICollectionView!
     
     @IBOutlet weak var wanderButton: UIButton!
     @IBOutlet weak var wanderLabel: UILabel!
     
     // TODO: Change to FirebaseGame
-    let popularGames: [StoredGame] = []
-    let newGames: [StoredGame] = []
-    let debug = true
+    var popularGames: [FirebaseGame] = []
+    var newGames: [FirebaseGame] = []
+    var historyGames: [StoredGame] = []
+    
+    let searchController = UISearchController(searchResultsController: nil)
+    let debug = false
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         
         if !debug {
             switch collectionView.accessibilityIdentifier {
@@ -48,35 +41,38 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
                     return popularGames.count
                 case "newView":
                     return newGames.count
+                case "historyView":
+                    return historyGames.count
                 default:
                     return 0
             }
         }
-        return 5
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reUsable", for: indexPath) as! ExploreCell
-        
-        // TODO: Change to FirebaseGame
         if !debug {
-            var game: StoredGame
+            var game: InfoGame
             switch collectionView.accessibilityIdentifier {
+                    
                 case "popularView":
-                    game = popularGames[indexPath.row]
+                    game = InfoGame(firebaseGame: popularGames[indexPath.row])
                 case "newView":
-                    game = newGames[indexPath.row]
+                    game = InfoGame(firebaseGame: newGames[indexPath.row])
+                case "historyView":
+                    game = InfoGame(storedGame: historyGames[indexPath.row])
                 default:
                     return cell
             }
-            
-            cell.titleLabel.text = game.name
+
+            cell.imageView.image = game.image
             cell.imageView.backgroundColor = .lightGray
-//            cell.imageView.image = if game.image != nil {
-//                UIImage(data: game.image!)
-//            } else {
-//                UIImage(systemName: "italic")
-//            }
+            
+            cell.titleLabel.text = game.title
+            cell.titleLabel.adjustsFontSizeToFitWidth = false
+            cell.titleLabel.lineBreakMode = .byTruncatingTail
+
         } else {
             cell.titleLabel.text = "Test"
             cell.imageView.backgroundColor = .lightGray
@@ -101,48 +97,97 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         let gameScreen = storyboard.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
         
         if !debug {
-            var tArray: [StoredGame] // TODO: Change to FirebaseGame
             switch collectionView.accessibilityIdentifier {
                 case "popularView":
-                    tArray = popularGames
+                    gameScreen.infoGame = InfoGame(firebaseGame: popularGames[indexPath.row])
                 case "newView":
-                    tArray = newGames
+                    gameScreen.infoGame = InfoGame(firebaseGame: newGames[indexPath.row])
+                case "historyView":
+                    gameScreen.infoGame = InfoGame(storedGame: historyGames[indexPath.row])
                 default:
-                    tArray = []
+                    break
             }
-            gameScreen.game = tArray[indexPath.row]
         }
         self.navigationController?.pushViewController(gameScreen, animated: true)
     }
     
-    let searchController = UISearchController(searchResultsController: nil)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        return CGSize(width: 96, height: 120)
+    }
  
+    func loadPopularPictures() {
+        guard popularGames.count > 0 else {return}
+        for i in 0...popularGames.count-1 {
+            if let documentID = popularGames[i].id {
+                let path = "gamePreviews/\(documentID).png"
+                let reference = storage.child(path)
+                reference.getData(maxSize: (64 * 1024 * 1024)) { (data, error) in
+                    if let image = data {
+                        print("image found for \(documentID)")
+                        // let myImage: UIImage! = UIImage(data: image)
+                        self.popularGames[i].image = image
+                        self.popularView.reloadData()
+                         // Use Image
+                    }
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Explore"
+        
+        // TODO: Query game lists
 
         wanderButton.layer.cornerRadius = 8
-        wanderButton.backgroundColor = UIColor(rgb: 0x0DCAD6)
+        wanderButton.backgroundColor = UIColor(hex: "#0DCAD6")
         wanderButton.tintColor = .white
         wanderLabel.text = "Press the button to learn more about the app!"
         
         popularView.accessibilityIdentifier = "popularView"
         newView.accessibilityIdentifier = "newView"
+        historyView.accessibilityIdentifier = "historyView"
         
         popularView.layer.cornerRadius = 12
         newView.layer.cornerRadius = 12
+        historyView.layer.cornerRadius = 12
 
         popularView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
         newView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
-                
+        historyView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
+                    
+        
         popularView.dataSource = self
         popularView.delegate = self
         popularView.backgroundColor = Color.primary
         
-        newView.dataSource = self
-        newView.delegate = self
+        Task {
+            popularGames = await GameManager.queryGames(query: "", tag: "", sort: "")
+            popularView.reloadData()
+            loadPopularPictures()
+        }
+        
+        historyView.dataSource = self
+        historyView.delegate = self
+        historyView.backgroundColor = Color.primary
+        
         newView.backgroundColor = Color.primary
     
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = StoredGame.fetchRequest()
+        let predicate = NSPredicate(format: "author == nil")
+        fetchRequest.predicate = predicate
+        let res = try! managedContext.fetch(fetchRequest)
+        self.historyGames = res
+        historyView.reloadData()
     }
     
     @IBAction func wanderAction(_ sender: Any) {

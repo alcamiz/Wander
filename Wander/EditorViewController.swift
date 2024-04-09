@@ -13,6 +13,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     var tile: StoredTile! // Incoming tile from MapView
     
     @IBOutlet weak var tileTypeSegCtrl: UISegmentedControl!
+    
     let segCtrlDefault = 0
     let segCtrlWin = 1
     let segCtrlLose = 2
@@ -44,6 +45,12 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tileTypeSegCtrl.backgroundColor = Color.primary
+        tileTypeSegCtrl.selectedSegmentTintColor = Color.secondary
+        
+        tileTypeSegCtrl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        tileTypeSegCtrl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
         
         // Initialie tileType
         let tileType = tile.getType()
@@ -95,6 +102,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Create a UITextField and set it as the titleView of the navigationItem
         titleTextField = UITextField()
         titleTextField.text = tile.title
+        titleTextField.textColor = .white
         titleTextField.textAlignment = .center
         
         // Set the font to navigation bar text style (bold, point 17)
@@ -102,6 +110,7 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         titleTextField.delegate = self
         navigationItem.titleView = titleTextField
+        navigationItem.titleView?.tintColor = .white
         
         // Add a tap gesture recognizer to the navigation bar to handle editing
         let titleTapGesture = UITapGestureRecognizer(target: self, action: #selector(tileTitleTapped(_:)))
@@ -110,6 +119,12 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Add a tap gesture recognizer to the main view to dismiss the keyboard
         let mainViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(mainViewTapped(_:)))
         view.addGestureRecognizer(mainViewTapGesture)
+        
+        button1.backgroundColor = Color.primary
+        button2.backgroundColor = Color.primary
+        
+        button1.tintColor = .white
+        button2.tintColor = .white
         
         if (tile.options != nil && tile.options!.count >= 2) {
             let opts = tile.fetchAllOptions()
@@ -168,12 +183,35 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
         case 0:
             setTileType(type: TileType.empty)
         case 1:
-            setTileType(type: TileType.win)
+            if tile.getType().rawValue == TileType.root.rawValue {
+                displayRootTileAlert()
+                tileTypeSegCtrl.selectedSegmentIndex = segCtrlDefault
+            }
+            else {
+                setTileType(type: TileType.win)
+            }
         case 2:
-            setTileType(type: TileType.lose)
+            if tile.getType().rawValue == TileType.root.rawValue {
+                displayRootTileAlert()
+                tileTypeSegCtrl.selectedSegmentIndex = segCtrlDefault
+            }
+            else {
+                setTileType(type: TileType.lose)
+            }
         default:
             print("This shouldn't happen!")
         }
+    }
+    
+    // Alert that prevents editor from making the root tile an end tile.
+    func displayRootTileAlert() {
+        let rootTileAlertVC = UIAlertController(
+            title: "Cannot Change Tile Type",
+            message: "This tile is the root and cannot be an end tile",
+            preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        rootTileAlertVC.addAction(okAction)
+        present(rootTileAlertVC, animated: true)
     }
     
     func setTileType(type: TileType) {
@@ -478,6 +516,4 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
             saveToCore()
         }
     }
-    
-    
 }

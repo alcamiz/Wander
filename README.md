@@ -1,10 +1,16 @@
 # Contributions:
 
 #### Alex Cabrera (25%)
-Defined core-data models and helper function (alongside Ben)
-Set-up basic view controller data handling
-Added viewController saving/loading to core-data
-Misc fixes
+- Alpha:
+  - Defined core-data models and helper function (alongside Ben)
+  - Set-up basic view controller data handling
+  - Added viewController saving/loading to core-data
+  - Misc fixes
+- Beta
+  - Created Explore page
+  - Created Search page and surogates (Filters, Results)
+  - Created GameScreen
+  - Misc fixes on editor screens
 
 #### Nihar Rao (25%)
 Created final screens for My Games, Game Title, Map View, And Linking View Controller as well as navigation and segues for the alpha
