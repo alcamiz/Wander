@@ -10,6 +10,7 @@ import CoreData
 
 class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DeleteGameDelegate {
     
+    @IBOutlet weak var createNewGameButton: UIButton!
     @IBOutlet weak var allGamesTableView: UITableView!
     
     var textCellIdentifier = "GameCell"
@@ -34,9 +35,12 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let appUser = getUser(managedContext: managedContext) {
             user = appUser
         } else {
-            //user = StoredUser(context: managedContext, username: "testUser")
+            user = StoredUser(context: managedContext, username: "generic@utexas.edu", id: "bIbGX3waQMdkkfBnvF61uEWuWsI2")
         }
         
+        createNewGameButton.backgroundColor = Color.primary
+        createNewGameButton.tintColor = .white
+                
         gameList = user?.fetchAllGames() ?? []
         allGamesTableView.reloadData()
     }
@@ -90,12 +94,17 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let nextVC = segue.destination as? GameTitleViewController {
             nextVC.delegate = self
             if segue.identifier == "CreateGameSegue"{
-                let newGame = user?.createGame()
-                gameList.append(newGame!)
-                let idxPath = IndexPath(row: allGamesTableView.numberOfRows(inSection: 0), section: 0)
-                allGamesTableView.insertRows(at: [idxPath], with: .automatic)
-                nextVC.game = newGame
-                selectedGameIndex = idxPath
+                if let user = user {
+                    let newGame = user.createGame()
+                    gameList.append(newGame)
+                    let idxPath = IndexPath(row: allGamesTableView.numberOfRows(inSection: 0), section: 0)
+                    allGamesTableView.insertRows(at: [idxPath], with: .automatic)
+                    nextVC.game = newGame
+                    selectedGameIndex = idxPath
+                }
+                else {
+                    print("user is nil")
+                }
                 
             } else if segue.identifier == "OpenGameSegue" {
                 let gameIndex = allGamesTableView.indexPathForSelectedRow?.row
