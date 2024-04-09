@@ -75,13 +75,14 @@ class FilterView: UIViewController {
     }
     
     func expandTag() {
-        self.tagHeight.constant = self.tagView.calcNewHeight(numRows: 30)
-        tagView.actionButton.setTitle("See less >>", for: .normal)
+        self.tagHeight.constant = self.tagView.calcNewHeight(numRows: 20)
+        tagView.actionButton.setTitle("See less <<", for: .normal)
         self.tagView.collectionView.reloadData()
     }
     
     func retractTag() {
         tagHeight.constant = tagView.calcNewHeight(numRows: tagRows)
+        tagView.actionButton.setTitle("See more >>", for: .normal)
         tagView.collectionView.reloadData()
     }
     
@@ -94,13 +95,14 @@ class FilterView: UIViewController {
     }
     
     func expandSort() {
-        self.sortHeight.constant = self.sortView.calcNewHeight(numRows: 30)
-        sortView.actionButton.setTitle("See less >>", for: .normal)
+        self.sortHeight.constant = self.sortView.calcNewHeight(numRows: 20)
+        sortView.actionButton.setTitle("See less <<", for: .normal)
         self.sortView.collectionView.reloadData()
     }
     
     func retractSort() {
         sortHeight.constant = sortView.calcNewHeight(numRows: sortRows)
+        sortView.actionButton.setTitle("See more >>", for: .normal)
         sortView.collectionView.reloadData()
     }
 

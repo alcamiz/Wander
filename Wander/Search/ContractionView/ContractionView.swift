@@ -153,9 +153,9 @@ class ContractionView: UIView, UICollectionViewDelegate, UICollectionViewDelegat
         
         // Start - Placeholder data
         if indexPath.row % 2 == 0 {
-            cell.mainLabel.text = "Text"
+            cell.mainLabel.text = "Test #1"
         } else {
-            cell.mainLabel.text = "Gaming"
+            cell.mainLabel.text = "Test #2"
         }
         // End - Placeholder data
         return cell
