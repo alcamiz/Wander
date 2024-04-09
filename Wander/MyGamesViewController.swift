@@ -3,7 +3,7 @@
 //  Wander
 //
 //  Created by Alex Cabrera on 2/26/24.
-//
+// 
 
 import UIKit
 import CoreData
