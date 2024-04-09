@@ -165,7 +165,17 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
             popularView.reloadData()
             loadPopularPictures()
         }
-       
+        
+        historyView.dataSource = self
+        historyView.delegate = self
+        historyView.backgroundColor = Color.primary
+        
+        newView.backgroundColor = Color.primary
+    
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -174,13 +184,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         fetchRequest.predicate = predicate
         let res = try! managedContext.fetch(fetchRequest)
         self.historyGames = res
-        
-        historyView.dataSource = self
-        historyView.delegate = self
-        historyView.backgroundColor = Color.primary
-        
-        newView.backgroundColor = Color.primary
-    
+        historyView.reloadData()
     }
     
     @IBAction func wanderAction(_ sender: Any) {

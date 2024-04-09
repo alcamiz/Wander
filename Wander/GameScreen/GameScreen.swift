@@ -68,17 +68,30 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
                 }
                 self.navigationController?.pushViewController(playMode, animated: true)
             } else if infoGame!.inFirebase {
-                Task {
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let managedContext = appDelegate.persistentContainer.viewContext
-                    var storedGame = await self.infoGame?.firebaseGame!.download(managedContext: managedContext)
-                    infoGame?.storedGame = storedGame
-                    infoGame?.inStore = true
-                    playMode.game = storedGame
-                    if let rootTile = storedGame!.root {
-                        playMode.currentTile = rootTile
-                    }
+                
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let managedContext = appDelegate.persistentContainer.viewContext
+                let fetchRequest = StoredGame.fetchRequest()
+                let predicate = NSPredicate(format: "id == %@", infoGame!.firebaseGame!.id! as CVarArg)
+                fetchRequest.predicate = predicate
+                let res = try! managedContext.fetch(fetchRequest)
+                if res.count > 0 {
+                    playMode.game = res[0]
                     self.navigationController?.pushViewController(playMode, animated: true)
+                }
+                else {
+                    Task {
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        let managedContext = appDelegate.persistentContainer.viewContext
+                        let storedGame = await self.infoGame?.firebaseGame!.download(managedContext: managedContext)
+                        infoGame?.storedGame = storedGame
+                        infoGame?.inStore = true
+                        playMode.game = storedGame
+                        if let rootTile = storedGame!.root {
+                            playMode.currentTile = rootTile
+                        }
+                        self.navigationController?.pushViewController(playMode, animated: true)
+                    }
                 }
             }
         }
