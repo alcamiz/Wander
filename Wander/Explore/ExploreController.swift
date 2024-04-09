@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -17,12 +18,12 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     @IBOutlet weak var wanderLabel: UILabel!
     
     // TODO: Change to FirebaseGame
-    let popularGames: [FirebaseGame] = []
-    let newGames: [FirebaseGame] = []
-    let historyGames: [StoredGame] = []
+    var popularGames: [FirebaseGame] = []
+    var newGames: [FirebaseGame] = []
+    var historyGames: [StoredGame] = []
     
     let searchController = UISearchController(searchResultsController: nil)
-    let debug = true
+    let debug = false
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -130,6 +131,17 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         newView.dataSource = self
         newView.delegate = self
         newView.backgroundColor = Color.primary
+        
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = StoredGame.fetchRequest()
+        let predicate = NSPredicate(format: "author == nil")
+        fetchRequest.predicate = predicate
+        let res = try! managedContext.fetch(fetchRequest)
+        self.historyGames = res
+        
+       
         
         historyView.dataSource = self
         historyView.delegate = self

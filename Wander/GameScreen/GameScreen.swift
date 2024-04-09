@@ -63,6 +63,9 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         if !debug {
             if infoGame!.inStore {
                 playMode.game = infoGame!.storedGame
+                if let rootTile = infoGame!.storedGame!.root {
+                    playMode.currentTile = rootTile
+                }
                 self.navigationController?.pushViewController(playMode, animated: true)
             } else if infoGame!.inFirebase {
                 Task {
