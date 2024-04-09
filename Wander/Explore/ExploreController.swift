@@ -66,9 +66,12 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
                     return cell
             }
 
-            cell.imageView.backgroundColor = .lightGray
-            cell.titleLabel.text = game.title
             cell.imageView.image = game.image
+            cell.imageView.backgroundColor = .lightGray
+            
+            cell.titleLabel.text = game.title
+            cell.titleLabel.adjustsFontSizeToFitWidth = false
+            cell.titleLabel.lineBreakMode = .byTruncatingTail
 
         } else {
             cell.titleLabel.text = "Test"

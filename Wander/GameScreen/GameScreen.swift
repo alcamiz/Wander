@@ -63,7 +63,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         if !debug {
             if infoGame!.inStore {
                 playMode.game = infoGame!.storedGame
-                if let rootTile = infoGame!.storedGame!.root {
+                if let rootTile = playMode.game!.root {
                     playMode.currentTile = rootTile
                 }
                 self.navigationController?.pushViewController(playMode, animated: true)
@@ -76,7 +76,11 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
                 fetchRequest.predicate = predicate
                 let res = try! managedContext.fetch(fetchRequest)
                 if res.count > 0 {
+                    print(res[0])
                     playMode.game = res[0]
+                    if let rootTile = playMode.game!.root {
+                        playMode.currentTile = rootTile
+                    }
                     self.navigationController?.pushViewController(playMode, animated: true)
                 }
                 else {
