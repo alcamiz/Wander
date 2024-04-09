@@ -7,6 +7,14 @@
 
 import UIKit
 import CoreData
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseStorage
+
+private var db = Firestore.firestore()
+private var storage = Storage.storage().reference()
+
+
 
 class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -101,6 +109,25 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         self.navigationController?.pushViewController(gameScreen, animated: true)
     }
  
+    func loadPopularPictures() {
+        guard popularGames.count > 0 else {return}
+        for i in 0...popularGames.count-1 {
+            if let documentID = popularGames[i].id {
+                let path = "gamePreviews/\(documentID).png"
+                let reference = storage.child(path)
+                reference.getData(maxSize: (64 * 1024 * 1024)) { (data, error) in
+                    if let image = data {
+                        print("image found for \(documentID)")
+                        // let myImage: UIImage! = UIImage(data: image)
+                        self.popularGames[i].image = image
+                        self.popularView.reloadData()
+                         // Use Image
+                    }
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Explore"
@@ -123,15 +150,18 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         popularView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
         newView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
         historyView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
-                
+                    
+        
         popularView.dataSource = self
         popularView.delegate = self
         popularView.backgroundColor = Color.primary
         
-        newView.dataSource = self
-        newView.delegate = self
-        newView.backgroundColor = Color.primary
-        
+        Task {
+            popularGames = await GameManager.queryGames(query: "", tag: "", sort: "")
+            popularView.reloadData()
+            loadPopularPictures()
+        }
+       
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -146,6 +176,8 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         historyView.dataSource = self
         historyView.delegate = self
         historyView.backgroundColor = Color.primary
+        
+        newView.backgroundColor = Color.primary
     
     }
     
