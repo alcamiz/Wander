@@ -16,7 +16,7 @@ private var storage = Storage.storage().reference()
 
 
 
-class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var popularView: UICollectionView!
     @IBOutlet weak var newView: UICollectionView!
@@ -47,12 +47,11 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
                     return 0
             }
         }
-        return 5
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reUsable", for: indexPath) as! ExploreCell
-        
         if !debug {
             var game: InfoGame
             switch collectionView.accessibilityIdentifier {
@@ -107,6 +106,11 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
             }
         }
         self.navigationController?.pushViewController(gameScreen, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        return CGSize(width: 96, height: 120)
     }
  
     func loadPopularPictures() {
@@ -170,8 +174,6 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         fetchRequest.predicate = predicate
         let res = try! managedContext.fetch(fetchRequest)
         self.historyGames = res
-        
-       
         
         historyView.dataSource = self
         historyView.delegate = self
