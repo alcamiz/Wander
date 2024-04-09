@@ -41,7 +41,7 @@ public class GameManager {
             var truncatedQuery = queryString.prefix(queryString.count - 1)
             let lastChar = (queryString.last?.unicodeScalars.first!.value)! + 1
             truncatedQuery.append(Character(UnicodeScalar(lastChar)!))
-            print(truncatedQuery)
+//            print(truncatedQuery)
             queryObj = queryObj.whereField("name", isGreaterThanOrEqualTo: queryString)
                 .whereField("name", isLessThan: truncatedQuery)
         }

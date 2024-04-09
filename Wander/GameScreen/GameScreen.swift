@@ -60,15 +60,11 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         let storyboard = UIStoryboard(name: "Playmode", bundle: nil)
         let playMode = storyboard.instantiateViewController(withIdentifier: "PlaymodeViewController") as! PlaymodeViewController
         
-        // TODO: Download game
-       
-            
-            self.navigationController?.pushViewController(playMode, animated: true)
         if !debug {
             if infoGame!.inStore {
                 playMode.game = infoGame!.storedGame
+                self.navigationController?.pushViewController(playMode, animated: true)
             } else if infoGame!.inFirebase {
-//                playMode.game = TODO: Take infoGame.firebaseGame and download it into a StoredGame object
                 Task {
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
                     let managedContext = appDelegate.persistentContainer.viewContext
@@ -78,15 +74,11 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
                     playMode.game = storedGame
                     if let rootTile = storedGame!.root {
                         playMode.currentTile = rootTile
-                    } else {
-                        let alert = UIAlertController(title: "Invalid Root tile", message: String(storedGame!.tiles!.count), preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
                     }
+                    self.navigationController?.pushViewController(playMode, animated: true)
                 }
             }
         }
-      
     }
     
     @IBAction func showDescription(_ sender: UITapGestureRecognizer) {
