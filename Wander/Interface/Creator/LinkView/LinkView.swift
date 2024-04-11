@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var allTilesTableView: UITableView!
     @IBOutlet weak var linkingNavigationBar: UINavigationBar!
@@ -18,7 +18,7 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
     var tileList:[StoredTile] = []
     var textCellIdentifier = "TileCell"
     var parentTile:StoredTile?
-    var delegate:EditorViewController?
+    var delegate:EditorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,11 +59,11 @@ class LinkingViewController: UIViewController, UITableViewDelegate, UITableViewD
             case "Button One":
                 delegate?.button1Option?.child = selectedTile
                 try? parentTile?.managedObjectContext?.save()
-                self.dismiss(animated: true)
+                self.navigationController?.popViewController(animated: true)
             case "Button Two":
                 delegate?.button2Option?.child = selectedTile
                 try? parentTile?.managedObjectContext?.save()
-                self.dismiss(animated: true)
+                self.navigationController?.popViewController(animated: true)
             default:
                 break
         }

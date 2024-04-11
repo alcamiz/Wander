@@ -13,9 +13,9 @@ import FirebaseStorage
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-class GameTitleViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
+class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     
-    var delegate: MyGamesViewController!
+    var delegate: GameList!
     
     var game:StoredGame!
     
@@ -231,8 +231,7 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             (alert) in
-            let myGamesVC = self.delegate as! DeleteGameDelegate
-            myGamesVC.deleteGame(game: self.game)
+            self.delegate.deleteGame(game: self.game)
             self.navigationController?.popViewController(animated: true)
         })
         deleteAlertVC.addAction(deleteAction)
@@ -245,7 +244,7 @@ class GameTitleViewController: UIViewController, UINavigationControllerDelegate,
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditGameSegue",
-           let nextVC = segue.destination as? MapViewController {
+           let nextVC = segue.destination as? TileList {
             nextVC.game = game
         }
         else if segue.identifier == "PlaytestGameSegue", let nextVC = segue.destination as? PlaymodeViewController {

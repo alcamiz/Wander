@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DeleteGameDelegate {
+class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var createNewGameButton: UIButton!
     @IBOutlet weak var allGamesTableView: UITableView!
@@ -91,7 +91,7 @@ class MyGamesViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let nextVC = segue.destination as? GameTitleViewController {
+        if let nextVC = segue.destination as? GameView {
             nextVC.delegate = self
             if segue.identifier == "CreateGameSegue"{
                 if let user = user {

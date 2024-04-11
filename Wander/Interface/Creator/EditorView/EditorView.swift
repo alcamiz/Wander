@@ -8,7 +8,7 @@
 import CropViewController
 import UIKit
 
-class EditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class EditorView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     var tile: StoredTile! // Incoming tile from MapView
     
@@ -503,13 +503,13 @@ class EditorViewController: UIViewController, UIImagePickerControllerDelegate, U
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "LinkButtonOneSegue",
-           let nextVC = segue.destination as? LinkingViewController {
+           let nextVC = segue.destination as? LinkView {
             nextVC.parentTile = self.tile
             nextVC.delegate = self
             nextVC.linkTitle = "Button One"
             saveToCore()
         } else if segue.identifier == "LinkButtonTwoSegue",
-            let nextVC = segue.destination as? LinkingViewController {
+            let nextVC = segue.destination as? LinkView {
             nextVC.parentTile = self.tile
             nextVC.delegate = self
             nextVC.linkTitle = "Button Two"

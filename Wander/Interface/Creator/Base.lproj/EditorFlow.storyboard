@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Games View Controller-->
+        <!--Game List-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MyGamesViewController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GameList" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,10 +74,10 @@
             </objects>
             <point key="canvasLocation" x="954.96183206106866" y="3.5211267605633805"/>
         </scene>
-        <!--Game Title View Controller-->
+        <!--Game View-->
         <scene sceneID="gGX-Jb-sKo">
             <objects>
-                <viewController id="Xyg-YJ-fxt" customClass="GameTitleViewController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Xyg-YJ-fxt" customClass="GameView" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YaG-KJ-s50">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -185,12 +185,12 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGW-n5-n8N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1550" y="427"/>
+            <point key="canvasLocation" x="1764" y="440"/>
         </scene>
-        <!--Editor View Controller-->
+        <!--Editor View-->
         <scene sceneID="0Lh-rp-sIX">
             <objects>
-                <viewController id="ZPq-MD-RMk" customClass="EditorViewController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZPq-MD-RMk" customClass="EditorView" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6US-KJ-qxP">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -349,10 +349,10 @@
             </objects>
             <point key="canvasLocation" x="3527.480916030534" y="3.5211267605633805"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Tile List-->
         <scene sceneID="Pp2-jL-aay">
             <objects>
-                <viewController id="4uw-EA-R6T" customClass="MapViewController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4uw-EA-R6T" customClass="TileList" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cEh-FP-L5b">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -434,10 +434,10 @@
             </objects>
             <point key="canvasLocation" x="28.244274809160306" y="3.5211267605633805"/>
         </scene>
-        <!--Linking View Controller-->
+        <!--Link View-->
         <scene sceneID="hae-5R-3rL">
             <objects>
-                <viewController id="d7W-Sl-Zwk" customClass="LinkingViewController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="d7W-Sl-Zwk" customClass="LinkView" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JO8-Ed-v4x">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -490,9 +490,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="PTd-q9-nyU"/>
-        <segue reference="X48-q3-r0z"/>
-        <segue reference="8gi-D9-aUj"/>
+        <segue reference="npG-xH-dlG"/>
+        <segue reference="G4A-Hk-eSg"/>
+        <segue reference="wpS-gn-cUI"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="doc.circle.fill" catalog="system" width="128" height="123"/>
@@ -506,10 +506,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

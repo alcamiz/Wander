@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var game:StoredGame?
     var tileList:[StoredTile] = []
     var textCellIdentifier = "TileCell"
@@ -100,7 +100,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let nextVC = segue.destination as? EditorViewController {
+        if let nextVC = segue.destination as? EditorView {
 
             if segue.identifier == "CreateTileSegue"{
                 let newTile = game?.createTile()
