@@ -185,9 +185,9 @@
 		B6953E832BC0A38300CE543D /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				B6953E862BC0A3B100CE543D /* LoginFlow.storyboard */,
 				B6953E892BC0A3B100CE543D /* LandingViewController.swift */,
 				B6CF7DC62BC1E3350044AED4 /* LoginViewController.swift */,
-				B6953E862BC0A3B100CE543D /* LoginFlow.storyboard */,
 				B6953E882BC0A3B100CE543D /* SignupViewController.swift */,
 				B6CF7DC82BC1EC860044AED4 /* AuthActions.swift */,
 			);
@@ -760,7 +760,7 @@
 				INFOPLIST_FILE = Wander/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = TabBar;
+				INFOPLIST_KEY_UIMainStoryboardFile = LoginFlow;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -789,7 +789,7 @@
 				INFOPLIST_FILE = Wander/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = TabBar;
+				INFOPLIST_KEY_UIMainStoryboardFile = LoginFlow;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
