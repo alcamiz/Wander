@@ -23,6 +23,7 @@ struct GlobalInfo {
     static var context: NSManagedObjectContext?
     static var currentUser: StoredUser?
     static var tagList = ["Horror", "Adventure", "Drama", "Etc"]
+    static var domainList = ["Title", "Author"]
 }
 
 
