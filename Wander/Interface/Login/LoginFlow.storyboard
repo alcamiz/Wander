@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GcM-AZ-QTI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GcM-AZ-QTI">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <!--Landing View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="LandingViewController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LandingViewController" id="Y6W-OH-hqX" customClass="LandingViewController" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -53,11 +53,12 @@
                     <connections>
                         <outlet property="loginButton" destination="KMK-dT-7GE" id="a9D-eP-vQS"/>
                         <outlet property="signupButton" destination="vul-4S-BzX" id="xnp-tG-KP4"/>
+                        <segue destination="9VO-GT-4xr" kind="presentation" identifier="PersistentSegue" modalPresentationStyle="fullScreen" id="uJ3-40-xN9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="916.79389312977094" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="1071" y="105"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="C5P-TE-VP5">
@@ -143,7 +144,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Eh-ey-ymS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2529" y="1"/>
+            <point key="canvasLocation" x="2512" y="45"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="3Yx-FI-w9K">
@@ -226,7 +227,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AmH-Cl-fLL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1862" y="423"/>
+            <point key="canvasLocation" x="1862" y="551"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ix9-Kw-h2a">
@@ -249,7 +250,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="BgH-B1-QPX"/>
-        <segue reference="CfG-Aa-stl"/>
+        <segue reference="uJ3-40-xN9"/>
         <segue reference="L7s-D4-Oon"/>
     </inferredMetricsTieBreakers>
     <resources>

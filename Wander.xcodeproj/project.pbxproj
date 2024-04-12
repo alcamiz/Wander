@@ -315,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				FF9A359D2B8D510700A38D62 /* Wander.xcdatamodeld */,
+				FF94C44B2BA9468A0089E47C /* StoredUser+CoreDataClass.swift */,
 				B6CF7DCA2BC1F4990044AED4 /* StoredUser+CoreDataProperties.swift */,
 				FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */,
 				FF94C44A2BA9468A0089E47C /* StoredGame+CoreDataProperties.swift */,
@@ -322,7 +323,6 @@
 				FF94C4462BA9468A0089E47C /* StoredOption+CoreDataProperties.swift */,
 				FF94C4472BA9468A0089E47C /* StoredTile+CoreDataClass.swift */,
 				FF94C4492BA9468A0089E47C /* StoredTile+CoreDataProperties.swift */,
-				FF94C44B2BA9468A0089E47C /* StoredUser+CoreDataClass.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";

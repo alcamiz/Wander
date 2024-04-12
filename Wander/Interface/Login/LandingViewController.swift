@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LandingViewController: UIViewController {
     
@@ -14,7 +15,12 @@ class LandingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        Auth.auth().addStateDidChangeListener() {
+            (auth, user) in
+            if user != nil {
+                self.performSegue(withIdentifier: "PersistentSegue", sender: self)
+            }
+        }
         // Do any additional setup after loading the view.
     }
     
