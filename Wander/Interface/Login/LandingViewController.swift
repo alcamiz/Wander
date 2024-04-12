@@ -20,7 +20,15 @@ class LandingViewController: UIViewController {
             if user != nil {
                 self.performSegue(withIdentifier: "PersistentSegue", sender: self)
             }
+            return
         }
+        
+        loginButton.tintColor = Color.secondary
+        loginButton.setTitleColor(.white, for: .normal)
+        
+        signupButton.tintColor = .white
+        signupButton.setTitleColor(Color.secondary, for: .normal)
+        
         // Do any additional setup after loading the view.
     }
     

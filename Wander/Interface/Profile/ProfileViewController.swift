@@ -84,7 +84,10 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     func navigateToLandingPage() {
         let storyboard = UIStoryboard(name: "LoginFlow", bundle: nil)
         if let landingVC = storyboard.instantiateViewController(withIdentifier: "LandingViewController") as? LandingViewController {
-        navigationController?.pushViewController(landingVC, animated: true)
+            
+        landingVC.modalPresentationStyle = .fullScreen
+        self.present(landingVC, animated: true, completion: nil)
+//        navigationController?.pushViewController(landingVC, animated: true)
         }
     }
     
