@@ -24,6 +24,7 @@ struct GlobalInfo {
     static var currentUser: StoredUser?
     static var tagList = ["Horror", "Adventure", "Drama", "Etc"]
     static var domainList = ["Title", "Author"]
+    static var sortList = ["Ascending", "Descending"]
 }
 
 
