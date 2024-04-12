@@ -38,8 +38,6 @@ class EditorView: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     var button2Title: String!
     let defaultButton1 = "Button 1"
     let defaultButton2 = "Button 2"
-    var button1Option: StoredOption?
-    var button2Option: StoredOption?
     
     @IBOutlet weak var linkingButton: UIButton!
     
@@ -126,18 +124,9 @@ class EditorView: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         button1.tintColor = .white
         button2.tintColor = .white
         
-        if (tile.options != nil && tile.options!.count >= 2) {
-            let opts = tile.fetchAllOptions()
-            button1Option = opts?[0]
-            button2Option = opts?[1]
-        } else {
-            button1Option = tile.createOption(tile: nil, desc: defaultButton1)
-            button2Option = tile.createOption(tile: nil, desc: defaultButton2)
-        }
-        
         // Create a UITextField with the same frame as the UIButtons
         button1TextField = UITextField(frame: button1.frame)
-        button1Title = button1Option?.desc ?? defaultButton1
+        button1Title = tile.leftButton ?? defaultButton1
         button1.titleLabel?.text = button1Title
         button1.setTitle(button1Title, for: .normal)
         button1TextField.isHidden = true
@@ -146,7 +135,7 @@ class EditorView: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         view.addSubview(button1TextField)
         
         button2TextField = UITextField(frame: button2.frame)
-        button2Title = button2Option?.desc ?? defaultButton2
+        button2Title = tile.rightButton ?? defaultButton2
         button2.titleLabel?.text = button2Title
         button2.setTitle(button2Title, for: .normal)
         button2TextField.isHidden = true
@@ -460,11 +449,11 @@ class EditorView: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if selectedImage != nil {
             tile.addImage(image: selectedImage)
         }
-        if button1Option != nil && button1Title != nil {
-            button1Option?.desc = button1Title
+        if button1Title != nil {
+            tile.leftButton = button1Title
         }
-        if button2Option != nil && button2Title != nil {
-            button2Option?.desc = button2Title
+        if button2Title != nil {
+            tile.rightButton = button2Title
         }
         
         if tileTypeSegCtrl.selectedSegmentIndex == segCtrlWin {
@@ -507,13 +496,13 @@ class EditorView: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             nextVC.parentTile = self.tile
             nextVC.delegate = self
             nextVC.linkTitle = "Button One"
-            saveToCore()
+            //saveToCore()
         } else if segue.identifier == "LinkButtonTwoSegue",
             let nextVC = segue.destination as? LinkView {
             nextVC.parentTile = self.tile
             nextVC.delegate = self
             nextVC.linkTitle = "Button Two"
-            saveToCore()
+            //saveToCore()
         }
     }
 }

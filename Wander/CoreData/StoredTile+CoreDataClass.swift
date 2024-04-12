@@ -36,6 +36,8 @@ public class StoredTile: NSManagedObject {
         self.title = "Tile #\(game.createCount)"
         self.type = TileType.empty.rawValue
         self.createdOn = Date()
+        self.leftButton = "Button 1"
+        self.rightButton = "Button 2"
     }
     
     convenience init(game: StoredGame, webVersion: FirebaseTile) {
@@ -46,54 +48,26 @@ public class StoredTile: NSManagedObject {
         self.title = webVersion.title
         self.type = Int16(webVersion.type)
         self.createdOn = Date()
+        if getType() != .win && getType() != .lose {
+            self.leftButton = "Button 1"
+            self.rightButton = "Button 2"
+        }
     }
     
     func initializeOptions(webVersion: FirebaseTile) {
-        guard webVersion.options.count > 0, webVersion.children.count == webVersion.options.count else {return}
-        for i in 0...webVersion.options.count-1 {
-            let childTile = game?.fetchTile(tileID: UUID(uuidString: webVersion.children[i])!)
-            createOption(tile: childTile, desc: webVersion.options[i])
-        }
+        guard webVersion.options.count == 2, webVersion.children.count == 2 else {return}
+        self.leftTile = game?.fetchTile(tileID: UUID(uuidString: webVersion.children[0])!)
+        self.leftButton = webVersion.options[0]
+        self.rightTile = game?.fetchTile(tileID: UUID(uuidString: webVersion.children[1])!)
+        self.rightButton =  webVersion.options[1]
     }
     
     func getType() -> TileType {
         return TileType(rawValue: self.type)!
     }
     
-    func createOption(tile: StoredTile?, desc: String) -> StoredOption {
-        let opt = StoredOption(parent: self, child: tile, desc: desc)
-        self.addToOptions(opt)
-        return opt
-    }
-    
-    func fetchOption(optionID : UUID) -> StoredOption? {
-        let predicate = NSPredicate(format: "id == %@", optionID as CVarArg)
-        let res = self.options?.filtered(using: predicate) as? Set<StoredOption>
-        return res != nil && res!.isEmpty ? res!.first : nil
-    }
-    
-    func fetchAllOptions() -> [StoredOption]? {
-        return (self.options?.allObjects as? [StoredOption])?.sorted(by:{ $0.createdOn ?? Date.distantPast < $1.createdOn ?? Date.distantPast })
-    }
-    
     func fetchAllChildren() -> [StoredTile?] {
-        let options = fetchAllOptions() ?? []
-        return options.map { $0.child }
-    }
-    
-    func deleteOption(option: StoredOption) -> Bool {
-        guard option.parent == self else {return false}
-        self.managedObjectContext?.delete(option)
-        try! self.managedObjectContext?.save()
-        return true
-    }
-    
-    func deleteAllOptions() -> Bool {
-        for option in self.options! {
-            self.managedObjectContext?.delete(option as! StoredOption)
-        }
-        try! self.managedObjectContext?.save()
-        return true
+        return [self.leftTile, self.rightTile]
     }
     
     func addImage(image: UIImage) {
@@ -112,13 +86,16 @@ public class StoredTile: NSManagedObject {
             "text": self.text ?? "",
             "type": self.type,
             "game": self.game?.id?.uuidString ?? "-1",
+            "children": [],
+            "options": []
         ] as [String : Any]
-        
-        if let childOptions = fetchAllOptions() {
-            let childIDs = childOptions.compactMap {$0.child?.id?.uuidString}
-            let buttonTexts = childOptions.compactMap {$0.desc}
-            data["children"] = childIDs
-            data["options"] = buttonTexts
+         
+        if getType() != .win && getType() != .lose {
+            data["children"] = [
+                self.leftTile?.id?.uuidString ?? "",
+                self.rightTile?.id?.uuidString ?? "",
+            ]
+            data["options"] = [self.leftButton ?? "", self.rightButton ?? ""]
         }
         
         if let dateObj = self.createdOn {

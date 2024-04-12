@@ -250,7 +250,6 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         else if segue.identifier == "PlaytestGameSegue", let nextVC = segue.destination as? PlaymodeViewController {
             nextVC.game = game
             nextVC.currentTile = game.root
-            nextVC.currentTileID = game.root?.id
         }
     }
     @IBAction func publishButtonPressed(_ sender: Any) {
