@@ -61,31 +61,34 @@ class PlaymodeViewController: UIViewController {
             return
         }
         
-        guard let currentTile = tile else {
+        guard let newCurrentTile = tile else {
             print("currentTile is nil")
             return
         }
-
-        titleLabel.text = currentTile.title
-        tileImageView.image = currentTile.fetchImage()
-        tileTextView.text = currentTile.text
         
-        if currentTile.type == TileType.win.rawValue || currentTile.type == TileType.lose.rawValue {
+        currentTile = tile
+        
+
+        titleLabel.text = newCurrentTile.title
+        tileImageView.image = newCurrentTile.fetchImage()
+        tileTextView.text = newCurrentTile.text
+        
+        if newCurrentTile.type == TileType.win.rawValue || newCurrentTile.type == TileType.lose.rawValue {
             tileButton1.isHidden = true
             tileButton2.isHidden = true
             
             let winText = "You have just completed \"\(game.name!)\" and WON!! Congratulations!!"
             let loseText = "You have just completed \"\(game.name!)\"...and lost. Womp womp."
             
-            completeGameLabel.text = (currentTile.type == TileType.win.rawValue) ? winText : loseText
+            completeGameLabel.text = (newCurrentTile.type == TileType.win.rawValue) ? winText : loseText
             completeGameLabel.isHidden = false
         }
         else {
             tileButton1.isHidden = false
             tileButton2.isHidden = false
             // Button names are option desc for button1, button 2
-            tileButton1.setTitle(currentTile.leftButton, for: .normal)
-            tileButton2.setTitle(currentTile.rightButton, for: .normal)
+            tileButton1.setTitle(newCurrentTile.leftButton, for: .normal)
+            tileButton2.setTitle(newCurrentTile.rightButton, for: .normal)
          
             completeGameLabel.isHidden = true
         }
