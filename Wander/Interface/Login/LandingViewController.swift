@@ -18,6 +18,7 @@ class LandingViewController: UIViewController {
         Auth.auth().addStateDidChangeListener() {
             (auth, user) in
             if user != nil {
+                self.view.isHidden = true
                 self.performSegue(withIdentifier: "PersistentSegue", sender: self)
             }
             return
@@ -28,11 +29,7 @@ class LandingViewController: UIViewController {
         
         signupButton.tintColor = .white
         signupButton.setTitleColor(Color.secondary, for: .normal)
-        
-        // Do any additional setup after loading the view.
     }
-    
-    
     
     /*
     // MARK: - Navigation

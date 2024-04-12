@@ -6,12 +6,20 @@
 //
 
 import Foundation
+import CoreData
 
-let globalDebug: Bool = false
-let loginDebug: Bool = false
-let exploreDebug: Bool = false
-let searchDebug: Bool = false
-let gameScreenDebug: Bool = false
-let creatorDebug: Bool = false
-let playmodeDebug: Bool = false
-let profileDebug: Bool = false
+struct DebugInfo {
+    static let global = false
+    static let login = false
+    static let explore = false
+    static let search = false
+    static let gameScreen = false
+    static let creator = false
+    static let playmode = false
+    static let profile = false
+}
+
+struct GlobalInfo {
+    static var context: NSManagedObjectContext?
+    static var currentUser: StoredUser?
+}
