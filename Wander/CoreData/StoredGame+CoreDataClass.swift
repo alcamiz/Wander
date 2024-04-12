@@ -18,7 +18,7 @@ public class StoredGame: NSManagedObject {
         self.init(context: creator.managedObjectContext!)
         self.id = UUID()
         self.author = creator
-        self.name = "Game #\(creator.createCount)"
+        self.name = "Game #\(creator.createdGames?.count ?? 0)"
         self.tags = []
         self.desc = nil
         self.createCount = 0

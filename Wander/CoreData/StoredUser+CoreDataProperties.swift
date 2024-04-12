@@ -2,7 +2,7 @@
 //  StoredUser+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Benjamin Gordon on 4/6/24.
+//  Created by Benjamin Gordon on 4/12/24.
 //
 //
 
@@ -16,9 +16,9 @@ extension StoredUser {
         return NSFetchRequest<StoredUser>(entityName: "StoredUser")
     }
 
-    @NSManaged public var createCount: Int32
     @NSManaged public var createdOn: Date?
     @NSManaged public var id: String?
+    @NSManaged public var picture: Data?
     @NSManaged public var username: String?
     @NSManaged public var createdGames: NSSet?
 

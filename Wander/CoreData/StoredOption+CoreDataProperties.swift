@@ -2,7 +2,7 @@
 //  StoredOption+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Alex Cabrera on 3/15/24.
+//  Created by Benjamin Gordon on 4/12/24.
 //
 //
 
@@ -16,10 +16,10 @@ extension StoredOption {
         return NSFetchRequest<StoredOption>(entityName: "StoredOption")
     }
 
+    @NSManaged public var left: Bool
     @NSManaged public var desc: String?
-    @NSManaged public var createdOn: Date?
-    @NSManaged public var parent: StoredTile?
     @NSManaged public var child: StoredTile?
+    @NSManaged public var parent: StoredTile?
 
 }
 

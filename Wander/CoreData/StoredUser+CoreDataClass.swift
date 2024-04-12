@@ -15,13 +15,11 @@ public class StoredUser: NSManagedObject {
         self.init(context: context)
         self.id = id
         self.username = username
-        self.createCount = 0
         self.createdOn = Date()
     }
     
     func createGame() -> StoredGame {
         let newGame = StoredGame(creator: self)
-        self.createCount += 1
         try! self.managedObjectContext?.save()
         return newGame
     }

@@ -57,11 +57,11 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         switch (linkTitle) {
             case "Button One":
-                delegate?.button1Option?.child = selectedTile
+                parentTile?.leftTile = selectedTile
                 try? parentTile?.managedObjectContext?.save()
                 self.navigationController?.popViewController(animated: true)
             case "Button Two":
-                delegate?.button2Option?.child = selectedTile
+                parentTile?.rightTile = selectedTile
                 try? parentTile?.managedObjectContext?.save()
                 self.navigationController?.popViewController(animated: true)
             default:
