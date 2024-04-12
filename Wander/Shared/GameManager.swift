@@ -33,32 +33,5 @@ public class GameManager {
     func fetchAllGames() -> [StoredGame]? {
         return try? self.context.fetch(StoredGame.fetchRequest())
     }
-    
-    static func queryGames(query: String?, tag: String?, sort: String?) async -> [FirebaseGame] {
-        var queriedGames: [FirebaseGame] = []
-        var queryObj = db.collection("games").whereField("name", notIn: [""])
-        if let queryString = query, queryString.count > 0 {
-            var truncatedQuery = queryString.prefix(queryString.count - 1)
-            let lastChar = (queryString.last?.unicodeScalars.first!.value)! + 1
-            truncatedQuery.append(Character(UnicodeScalar(lastChar)!))
-//            print(truncatedQuery)
-            queryObj = queryObj.whereField("name", isGreaterThanOrEqualTo: queryString)
-                .whereField("name", isLessThan: truncatedQuery)
-        }
-        do {
-            let querySnapshot = try await queryObj.getDocuments()
-             
-            for document in querySnapshot.documents {
-                do {
-                    let gameObj = try document.data(as: FirebaseGame.self)
-                    queriedGames.append(gameObj)
-                } catch {
-                }
-            }
-        
-        } catch {}
-        
-        return queriedGames
-    }
 
 }

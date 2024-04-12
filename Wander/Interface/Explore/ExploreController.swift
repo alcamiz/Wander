@@ -14,8 +14,6 @@ import FirebaseStorage
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-
-
 class ExploreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var popularView: UICollectionView!
@@ -164,9 +162,13 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         popularView.backgroundColor = Color.primary
         
         Task {
-            popularGames = await GameManager.queryGames(query: "", tag: "", sort: "")
+            popularGames = await FirebaseHelper.queryGames(query: "", tag: "", sort: "")
             popularView.reloadData()
-            loadPopularPictures()
+            FirebaseHelper.loadPictures(imageList: popularGames, basepath: "gamePreviews") { (index, data) in
+                self.popularGames[index].image = data
+                let indexPath = IndexPath(row: index, section: 0)
+                self.popularView.reloadItems(at: [indexPath])
+            }
         }
         
         historyView.dataSource = self

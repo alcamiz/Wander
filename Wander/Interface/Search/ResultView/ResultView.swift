@@ -36,34 +36,17 @@ class ResultView: UITableViewController {
     
     func reloadQuery() async {
         // TODO: Load queried games (FirebaseGame), using query, filter, sort
-        queriedGames = await GameManager.queryGames(query: query, tag: selectedFilter, sort: selectedSort)
+        queriedGames = await FirebaseHelper.queryGames(query: query, tag: selectedFilter, sort: selectedSort)
         tableView.reloadData()
-        loadPictures()
-    }
-    
-    func loadPictures() {
-        guard queriedGames.count > 0 else {return}
-        for i in 0...queriedGames.count-1 {
-            if let documentID = queriedGames[i].id {
-                let path = "gamePreviews/\(documentID).png"
-                let reference = storage.child(path)
-                reference.getData(maxSize: (64 * 1024 * 1024)) { (data, error) in
-                    if let image = data {
-                        print("image found for \(documentID)")
-                        // let myImage: UIImage! = UIImage(data: image)
-                        self.queriedGames[i].image = image
-                        self.tableView.reloadData()
-                         // Use Image
-                    }
-                }
-            }
+        FirebaseHelper.loadPictures(imageList: queriedGames, basepath: "gamePreviews") { (index, data) in
+            self.queriedGames[index].image = data
+            let indexPath = IndexPath(row: index, section: 0)
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadPictures()
     }
 
     // MARK: - Table view data source

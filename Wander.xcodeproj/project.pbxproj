@@ -48,6 +48,9 @@
 		B6CF7E9B2BC2211B0044AED4 /* Playmode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CF7E992BC2211B0044AED4 /* Playmode.storyboard */; };
 		B6CF7E9C2BC2211B0044AED4 /* PlaymodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CF7E9A2BC2211B0044AED4 /* PlaymodeViewController.swift */; };
 		B6CF7EA02BC221BC0044AED4 /* EditorNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CF7E9E2BC221BC0044AED4 /* EditorNavigation.swift */; };
+		FF3558EE2BC8C57200BF2F17 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3558ED2BC8C57200BF2F17 /* Protocol.swift */; };
+		FF3558F02BC8D06B00BF2F17 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3558EF2BC8D06B00BF2F17 /* FirebaseHelper.swift */; };
+		FF3558F22BC8D27000BF2F17 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3558F12BC8D27000BF2F17 /* Variables.swift */; };
 		FF486D382BC4AEDD00133C46 /* TileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF486D352BC4AEDD00133C46 /* TileCell.swift */; };
 		FF486D392BC4AEDD00133C46 /* TileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF486D362BC4AEDD00133C46 /* TileCell.xib */; };
 		FF7880CF2BB0F60F00689BEC /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880CE2BB0F60F00689BEC /* CropViewController */; };
@@ -120,6 +123,9 @@
 		B6CF7E992BC2211B0044AED4 /* Playmode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Playmode.storyboard; sourceTree = "<group>"; };
 		B6CF7E9A2BC2211B0044AED4 /* PlaymodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaymodeViewController.swift; sourceTree = "<group>"; };
 		B6CF7E9E2BC221BC0044AED4 /* EditorNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorNavigation.swift; sourceTree = "<group>"; };
+		FF3558ED2BC8C57200BF2F17 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		FF3558EF2BC8D06B00BF2F17 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		FF3558F12BC8D27000BF2F17 /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		FF486D352BC4AEDD00133C46 /* TileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileCell.swift; sourceTree = "<group>"; };
 		FF486D362BC4AEDD00133C46 /* TileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TileCell.xib; sourceTree = "<group>"; };
 		FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredGame+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -176,6 +182,8 @@
 			children = (
 				B6953E842BC0A39200CE543D /* Color.swift */,
 				53DA0CC22BC1F9BC00CEB3A0 /* Format.swift */,
+				FF3558ED2BC8C57200BF2F17 /* Protocol.swift */,
+				FF3558F12BC8D27000BF2F17 /* Variables.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -443,6 +451,7 @@
 		FFBEBC232BC760D8008A2CB4 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				FF3558EF2BC8D06B00BF2F17 /* FirebaseHelper.swift */,
 				B6953E7A2BC0857900CE543D /* FirebaseGame.swift */,
 				B6552B4C2BAE29F300D06004 /* GoogleService-Info.plist */,
 			);
@@ -570,6 +579,7 @@
 				B6CF7E922BC209B40044AED4 /* SearchFlow.swift in Sources */,
 				039EE99D2BBA3C9000E67A61 /* TabBar.swift in Sources */,
 				FF9A359F2B8D510700A38D62 /* Wander.xcdatamodeld in Sources */,
+				FF3558F22BC8D27000BF2F17 /* Variables.swift in Sources */,
 				FF94C44C2BA9468A0089E47C /* StoredGame+CoreDataClass.swift in Sources */,
 				FF94C4522BA9468A0089E47C /* StoredGame+CoreDataProperties.swift in Sources */,
 				B6CF7EA02BC221BC0044AED4 /* EditorNavigation.swift in Sources */,
@@ -588,6 +598,8 @@
 				FF94C4532BA9468A0089E47C /* StoredUser+CoreDataClass.swift in Sources */,
 				FF9A35992B8D510700A38D62 /* GameList.swift in Sources */,
 				B6CF7DC92BC1EC860044AED4 /* AuthActions.swift in Sources */,
+				FF3558F02BC8D06B00BF2F17 /* FirebaseHelper.swift in Sources */,
+				FF3558EE2BC8C57200BF2F17 /* Protocol.swift in Sources */,
 				FF9A35952B8D510700A38D62 /* AppDelegate.swift in Sources */,
 				B6953E852BC0A39200CE543D /* Color.swift in Sources */,
 				B6CF7E9C2BC2211B0044AED4 /* PlaymodeViewController.swift in Sources */,

@@ -14,8 +14,7 @@ import CoreData
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-
-public class FirebaseTile: Codable {
+public class FirebaseTile: Codable, ImageableFirebase {
     @DocumentID var id: String?
     var image: Data?
     var text: String
@@ -26,7 +25,7 @@ public class FirebaseTile: Codable {
     var options: [String]
 }
 
-public class FirebaseGame: Codable {
+public class FirebaseGame: Codable, ImageableFirebase {
     @DocumentID var id: String?
     var author: String
     var root: String
@@ -37,9 +36,6 @@ public class FirebaseGame: Codable {
     var tiles: [String]
     var tags: [String]
     var image: Data?
-    
-    
-   
     
     func downloadTiles(_ storedGame: StoredGame) async {
         // first pass: initialize objects
