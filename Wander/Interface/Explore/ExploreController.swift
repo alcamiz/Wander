@@ -118,9 +118,9 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         guard popularGames.count > 0 else {return}
         for i in 0...popularGames.count-1 {
             if let documentID = popularGames[i].id {
-                let path = "gamePreviews/\(documentID).png"
+                let path = "gamePreviews/\(documentID).jpeg"
                 let reference = storage.child(path)
-                reference.getData(maxSize: (64 * 1024 * 1024)) { (data, error) in
+                reference.getData(maxSize: (5 * 1024 * 1024)) { (data, error) in
                     if let image = data {
                         print("image found for \(documentID)")
                         // let myImage: UIImage! = UIImage(data: image)
@@ -185,7 +185,8 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = StoredGame.fetchRequest()
-        let predicate = NSPredicate(format: "author == nil")
+        
+        let predicate = NSPredicate(format: "author != %@", GlobalInfo.currentUser!)
         fetchRequest.predicate = predicate
         let res = try! managedContext.fetch(fetchRequest)
         self.historyGames = res

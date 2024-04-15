@@ -7,6 +7,9 @@
 
 import Foundation
 import CoreData
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseStorage
 
 struct DebugInfo {
     static let global = false
@@ -20,11 +23,13 @@ struct DebugInfo {
 }
 
 struct GlobalInfo {
-    static var context: NSManagedObjectContext?
+    static var managedContext: NSManagedObjectContext?
     static var currentUser: StoredUser?
     static var tagList = ["Horror", "Adventure", "Drama", "Etc"]
     static var domainList = ["Title", "Author"]
     static var sortList = ["Ascending", "Descending"]
+    static var db = Firestore.firestore()
+    static var storage = Storage.storage().reference()
 }
 
 

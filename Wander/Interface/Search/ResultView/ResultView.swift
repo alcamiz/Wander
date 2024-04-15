@@ -65,7 +65,7 @@ class ResultView: UITableViewController {
         if !debug {
             let curGame = queriedGames[indexPath.row]
             cell.titleLabel.text = curGame.name
-            cell.authorLabel.text = curGame.author
+            cell.authorLabel.text = curGame.authorUsername
             cell.imageScreen.image = if curGame.image != nil {
                 UIImage.init(data: curGame.image!)
             } else {

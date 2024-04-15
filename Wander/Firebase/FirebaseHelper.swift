@@ -31,6 +31,8 @@ class FirebaseHelper {
             for document in querySnapshot.documents {
                 do {
                     let gameObj = try document.data(as: FirebaseGame.self)
+                    let author = try await db.collection("users").document(gameObj.author).getDocument(as: FirebaseUser.self)
+                    gameObj.authorUsername = author.username
                     queriedGames.append(gameObj)
                 } catch {
                 }
@@ -45,9 +47,9 @@ class FirebaseHelper {
         guard imageList.count > 0 else {return}
         for i in 0...imageList.count-1 {
             if let documentID = imageList[i].id {
-                let path = "\(basepath)/\(documentID).png"
+                let path = "\(basepath)/\(documentID).jpeg"
                 let reference = storage.child(path)
-                reference.getData(maxSize: (64 * 1024 * 1024)) { (data, error) in
+                reference.getData(maxSize: (5 * 1024 * 1024)) { (data, error) in
                     callback(i, data)
                 }
             }

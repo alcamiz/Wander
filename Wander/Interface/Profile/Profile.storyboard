@@ -127,6 +127,7 @@
                     <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="flX-GY-mEZ"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="pfpLabel" destination="Chf-hm-AQR" id="Xhy-2Z-5Hi"/>
                         <outlet property="profilePictureImageView" destination="RvO-wF-yY1" id="KBU-B5-Wsl"/>
                         <outlet property="publishedGamesCollectionView" destination="8pp-ML-aCb" id="JWY-gI-wzH"/>
                         <outlet property="usernameLabel" destination="wnB-Q7-KO0" id="r9v-p5-9WT"/>
