@@ -12,7 +12,6 @@ class ContractionView: UIView, UICollectionViewDelegate, UICollectionViewDelegat
     @IBOutlet var contractionView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var expandHeight: NSLayoutConstraint!
     @IBOutlet weak var actionButton: UIButton!
     
     var dataList: [String] = []
@@ -32,7 +31,7 @@ class ContractionView: UIView, UICollectionViewDelegate, UICollectionViewDelegat
     
     var buttonAction: () -> Void = {}
     
-    let debug = true
+    let debug = false
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -63,12 +62,12 @@ class ContractionView: UIView, UICollectionViewDelegate, UICollectionViewDelegat
         
         self.layer.backgroundColor = UIColor.white.cgColor
         self.layer.cornerRadius = 15
-        self.layer.borderWidth = 4
+        self.layer.borderWidth = 2.5
         self.layer.borderColor = UIColor(hex: "#389eb9").cgColor
+
     }
     
     func getSelectedData() -> String? {
-        // TODO: Comment in implementation
         if !debug {
             return selectedIndex != nil ? dataList[selectedIndex!.row] : nil
         }
@@ -130,7 +129,9 @@ class ContractionView: UIView, UICollectionViewDelegate, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return min(self.numRows * self.numCols, dataList.count)
+        if !debug {
+            return min(self.numRows * self.numCols, dataList.count)
+        }
         return self.numRows * self.numCols
     }
     
@@ -144,20 +145,17 @@ class ContractionView: UIView, UICollectionViewDelegate, UICollectionViewDelegat
         } else {
             cell.setSelected()
         }
-    
-        // TODO: Comment in/out
 
         // Start - Implementation
-        // cell.mainLabel.text = dataList[indexPath.row]
-        // End - Implementation
-        
-        // Start - Placeholder data
-        if indexPath.row % 2 == 0 {
-            cell.mainLabel.text = "Test #1"
+        if !debug {
+            cell.mainLabel.text = dataList[indexPath.row]
         } else {
-            cell.mainLabel.text = "Test #2"
+            if indexPath.row % 2 == 0 {
+                cell.mainLabel.text = "Test #1"
+            } else {
+                cell.mainLabel.text = "Test #2"
+            }
         }
-        // End - Placeholder data
         return cell
     }
     

@@ -13,7 +13,7 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     var searchControl: UISearchController = UISearchController()
     
     let resultView = {
-        return ResultView(nibName: "ResultView", bundle: nil)
+        return NewResult(nibName: "NewResult", bundle: nil)
     }()
     
     let filterView = {
@@ -53,6 +53,8 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
         DispatchQueue.main.async {
             self.searchControl.searchBar.becomeFirstResponder()
         }
+        
+        resultView.fixSelectedRow()
     }
     
     // Animates changes in safe area due to search bar
@@ -61,7 +63,7 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let results = searchControl.searchResultsController as! ResultView
+        let results = searchControl.searchResultsController as! NewResult
         results.query = searchBar.text ?? ""
         Task {
             await results.reloadQuery()

@@ -11,10 +11,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterView" customModule="Wander" customModuleProvider="target">
             <connections>
-                <outlet property="sortHeight" destination="3hK-R7-b0b" id="Z00-6K-FZC"/>
-                <outlet property="sortView" destination="0s1-gV-tq9" id="naL-E6-sb3"/>
-                <outlet property="tagHeight" destination="kY9-V0-bic" id="FvY-G4-4iM"/>
-                <outlet property="tagView" destination="gPs-0S-FCw" id="XUu-hu-zoq"/>
+                <outlet property="domainHeight" destination="kY9-V0-bic" id="AlX-4e-WSR"/>
+                <outlet property="domainView" destination="gPs-0S-FCw" id="Kuw-mq-hoP"/>
+                <outlet property="sortHeight" destination="HBy-HK-cKb" id="2qh-eL-bH4"/>
+                <outlet property="sortView" destination="PVd-1V-LXJ" id="BPv-rE-DF0"/>
+                <outlet property="tagHeight" destination="3hK-R7-b0b" id="7i4-Ip-fgR"/>
+                <outlet property="tagView" destination="0s1-gV-tq9" id="ATy-bh-Rs8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -27,30 +29,40 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dve-X5-YUs" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="445"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="600"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPs-0S-FCw" userLabel="Tag View" customClass="ContractionView" customModule="Wander" customModuleProvider="target">
-                                    <rect key="frame" x="15" y="40" width="363" height="220"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPs-0S-FCw" userLabel="Domain View" customClass="ContractionView" customModule="Wander" customModuleProvider="target">
+                                    <rect key="frame" x="15" y="40" width="363" height="120"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="220" id="kY9-V0-bic"/>
+                                        <constraint firstAttribute="height" constant="120" id="kY9-V0-bic"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0s1-gV-tq9" userLabel="Sort View" customClass="ContractionView" customModule="Wander" customModuleProvider="target">
-                                    <rect key="frame" x="15" y="285" width="363" height="120"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PVd-1V-LXJ" userLabel="Sort View" customClass="ContractionView" customModule="Wander" customModuleProvider="target">
+                                    <rect key="frame" x="15" y="190" width="363" height="120"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="120" id="3hK-R7-b0b"/>
+                                        <constraint firstAttribute="height" constant="120" id="HBy-HK-cKb"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0s1-gV-tq9" userLabel="Tag View" customClass="ContractionView" customModule="Wander" customModuleProvider="target">
+                                    <rect key="frame" x="15" y="340" width="363" height="220"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="220" id="3hK-R7-b0b"/>
                                     </constraints>
                                 </view>
                             </subviews>
                             <constraints>
+                                <constraint firstItem="PVd-1V-LXJ" firstAttribute="leading" secondItem="dve-X5-YUs" secondAttribute="leading" constant="15" id="7HX-Ms-r60"/>
                                 <constraint firstItem="gPs-0S-FCw" firstAttribute="leading" secondItem="dve-X5-YUs" secondAttribute="leading" constant="15" id="Ay1-4V-e6f"/>
                                 <constraint firstAttribute="bottom" secondItem="0s1-gV-tq9" secondAttribute="bottom" constant="40" id="OLR-oG-4lc"/>
                                 <constraint firstItem="gPs-0S-FCw" firstAttribute="top" secondItem="dve-X5-YUs" secondAttribute="top" constant="40" id="Pfc-5e-CfV"/>
+                                <constraint firstItem="0s1-gV-tq9" firstAttribute="top" secondItem="PVd-1V-LXJ" secondAttribute="bottom" constant="30" id="Sld-fd-zFS"/>
                                 <constraint firstAttribute="trailing" secondItem="0s1-gV-tq9" secondAttribute="trailing" constant="15" id="d1X-jg-sWu"/>
-                                <constraint firstItem="0s1-gV-tq9" firstAttribute="top" secondItem="gPs-0S-FCw" secondAttribute="bottom" constant="25" id="i7Z-Ay-Db6"/>
+                                <constraint firstItem="PVd-1V-LXJ" firstAttribute="top" secondItem="gPs-0S-FCw" secondAttribute="bottom" constant="30" id="fBw-Yp-4sO"/>
                                 <constraint firstAttribute="trailing" secondItem="gPs-0S-FCw" secondAttribute="trailing" constant="15" id="sBL-uG-mVH"/>
+                                <constraint firstAttribute="trailing" secondItem="PVd-1V-LXJ" secondAttribute="trailing" constant="15" id="sS2-ev-aCZ"/>
                                 <constraint firstItem="0s1-gV-tq9" firstAttribute="leading" secondItem="dve-X5-YUs" secondAttribute="leading" constant="15" id="u23-T2-chC"/>
                             </constraints>
                         </view>

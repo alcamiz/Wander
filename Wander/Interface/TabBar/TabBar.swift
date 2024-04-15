@@ -12,16 +12,17 @@ class TabBar: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabBar.isTranslucent = false
+        let tabAppearance = UITabBarAppearance()
+        tabAppearance.configureWithOpaqueBackground()
+        tabAppearance.backgroundColor = Color.secondary
         
-        // Set the background color of the tab bar
-        self.tabBar.backgroundColor = Color.secondary
+        self.tabBar.standardAppearance = tabAppearance
+        self.tabBar.scrollEdgeAppearance = tabAppearance
+        
+        self.tabBar.isTranslucent = false
         
         // Set the selected tab item color
         self.tabBar.tintColor = Color.primary
-        
-        // Set the unselected tab item color
-        self.tabBar.unselectedItemTintColor = .white
-        
+                
     }
 }

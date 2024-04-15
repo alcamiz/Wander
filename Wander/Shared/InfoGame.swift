@@ -16,9 +16,6 @@ class InfoGame {
     var tags: [String]
     var image: UIImage?
     
-    var inStore: Bool
-    var inFirebase: Bool
-    
     var storedGame: StoredGame?
     var firebaseGame: FirebaseGame?
     
@@ -31,11 +28,9 @@ class InfoGame {
         if storedGame.image != nil {
             self.image = UIImage(data: storedGame.image!)
         } else {
-            self.image = UIImage(systemName: "italic")
+            self.image = UIImage(systemName: "questionmark")
         }
         
-        self.inStore = true
-        self.inFirebase = false // TODO: Might change for final release
         self.storedGame = storedGame
 
     }
@@ -49,12 +44,18 @@ class InfoGame {
         if firebaseGame.image != nil {
             self.image = UIImage(data: firebaseGame.image!)
         } else {
-            self.image = UIImage(systemName: "italic")
+            self.image = UIImage(systemName: "questionmark")
         }
-        
-        self.inFirebase = true
-        self.inStore = false // TODO: Might change for final
+
         self.firebaseGame = firebaseGame
+    }
+    
+    init () {
+        self.title = "Empty"
+        self.author = "No games"
+        self.desc = ""
+        self.tags = []
+        self.image = UIImage(systemName: "questionmark")
     }
     
 }

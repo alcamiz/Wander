@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,16 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RHK-d8-Ksa">
-                                <rect key="frame" x="-7" y="59" width="389" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="My Games" id="7DS-ZF-0xz"/>
-                                </items>
-                            </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BNG-J9-jtS">
-                                <rect key="frame" x="-2" y="158" width="393" height="689"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BNG-J9-jtS">
+                                <rect key="frame" x="0.0" y="134" width="393" height="684"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GameCell" textLabel="vfQ-rI-SlH" style="IBUITableViewCellStyleDefault" id="xne-mk-kRW">
@@ -50,9 +43,11 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTO-cO-4H1">
-                                <rect key="frame" x="61" y="120" width="271" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTO-cO-4H1">
+                                <rect key="frame" x="61.666666666666657" y="79" width="270" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="270" id="KtB-nh-r99"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Create New Game"/>
                                 <connections>
@@ -62,6 +57,14 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="R1R-Fs-Hww"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="R1R-Fs-Hww" firstAttribute="bottom" secondItem="BNG-J9-jtS" secondAttribute="bottom" id="bdZ-Zl-4u4"/>
+                            <constraint firstItem="JTO-cO-4H1" firstAttribute="top" secondItem="R1R-Fs-Hww" secondAttribute="top" constant="20" id="bdr-6d-czx"/>
+                            <constraint firstItem="JTO-cO-4H1" firstAttribute="centerX" secondItem="fgO-Ny-6A5" secondAttribute="centerX" id="cDu-1R-RZN"/>
+                            <constraint firstItem="BNG-J9-jtS" firstAttribute="top" secondItem="JTO-cO-4H1" secondAttribute="bottom" constant="20" id="mQE-TT-4SF"/>
+                            <constraint firstItem="R1R-Fs-Hww" firstAttribute="trailing" secondItem="BNG-J9-jtS" secondAttribute="trailing" id="s8D-7q-Kfy"/>
+                            <constraint firstItem="BNG-J9-jtS" firstAttribute="leading" secondItem="R1R-Fs-Hww" secondAttribute="leading" id="xdL-Wp-FOX"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="NJQ-Hn-lhj"/>
                     <connections>

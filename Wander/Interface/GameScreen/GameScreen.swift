@@ -33,6 +33,12 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         self.imageScreen.backgroundColor = .lightGray
         self.descriptionLabel.textColor = .gray
         
+        imageScreen.layer.cornerRadius = 12
+        imageScreen.clipsToBounds = true
+        imageScreen.tintColor = .black
+        
+        authorLabel.textColor = Color.primary
+        
         if !debug {
             titleLabel.text = infoGame!.title
             authorLabel.text = infoGame!.author
@@ -53,7 +59,8 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
 
         tagView.delegate = self
         tagView.dataSource = self
-        playButton.tintColor = Color.secondary
+        playButton.tintColor = Color.primary
+        playButton.titleLabel?.textColor = Color.primary
     }
     
     @IBAction func playAction(_ sender: Any) {
@@ -61,13 +68,14 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         let playMode = storyboard.instantiateViewController(withIdentifier: "PlaymodeViewController") as! PlaymodeViewController
         
         if !debug {
-            if infoGame!.inStore {
+            if infoGame!.storedGame != nil {
                 playMode.game = infoGame!.storedGame
                 if let rootTile = playMode.game!.root {
                     playMode.currentTile = rootTile
                 }
                 self.navigationController?.pushViewController(playMode, animated: true)
-            } else if infoGame!.inFirebase {
+                
+            } else if infoGame!.firebaseGame != nil {
                 
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let managedContext = appDelegate.persistentContainer.viewContext
@@ -82,14 +90,12 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
                         playMode.currentTile = rootTile
                     }
                     self.navigationController?.pushViewController(playMode, animated: true)
-                }
-                else {
+                } else {
                     Task {
                         let appDelegate = UIApplication.shared.delegate as! AppDelegate
                         let managedContext = appDelegate.persistentContainer.viewContext
                         let storedGame = await self.infoGame?.firebaseGame!.download(managedContext: managedContext)
                         infoGame?.storedGame = storedGame
-                        infoGame?.inStore = true
                         playMode.game = storedGame
                         if let rootTile = storedGame!.root {
                             playMode.currentTile = rootTile

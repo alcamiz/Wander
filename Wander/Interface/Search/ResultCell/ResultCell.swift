@@ -15,7 +15,14 @@ class ResultCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        imageScreen.backgroundColor = .lightGray
+        imageScreen.layer.cornerRadius = 12
+        imageScreen.clipsToBounds = true
+        imageScreen.tintColor = .black
+        
+        titleLabel.textColor = .black
+        authorLabel.textColor = .lightGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

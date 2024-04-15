@@ -14,7 +14,6 @@
                 <outlet property="actionButton" destination="nVQ-dp-Wue" id="ufG-qU-qIg"/>
                 <outlet property="collectionView" destination="khV-Pr-tIB" id="HTt-Fe-14s"/>
                 <outlet property="contractionView" destination="vsp-bK-ljc" id="mDo-AQ-5aT"/>
-                <outlet property="expandHeight" destination="rj3-WT-Mqx" id="ow0-YW-3fn"/>
                 <outlet property="titleLabel" destination="uTF-kd-s1J" id="L9Z-Kg-Gar"/>
             </connections>
         </placeholder>
@@ -23,14 +22,14 @@
             <rect key="frame" x="0.0" y="0.0" width="316" height="340"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTF-kd-s1J">
-                    <rect key="frame" x="20" y="79" width="276" height="24"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTF-kd-s1J">
+                    <rect key="frame" x="20" y="79" width="276" height="20.333333333333329"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="khV-Pr-tIB">
-                    <rect key="frame" x="15" y="113" width="286" height="148"/>
+                    <rect key="frame" x="15" y="109.33333333333333" width="286" height="151.66666666666669"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8lw-XP-O4S">
                         <size key="itemSize" width="128" height="30"/>
@@ -44,13 +43,13 @@
                     <rect key="frame" x="0.0" y="261" width="316" height="45"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVQ-dp-Wue">
-                            <rect key="frame" x="128" y="14" width="60" height="17"/>
+                            <rect key="frame" x="129" y="14" width="58.333333333333343" height="17"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="17" id="rj3-WT-Mqx"/>
+                                <constraint firstAttribute="height" constant="17" id="36J-eO-8TD"/>
                             </constraints>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" title="Action">
-                                <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
+                                <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </buttonConfiguration>
                             <connections>

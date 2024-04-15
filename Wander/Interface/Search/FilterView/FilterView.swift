@@ -9,48 +9,67 @@ import UIKit
 
 class FilterView: UIViewController {
 
-    @IBOutlet weak var tagView: ContractionView!
+    @IBOutlet weak var domainView: ContractionView!
     @IBOutlet weak var sortView: ContractionView!
+    @IBOutlet weak var tagView: ContractionView!
     
-    @IBOutlet weak var tagHeight: NSLayoutConstraint!
+    @IBOutlet weak var domainHeight: NSLayoutConstraint!
     @IBOutlet weak var sortHeight: NSLayoutConstraint!
+    @IBOutlet weak var tagHeight: NSLayoutConstraint!
     
-    var resultView: ResultView?
+    var resultView: NewResult?
     
-    var tagList: [String] = []
-    var sortList: [String] = []
+    var domainList: [String] = GlobalInfo.domainList
+    var sortList: [String] = GlobalInfo.sortList
+    var tagList: [String] = GlobalInfo.tagList
+    
+    let domainRows = 1
+    let domainCols = 3
+    
+    let sortRows = 1
+    let sortCols = 2
     
     let tagRows = 4
     let tagCols = 3
     
-    let sortRows = 1
-    let sortCols = 4
-    
-    var tagRowsExpanded: Int = 0
+    var domainRowsExpanded: Int = 0
     var sortRowsExpanded: Int = 0
+    var tagRowsExpanded: Int = 0
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tagView.titleLabel.text = "Tags"
         
-        tagView.setCells(numRows: tagRows, numCols: tagCols, wPaddingConst: 5.5, hPaddingConst: 2.0)
+        domainView.titleLabel.text = "Domains"
+        domainView.setCells(numRows: domainRows, numCols: domainCols, wPaddingConst: 5.5, hPaddingConst: 2.0)
+        domainView.autoCellSize()
+        domainView.setDataSource(data: domainList)
+        domainView.actionButton.setTitle("<< All domains >>", for: .normal)
+//        domainView.buttonAction = tagAction
+        domainRowsExpanded = domainList.count / domainCols
+        
+        sortView.titleLabel.text = "Sort"
+        sortView.setCells(numRows: sortRows, numCols: sortCols, wPaddingConst: 10.0, hPaddingConst: 2.0)
+        sortView.autoCellSize()
+        sortView.setDataSource(data: sortList)
+        sortView.actionButton.setTitle("<< All sorts >>", for: .normal)
+//        sortView.buttonAction = sortAction
+        sortRowsExpanded = sortList.count / sortCols
+        
+        tagView.titleLabel.text = "Tags"
+        tagView.setCells(numRows: tagRows, numCols: tagCols, wPaddingConst: 9.0, hPaddingConst: 2.0)
         tagView.autoCellSize()
         tagView.setDataSource(data: tagList)
         tagView.actionButton.setTitle("See more >>", for: .normal)
         tagView.buttonAction = tagAction
         tagRowsExpanded = tagList.count / tagCols
-        
-        sortView.titleLabel.text = "Sort"
-        sortView.setCells(numRows: sortRows, numCols: sortCols, wPaddingConst: 4.0, hPaddingConst: 2.0)
-        sortView.autoCellSize()
-        sortView.setDataSource(data: sortList)
-        sortView.actionButton.setTitle("See more >>", for: .normal)
-        sortView.buttonAction = sortAction
-        sortRowsExpanded = sortList.count / sortCols
-        
-        // TODO: Retrieve tag data
-        // TODO: Retrieve sort data
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        domainView.actionButton.titleLabel?.font = domainView.actionButton.titleLabel?.font.withSize(15.0)
+        sortView.actionButton.titleLabel?.font = sortView.actionButton.titleLabel?.font.withSize(15.0)
+        tagView.actionButton.titleLabel?.font = tagView.actionButton.titleLabel?.font.withSize(15.0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -75,7 +94,7 @@ class FilterView: UIViewController {
     }
     
     func expandTag() {
-        self.tagHeight.constant = self.tagView.calcNewHeight(numRows: 20)
+        self.tagHeight.constant = self.tagView.calcNewHeight(numRows: tagRowsExpanded)
         tagView.actionButton.setTitle("See less <<", for: .normal)
         self.tagView.collectionView.reloadData()
     }
