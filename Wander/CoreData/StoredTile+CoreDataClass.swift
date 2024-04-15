@@ -71,16 +71,26 @@ public class StoredTile: NSManagedObject {
     }
     
     func addImage(image: UIImage) {
-        self.image = image.pngData()
+        self.image = image.jpegData(compressionQuality: 0.75)
     }
     
     func fetchImage() -> UIImage? {
         return self.image != nil ? UIImage(data: self.image!) : nil
     }
     
+    func downloadImage(callback: @escaping (Data?) -> Void) {
+        let reference = GlobalInfo.storage.child("tilePics/\(id!.uuidString).jpeg")
+        reference.getData(maxSize: (5 * 1024 * 1024)) { (data, error) in
+            if error == nil && data != nil {
+                self.image = data
+                callback(data)
+            }
+        }
+    }
+    
     func uploadToFirebase(_ db: Firestore, _ storage: StorageReference) {
         let docString: String = self.id!.uuidString
-        let imagePathRef = storage.child("tilePics/\(docString).png")
+        let imagePathRef = storage.child("tilePics/\(docString).jpeg")
         var data = [
             "title": self.title ?? "",
             "text": self.text ?? "",
@@ -98,28 +108,13 @@ public class StoredTile: NSManagedObject {
             data["options"] = [self.leftButton ?? "", self.rightButton ?? ""]
         }
         
-        if let dateObj = self.createdOn {
-            //data["createdOn"] = dateObj
-        }
-        
         // todo better use of async
         if let pic = self.image {
-            let _ = imagePathRef.putData(pic, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    return
-                }
-                imagePathRef.downloadURL { (url, error) in
-                    guard let downloadURL = url else {
-                        return
-                    }
-                    let picURL = downloadURL.absoluteString
-                    data["image"] = picURL
-                    db.collection("tiles").document(docString).setData(data)
-                }
-            }
-        } else {
-            db.collection("tiles").document(docString).setData(data)
+            let path = "tilePreviews/\(id!).jpeg"
+            let _ = imagePathRef.putData(pic, metadata: nil)
         }
+        db.collection("tiles").document(docString).setData(data)
+
     }
     
 }

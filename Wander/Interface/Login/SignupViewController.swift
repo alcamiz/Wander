@@ -62,7 +62,7 @@ class SignupViewController: UIViewController {
                             "email": userInfo.email!,
                             "username": username,
                         ])
-                        storeAfterSignIn(managedContext: managedContext, userInfo: userInfo, username: username)
+                        GlobalInfo.currentUser = storeAfterSignup(managedContext: managedContext, userInfo: userInfo, username: username)
                         self.performSegue(withIdentifier: "SuccessfulSignupSegue", sender: nil)
 
                     }

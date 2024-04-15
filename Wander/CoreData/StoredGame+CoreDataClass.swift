@@ -31,6 +31,7 @@ public class StoredGame: NSManagedObject {
     convenience init(webVersion: FirebaseGame, managedContext: NSManagedObjectContext) {
         self.init(context: managedContext)
         //self.author = webVersion.author (change model!)
+        self.author = StoredUser(webVersion: FirebaseUser(id: webVersion.author, username: webVersion.authorUsername!), managedContext: managedContext)
         //self.root = something (fetch the tiles)
         self.id = UUID(uuidString: webVersion.id!)
         self.name = webVersion.name
@@ -74,7 +75,7 @@ public class StoredGame: NSManagedObject {
     }
     
     func addImage(image: UIImage) {
-        self.image = image.pngData()
+        self.image = image.jpegData(compressionQuality: 0.75)
     }
 
     func fetchImage() -> UIImage? {
@@ -85,7 +86,6 @@ public class StoredGame: NSManagedObject {
         let docString: String = self.id!.uuidString
         let tiles = fetchAllTiles() ?? []
         var tileIDs = tiles.map { ($0.id ?? UUID()).uuidString }
-        let imagePathRef = storage.child("gamePreviews/\(docString).png")
         
         var data = [
             "name": self.name ?? "",
@@ -103,25 +103,11 @@ public class StoredGame: NSManagedObject {
         
         // todo better use of async
         if let pic = self.image {
-            let _ = imagePathRef.putData(pic, metadata: nil) { (metadata, error) in
-              guard let metadata = metadata else {
-                // Uh-oh, an error occurred!
-                return
-              }
-              // You can also access to download URL after upload.
-                imagePathRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                  // Uh-oh, an error occurred!
-                  return
-                }
-                let picURL = downloadURL.absoluteString
-                //data["image"] = picURL
-                db.collection("games").document(docString).setData(data)
-              }
-            }
-        } else {
-            db.collection("games").document(docString).setData(data)
+            let imagePathRef = storage.child("gamePreviews/\(docString).jpeg")
+            let _ = imagePathRef.putData(pic, metadata: nil)
         }
+        
+        db.collection("games").document(docString).setData(data)
 
         tiles.forEach { $0.uploadToFirebase(db, storage) }
         

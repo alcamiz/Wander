@@ -7,29 +7,24 @@
 
 import UIKit
 
-import Firebase
-import FirebaseCore
-import FirebaseFirestore
-import FirebaseStorage
+import FirebaseAuth
 import CoreData
 import CropViewController
 
-private var db = Firestore.firestore()
-private var storage = Storage.storage().reference()
 
 class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate,
                              UIImagePickerControllerDelegate, CropViewControllerDelegate {
-    
     let publishedGames: [StoredGame] = []
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var publishedGamesCollectionView: UICollectionView!
     
     @IBOutlet weak var profilePictureImageView: UIImageView!
     
+    @IBOutlet weak var pfpLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         publishedGamesCollectionView.dataSource = self
         publishedGamesCollectionView.delegate = self
         
@@ -44,12 +39,22 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         
         profilePictureImageView.layer.borderWidth = 3
         profilePictureImageView.layer.borderColor = UIColor.gray.cgColor
+        
+        if let currentUser = GlobalInfo.currentUser {
+            usernameLabel.text = currentUser.username
+            if let pic = currentUser.picture {
+                profilePictureImageView.image = UIImage(data: pic)
+                pfpLabel.text = ""
+            }
+        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         //publishedGames
         
         publishedGamesCollectionView.reloadData()
+       
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -119,18 +124,14 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         }
 
         // Update in Firebase
-        let userRef: Void = db.collection("users").document(currentUserID)
+        GlobalInfo.db.collection("users").document(currentUserID)
             .updateData(["username":newUsername])
         
         // Update in CoreData
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let res = try? managedContext.fetch(StoredUser.fetchRequest())
-        res?[0].username = newUsername
-        
-        try! managedContext.save()
-        
+        GlobalInfo.currentUser?.username = newUsername
+        try! GlobalInfo.managedContext?.save()
+
+        usernameLabel.text = newUsername
     }
     
     @IBAction func onUpdatePasswordPressed(_ sender: Any) {
@@ -219,11 +220,17 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         // Do not show default settings
         profilePictureImageView.layer.borderWidth = 0
         //gameImagePlaceholder.isHidden = true
-        
         // Update imageView and selectedImage with newly cropped image
-        profilePictureImageView.image = image
-        //gameImage = image
-//        game.addImage(image: image)
-//        try? game.managedObjectContext?.save()
+        if let compressedData = image.jpegData(compressionQuality: 0.75),
+           let userID = GlobalInfo.currentUser?.id {
+            profilePictureImageView.image = UIImage(data: compressedData)
+            
+            GlobalInfo.currentUser?.picture = compressedData
+            try! GlobalInfo.managedContext?.save()
+            
+            let imagePathRef = GlobalInfo.storage.child("userProfiles/\(userID).jpeg")
+            let _ = imagePathRef.putData(compressedData, metadata: nil)
+            pfpLabel.text = ""
+        }
     }
 }

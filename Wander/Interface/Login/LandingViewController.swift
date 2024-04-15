@@ -15,11 +15,18 @@ class LandingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        GlobalInfo.managedContext = appDelegate.persistentContainer.viewContext
+        
         Auth.auth().addStateDidChangeListener() {
             (auth, user) in
             if user != nil {
                 self.view.isHidden = true
-                self.performSegue(withIdentifier: "PersistentSegue", sender: self)
+                Task {
+                    await storeAfterLogin(managedContext: GlobalInfo.managedContext!, userInfo: user!)
+                    self.performSegue(withIdentifier: "PersistentSegue", sender: self)
+                }
             }
             return
         }

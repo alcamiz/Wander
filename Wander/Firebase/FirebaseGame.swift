@@ -14,20 +14,10 @@ import CoreData
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-public class FirebaseTile: Codable, ImageableFirebase {
-    @DocumentID var id: String?
-    var image: Data?
-    var text: String
-    var title: String
-    var type: Int
-    var game: String
-    var children: [String]
-    var options: [String]
-}
-
 public class FirebaseGame: Codable, ImageableFirebase {
     @DocumentID var id: String?
     var author: String
+    var authorUsername: String?
     var root: String
     var createCount: Int
     var createdOn: Date?
@@ -52,15 +42,22 @@ public class FirebaseGame: Codable, ImageableFirebase {
         }
         guard storedTiles.count > 0 else {return}
         
-        // second pass: link tiles together
+        // second pass: link tiles together, download images
         for i in 0...storedTiles.count-1 {
             storedTiles[i].initializeOptions(webVersion: firebaseTiles[i])
         }
-        // third pass: fetch images
-        for tile in tiles {
-            
-        }
         try! storedGame.managedObjectContext!.save()
+        
+        var downloadCount = 0
+        for i in 0...storedTiles.count - 1 {
+            storedTiles[i].downloadImage() { (data) in
+                storedTiles[i].image = data
+                downloadCount += 1
+                if (downloadCount == storedTiles.count) {
+                    try! storedGame.managedObjectContext!.save()
+                }
+            }
+        }
     
     }
     
