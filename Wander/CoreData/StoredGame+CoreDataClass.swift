@@ -37,7 +37,7 @@ public class StoredGame: NSManagedObject {
         self.id = UUID(uuidString: webVersion.id!)
         self.name = webVersion.name
         self.createCount = Int32(webVersion.createCount)
-        self.createdOn = webVersion.createdOn
+        self.publishedOn = webVersion.publishedOn
         self.image = webVersion.image
         self.desc = webVersion.desc
         self.tags = webVersion.tags
@@ -87,21 +87,18 @@ public class StoredGame: NSManagedObject {
         let docString: String = self.id!.uuidString
         let tiles = fetchAllTiles() ?? []
         var tileIDs = tiles.map { ($0.id ?? UUID()).uuidString }
+        let publishDate = Date()
         
         var data = [
             "name": self.name ?? "",
             "desc": self.desc ?? "",
             "tags": self.tags ?? [],
             "createCount": self.createCount,
+            "publishedOn": publishDate,
             "author": self.author?.id ?? "",
             "tiles": tileIDs,
             "root": self.root?.id?.uuidString ?? "-1",
         ] as [String : Any]
-        
-        if let dateObj = self.createdOn {
-            data["createdOn"] = dateObj
-        }
-        
         // todo better use of async
         if let pic = self.image {
             let imagePathRef = storage.child("gamePreviews/\(docString).jpeg")
@@ -112,6 +109,7 @@ public class StoredGame: NSManagedObject {
 
         tiles.forEach { $0.uploadToFirebase(db, storage) }
         self.published = true
+        self.publishedOn = publishDate
     }
     
     func unpublish() {
