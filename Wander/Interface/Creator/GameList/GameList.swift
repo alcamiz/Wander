@@ -42,11 +42,11 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         createNewGameButton.tintColor = .white
                 
         gameList = user?.fetchAllGames() ?? []
-        allGamesTableView.reloadData()
+        self.navigationItem.title = "Game List"
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if selectedGameIndex != nil {
             allGamesTableView.reloadRows(at: [selectedGameIndex!], with: .automatic)
         }

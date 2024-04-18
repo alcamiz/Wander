@@ -97,6 +97,11 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        gameTitleTextField.frame = gameTitleLabel.frame
+    }
+    
     @objc func gameImageViewTapped(_ sender: UITapGestureRecognizer) {
         let alertController = UIAlertController(title: "Import Image", message: "Select image source", preferredStyle: .actionSheet)
         
@@ -281,4 +286,11 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         }
         try! GlobalInfo.managedContext?.save()
     }
+    
+    @IBAction func editInfo(_ sender: Any) {
+        let editForm = EditForm(nibName: "EditForm", bundle: nil)
+        editForm.storedGame = game
+        self.navigationController?.pushViewController(editForm, animated: true)
+    }
+    
 }

@@ -82,8 +82,7 @@ class PlaymodeViewController: UIViewController {
             
             completeGameLabel.text = (newCurrentTile.type == TileType.win.rawValue) ? winText : loseText
             completeGameLabel.isHidden = false
-        }
-        else {
+        } else {
             tileButton1.isHidden = false
             tileButton2.isHidden = false
             // Button names are option desc for button1, button 2

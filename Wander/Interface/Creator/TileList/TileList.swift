@@ -27,15 +27,15 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         allTilesTableView.dataSource = self
         
         tileList = game?.fetchAllTiles() ?? []
-        allTilesTableView.reloadData()
+        self.navigationItem.title = "Tile List"
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if selectedTileIndex != nil {
             allTilesTableView.reloadRows(at: [selectedTileIndex!], with: .automatic)
         }
-        allTilesTableView.reloadData()
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
