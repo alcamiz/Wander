@@ -45,19 +45,14 @@ class TagViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let row = indexPath.row
         
         let thisTag = GlobalInfo.tagList[row]
-        var cellTitle = thisTag
         cell.isChecked = currentTags.contains(thisTag)
-        cell.tagLabel.text! = cellTitle
+        cell.tagLabel.text! = thisTag
         cell.delegate = self
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: tagCellIdentifier, for: indexPath) as! TagTableViewCell
-//        let row = indexPath.row
-        
         tagTableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -71,14 +66,4 @@ class TagViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         currentTags.append(tagName)
         print(currentTags!)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
