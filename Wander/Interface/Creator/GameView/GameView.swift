@@ -89,6 +89,11 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         publishGameButton.tintColor = .white
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        gameTitleTextField.frame = gameTitleLabel.frame
+    }
+    
     @objc func gameImageViewTapped(_ sender: UITapGestureRecognizer) {
         let alertController = UIAlertController(title: "Import Image", message: "Select image source", preferredStyle: .actionSheet)
         
@@ -253,7 +258,13 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         }
     }
     @IBAction func publishButtonPressed(_ sender: Any) {
-        game.uploadToFirebase(db, storage)
-        
+        _ = game.uploadToFirebase(db, storage)
     }
+    
+    @IBAction func editInfo(_ sender: Any) {
+        let editForm = EditForm(nibName: "EditForm", bundle: nil)
+        editForm.storedGame = game
+        self.navigationController?.pushViewController(editForm, animated: true)
+    }
+    
 }
