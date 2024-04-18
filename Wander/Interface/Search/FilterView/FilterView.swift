@@ -15,7 +15,7 @@ class FilterView: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     @IBOutlet weak var sortView: UICollectionView!
     @IBOutlet weak var tagView: UICollectionView!
     
-    var resultView: NewResult?
+    var resultView: ResultView?
     
     let sortList: [String] = GlobalInfo.sortList
     let tagList: [String] = GlobalInfo.tagList
@@ -29,8 +29,8 @@ class FilterView: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sortView.accessibilityIdentifier = "tagView"
-        tagView.accessibilityIdentifier = "sortView"
+        sortView.accessibilityIdentifier = "sortView"
+        tagView.accessibilityIdentifier = "tagView"
         
         sortView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
         tagView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")

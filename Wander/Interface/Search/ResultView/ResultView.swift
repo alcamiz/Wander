@@ -2,36 +2,50 @@
 //  ResultView.swift
 //  Wander
 //
-//  Created by Alex Cabrera on 4/4/24.
+//  Created by Alex Cabrera on 4/13/24.
 //
 
 import UIKit
-import Foundation
-import CoreData
-import FirebaseCore
-import FirebaseFirestore
-import FirebaseStorage
 
-private var db = Firestore.firestore()
-private var storage = Storage.storage().reference()
-
-class ResultView: UITableViewController {
-        
+class ResultView: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var domainSelector: UISegmentedControl!
+    @IBOutlet weak var tableView: UITableView!
+    
     var query: String = ""
     var selectedFilter: String?
     var selectedSort: String?
+    var selectedDomain: String?
     
-    // TODO: Change to FirebaseGame
     var queriedGames: [FirebaseGame] = []
     var tableCellId = ""
-
+    
     var localSuperView: UIViewController?
     var debug = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.allowsMultipleSelection = false
+
         self.tableCellId = UUID().uuidString
         tableView.register(UINib(nibName: "ResultCell", bundle: nil), forCellReuseIdentifier: self.tableCellId)
+        
+        domainSelector.removeAllSegments()
+        
+        for (idx, title) in GlobalInfo.domainList.enumerated() {
+            domainSelector.insertSegment(withTitle: title, at: idx, animated: false)
+        }
+        domainSelector.selectedSegmentIndex = 0
+        
+    }
+    
+    func fixSelectedRow() {
+        if tableView.indexPathForSelectedRow != nil {
+            tableView.deselectRow(at: tableView!.indexPathForSelectedRow!, animated: true)
+        }
     }
     
     func reloadQuery() async {
@@ -45,27 +59,28 @@ class ResultView: UITableViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @IBAction func domainSelected(_ sender: Any) {
+        selectedDomain = GlobalInfo.domainList[domainSelector.selectedSegmentIndex]
+        Task {
+            await reloadQuery()
+        }
     }
-
-    // MARK: - Table view data source
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if !debug {
             return queriedGames.count
         }
         return 5
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.tableCellId, for: indexPath) as! ResultCell
 
         // TODO: Change to FirebaseGame
         if !debug {
             let curGame = queriedGames[indexPath.row]
             cell.titleLabel.text = curGame.name
-            cell.authorLabel.text = curGame.authorUsername
+            cell.authorLabel.text = curGame.author
             cell.imageScreen.image = if curGame.image != nil {
                 UIImage.init(data: curGame.image!)
             } else {
@@ -80,7 +95,7 @@ class ResultView: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "GameScreen", bundle: nil)
         let gameScreen = storyboard.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
         
@@ -92,8 +107,19 @@ class ResultView: UITableViewController {
         self.localSuperView?.navigationController?.pushViewController(gameScreen, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-    
+
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }

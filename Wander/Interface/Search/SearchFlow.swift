@@ -13,7 +13,7 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     var searchControl: UISearchController = UISearchController()
     
     let resultView = {
-        return NewResult(nibName: "NewResult", bundle: nil)
+        return ResultView(nibName: "ResultView", bundle: nil)
     }()
     
     let filterView = {
@@ -63,7 +63,7 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let results = searchControl.searchResultsController as! NewResult
+        let results = searchControl.searchResultsController as! ResultView
         results.query = searchBar.text ?? ""
         Task {
             await results.reloadQuery()
