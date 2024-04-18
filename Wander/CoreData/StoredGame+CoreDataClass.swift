@@ -23,7 +23,7 @@ public class StoredGame: NSManagedObject {
         self.desc = nil
         self.createCount = 0
         self.createdOn = Date()
-        
+        self.published = false
         self.root = createTile()
         self.root?.type = TileType.root.rawValue
     }
@@ -31,6 +31,7 @@ public class StoredGame: NSManagedObject {
     convenience init(webVersion: FirebaseGame, managedContext: NSManagedObjectContext) {
         self.init(context: managedContext)
         //self.author = webVersion.author (change model!)
+        self.published = true
         self.author = StoredUser(webVersion: FirebaseUser(id: webVersion.author, username: webVersion.authorUsername!), managedContext: managedContext)
         //self.root = something (fetch the tiles)
         self.id = UUID(uuidString: webVersion.id!)
@@ -82,7 +83,7 @@ public class StoredGame: NSManagedObject {
         return self.image != nil ? UIImage(data: self.image!) : nil
     }
 
-    func uploadToFirebase(_ db: Firestore, _ storage: StorageReference) -> String {
+    func uploadToFirebase(_ db: Firestore, _ storage: StorageReference) {
         let docString: String = self.id!.uuidString
         let tiles = fetchAllTiles() ?? []
         var tileIDs = tiles.map { ($0.id ?? UUID()).uuidString }
@@ -110,8 +111,19 @@ public class StoredGame: NSManagedObject {
         db.collection("games").document(docString).setData(data)
 
         tiles.forEach { $0.uploadToFirebase(db, storage) }
-        
-        return "Success"
+        self.published = true
+    }
+    
+    func unpublish() {
+        let documentID: String = id!.uuidString
+        Task {
+            try? await GlobalInfo.db.collection("games").document(documentID).delete()
+            let imagePathRef = GlobalInfo.storage.child("gamePreviews/\(documentID).jpeg")
+            try? await imagePathRef.delete()
+        }
+        let tiles = fetchAllTiles() ?? []
+        tiles.forEach { $0.unpublish() }
+        self.published = false
     }
 }
 
