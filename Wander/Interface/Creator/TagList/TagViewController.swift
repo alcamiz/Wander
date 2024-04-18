@@ -12,9 +12,13 @@ protocol ModifyTagDelegate {
     func addTag(tagName: String)
 }
 
+protocol ModifyGameTagsDelegate {
+    func setGameTags(newTags: [String])
+}
+
 class TagViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ModifyTagDelegate {
     
-    var delegate: GameView!
+    var delegate: UIViewController!
     var currentTags: [String]!
     
     @IBOutlet weak var tagTableView: UITableView!
@@ -25,6 +29,11 @@ class TagViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         tagTableView.delegate = self
         tagTableView.dataSource = self
         print(currentTags!)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let gameVC = delegate as! ModifyGameTagsDelegate
+        gameVC.setGameTags(newTags: currentTags)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -7,14 +7,12 @@
 
 import UIKit
 import CropViewController
-
 import FirebaseFirestore
 import FirebaseStorage
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
-    
+class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, ModifyGameTagsDelegate {
     
     var delegate: GameList!
     
@@ -251,7 +249,6 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         else if segue.identifier == "TagViewSegue",
                 let nextVC = segue.destination as? TagViewController {
             nextVC.delegate = self
-            game.tags?.append("Horror") // TAKE OUT LATER!!
             nextVC.currentTags = game.tags.map { $0 }
         }
         else if segue.identifier == "PlaytestGameSegue", let nextVC = segue.destination as? PlaymodeViewController {
@@ -265,16 +262,7 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         
     }
     
-//    func removeTag(tagName: String) {
-//        if let gameTags = game.tags {
-//            let index = game.tags!.firstIndex(of: tagName)!
-//            game.tags!.remove(at: index)
-//        }
-//    }
-//
-//    func addTag(tagName: String) {
-//        if let gameTags = game.tags {
-//            game.tags!.append(tagName)
-//        }
-//    }
+    func setGameTags(newTags: [String]) {
+        game.tags = newTags.map { $0 }
+    }
 }
