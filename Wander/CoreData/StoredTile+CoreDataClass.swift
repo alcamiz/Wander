@@ -117,5 +117,14 @@ public class StoredTile: NSManagedObject {
 
     }
     
+    func unpublish() {
+        let documentID: String = id!.uuidString
+        Task {
+            try? await GlobalInfo.db.collection("tiles").document(documentID).delete()
+            let imagePathRef = GlobalInfo.storage.child("tilePics/\(documentID).jpeg")
+            try? await imagePathRef.delete()
+        }
+    }
+    
 }
 

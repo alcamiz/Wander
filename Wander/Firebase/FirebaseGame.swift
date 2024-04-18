@@ -20,7 +20,7 @@ public class FirebaseGame: Codable, ImageableFirebase {
     var authorUsername: String?
     var root: String
     var createCount: Int
-    var createdOn: Date?
+    var publishedOn: Date?
     var name: String
     var desc: String
     var tiles: [String]

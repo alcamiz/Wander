@@ -36,6 +36,7 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
     @IBOutlet weak var editGameButton: UIButton!
     @IBOutlet weak var publishGameButton: UIButton!
     
+    @IBOutlet weak var deleteGameButton: UIButton!
     //    override func viewWillAppear(_ animated: Bool) {
 //        gameTitle.text = game.name ?? "Invalid Game"
 //    }
@@ -82,11 +83,18 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         
         playtestGameButton.backgroundColor = Color.primary
         editGameButton.backgroundColor = Color.primary
-        publishGameButton.backgroundColor = Color.primary
         
         playtestGameButton.tintColor = .white
         editGameButton.tintColor = .white
         publishGameButton.tintColor = .white
+        
+        if game.published {
+            publishGameButton.setTitle("Unpublish", for: .normal)
+            publishGameButton.backgroundColor = Color.systemPink
+            deleteGameButton.isHidden = true
+        } else {
+            publishGameButton.backgroundColor = Color.primary
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -229,22 +237,27 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
     
     
     @IBAction func deleteGameButtonPressed(_ sender: Any) {
-        let deleteAlertVC = UIAlertController(
-            title: "Are you sure?",
-            message: "If you delete the game \"\(self.game.name!)\", it cannot be undone.",
-            preferredStyle: .alert)
-        
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-            (alert) in
-            self.delegate.deleteGame(game: self.game)
-            self.navigationController?.popViewController(animated: true)
-        })
-        deleteAlertVC.addAction(deleteAction)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        deleteAlertVC.addAction(cancelAction)
-        
-        present(deleteAlertVC, animated: true)
+        if game.published {
+            
+        } else {
+            let deleteAlertVC = UIAlertController(
+                title: "Are you sure?",
+                message: "If you delete the game \"\(self.game.name!)\", it cannot be undone.",
+                preferredStyle: .alert)
+            
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                (alert) in
+                self.delegate.deleteGame(game: self.game)
+                self.navigationController?.popViewController(animated: true)
+            })
+            deleteAlertVC.addAction(deleteAction)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            deleteAlertVC.addAction(cancelAction)
+            
+            present(deleteAlertVC, animated: true)
+        }
+       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -258,7 +271,20 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         }
     }
     @IBAction func publishButtonPressed(_ sender: Any) {
-        _ = game.uploadToFirebase(db, storage)
+        if game.published {
+            publishGameButton.setTitle("Publish", for: .normal)
+            publishGameButton.backgroundColor = Color.primary
+            deleteGameButton.isHidden = false
+            // nuke from firebase
+            game.unpublish()
+            
+        } else {
+            game.uploadToFirebase(db, storage)
+            publishGameButton.backgroundColor = Color.systemPink
+            publishGameButton.setTitle("Unpublish", for: .normal)
+            deleteGameButton.isHidden = true
+        }
+        try! GlobalInfo.managedContext?.save()
     }
     
     @IBAction func editInfo(_ sender: Any) {

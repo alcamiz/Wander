@@ -35,4 +35,5 @@ class Color {
     static let secondaryGreen = UIColor(hex: "#055902") // dark green
     
     static let background = UIColor(hex: "#FFFFFF") // white
+    static let systemPink = UIColor(hex: "#FF2D55") // delete button
 }
