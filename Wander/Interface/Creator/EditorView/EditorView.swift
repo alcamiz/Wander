@@ -498,6 +498,11 @@ class EditorView: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     
+    @IBAction func selectTagsButtonPressed(_ sender: Any) {
+        
+    }
+    
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

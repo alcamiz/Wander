@@ -66,11 +66,11 @@ class ResultView: UITableViewController {
             let curGame = queriedGames[indexPath.row]
             cell.titleLabel.text = curGame.name
             cell.authorLabel.text = curGame.author
-            cell.imageScreen.image = if curGame.image != nil {
-                UIImage.init(data: curGame.image!)
-            } else {
-                UIImage(systemName: "italic")
-            }
+//            cell.imageScreen.image = if curGame.image != nil {
+//                UIImage.init(data: curGame.image!)
+//            } else {
+//                UIImage(systemName: "italic")
+//            }
         } else {
             cell.titleLabel.text = "Untitled"
             cell.authorLabel.text = "Unknown"

@@ -15,6 +15,7 @@ private var storage = Storage.storage().reference()
 
 class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     
+    
     var delegate: GameList!
     
     var game:StoredGame!
@@ -42,7 +43,7 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         gameTitleLabel.text = game.name
         gameTitleLabel.isHidden = false // Display title
         gameTitleLabel.textAlignment = .center
@@ -247,6 +248,12 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
            let nextVC = segue.destination as? TileList {
             nextVC.game = game
         }
+        else if segue.identifier == "TagViewSegue",
+                let nextVC = segue.destination as? TagViewController {
+            nextVC.delegate = self
+            game.tags?.append("Horror") // TAKE OUT LATER!!
+            nextVC.currentTags = game.tags.map { $0 }
+        }
         else if segue.identifier == "PlaytestGameSegue", let nextVC = segue.destination as? PlaymodeViewController {
             nextVC.game = game
             nextVC.currentTile = game.root
@@ -257,4 +264,17 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         game.uploadToFirebase(db, storage)
         
     }
+    
+//    func removeTag(tagName: String) {
+//        if let gameTags = game.tags {
+//            let index = game.tags!.firstIndex(of: tagName)!
+//            game.tags!.remove(at: index)
+//        }
+//    }
+//
+//    func addTag(tagName: String) {
+//        if let gameTags = game.tags {
+//            game.tags!.append(tagName)
+//        }
+//    }
 }
