@@ -1,46 +1,86 @@
 # Contributions:
 
-#### Alex Cabrera (25%)
-Defined core-data models and helper function (alongside Ben)
-Set-up basic view controller data handling
-Added viewController saving/loading to core-data
-Misc fixes
+#### Gabby Galicinao (Release 25%, Overall 25%)
 
-#### Nihar Rao (25%)
-Created final screens for My Games, Game Title, Map View, And Linking View Controller as well as navigation and segues for the alpha
-Created initial design for app and editor
-Completed linking for tiles
+* All of tab bar controller
+    * Create tab bar controller + storyboard, linked the storyboard references from the tab bar controller, added color scheme and icons to tab bar
+* All of Playmode storyboard/ViewController
+    * Not entirely satisfied with appearance of end tiles - might 
+* All of playtesting
+    * From “Game Title View Controller”, can select “Playtest” button and be redirected to Playmode screen
+* Most of editor screens in Main storyboard
+    * Map, Linking View Controllers: 
+        * Added to title labels if a game tile is the root tile (first tile to appear in play mode), and end tile (win/lose), and what tiles each button links to, if any.
+    * Editor View Controller:
+        * Added ScrollView to buttons (realized that when you selected a button to change their name, the keyboard covered up the button). DOES NOT CURRENTLY WORK! When you modify a button name, you still cannot see it while you are still editing. Currently usable when only using the hardware keyboard
+* Other:
+    * Added theme colors to buttons and navigation bar on editor screens in main storyboard
+    * Have not tested adding image from camera to UIImageViews
 
-#### Ben Gordon (25%)
-Defined core data models and helper functions (alongside Alex) 
-Added outlets and actions to View Controller files to handle core data functionality
+#### Nihar Rao (Release 25%, Overall 25%)
 
-#### Gabby Galicinao (25%)
-Majority of editor screen (import an image into UIImageView, customized UITextView, edit titles of the two choice buttons and tile’s title in the navigation bar)
-Part of Game Title screen (can edit game title, can add image to ImageView for game)
-Used CropViewController to crop an image selected from photo library
+* Alpha
+    * Created final screens for My Games, Game Title, Map View, And Linking View Controller as well as navigation and segues for the alpha Created initial design for app and editor Completed linking for tiles
+* Beta
+    * Creation of LoginFlow and LoginViewControllers, added in authentication and saving of variables for future use as well as setup for login persistence
+    * Creation of the UI for Profile and setup for some future features
+        * Changing password, log out, and pfp has not been functionally added due to database issues 
+    * Creation of App Logo App Icon and application of color palette as well as design across application
+
+#### Ben Gordon (Release 25%, Overall 25%)
+
+Alpha
+
+* Defined core data models and helper functions (alongside Alex) 
+* Added outlets and actions to View Controller files to handle core data functionality
+
+Beta
+
+* Set up firebase project with Firestone database for most info and Storage for images 
+* Uploading games to Firestore
+    * Developed new more compact representation of data for Firebase
+* Browsing games
+    * Made intermediate data structure FirebaseGame to provide previews of games without having to download all information 
+    * Dealt with asynchronous functions 
+* Downloading Games to Core Data
+
+#### Alex Cabrera (Release 25%, Overall 25%)
+
+* Alpha:
+    * Defined core-data models and helper function (alongside Ben)
+    * Set-up basic view controller data handling
+    * Added viewController saving/loading to core-data
+    * Misc fixes
+* Beta
+    * Explore Page:
+        * ContractionView and NavBar work for displaying popular games, newly added games, and games in your history.
+    * Search Page:
+        * Set up UISearchController (search bar, explore page)
+        * ResultView for displaying search results:
+            * Custom cells for displaying games after query is entered in search
+            * Uses query/tags/sort from other screens
+        * FilterView for tags and sorting:
+            * Accessed from the sandwich menu to the right of search bar
+            * UI Only, see deviations
+            * Custom CollectionView:
+                * Cell sizes calculated programmatically to fit within any frame and set up to allow custom “row by column” displays when creating the view
+                * Reusable as an NIB
+    * Game Screen:
+        * Both the explore page and results page (from search) link here to start playing a created game retrieved from Firebase
+        * Segues to Gabby’s PlayTester view
+    * Misc fixes on editor screens
 
 # Deviations:
 
-Here are the things we planned for in the alpha release:
-
-#### Basic UI for making a game
-
-There is a basic UI for creating the game as well as finding the game to edit, finding the tile to edit, editing the game information, and editing a tile
-The simulators do not have the camera, so Gabby did not yet test if the user can import an image from the camera; just the photo library.
-We planned for a description in the Game screen but we ran into some problems with that screen and might move some stuff around
-Tile/game deletion is implemented with a swiping action on each TableView controller. Game deletion will be moved to the game screen, where the button currently does not do anything. We plan on adding a confirmation action as well.
-
-#### View Controller to see a list of your own games, list of games you are currently playing, and list of games you have played in the past 
-
-We only have a list of your own games and decided against a list of games you are currently playing and games you have played in the past. We thought it was a little redundant and would be easier to make the search system more robust to find the games you have played in the past.
-
-#### Keep track of progress for the user in each game (persistent storage)
-
-The app saves your progress on editing each tile as well as editing the game object itself (game title, image, description). This is done through core data objects with convenience functions manually defined.
-A user system is implemented, but since there are no login/signup screens in our alpha release, a user object is created by default on login. We plan to implement the network side of this (sync and auth) on our beta release.
-
-
-
-
-
+* Set up a server with an API and a database
+    * This has been setup although there are some other parts to add in for the final 
+* Publish games to the web
+    * You are able to upload games to the database and download them
+* View a list of other players’ games 
+    * Published games can be found on the explore page
+    * Tags and sorting is not working
+* 3 main view controllers when not making a game - games you are currently playing, games on the web, and games that you made
+    * Tab controller displays this, and some changes were made for finding these things, separated between my games and explore
+* Feature to “save” a game (add it to your own home screen)
+*      Downloading pictures is not working and we are still working on this feature as we got caught behind with Firebase issues.
+* Filtering is only implemented in the UI, but does not have the appropriate components in Firebase/Editor to currently support it. Proper filtering/sorting will be included in the final release.

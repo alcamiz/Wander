@@ -18,14 +18,29 @@ public class StoredGame: NSManagedObject {
         self.init(context: creator.managedObjectContext!)
         self.id = UUID()
         self.author = creator
-        self.name = "Game #\(creator.createCount)"
+        self.name = "Game #\(creator.createdGames?.count ?? 0)"
         self.tags = []
         self.desc = nil
         self.createCount = 0
         self.createdOn = Date()
-        
+        self.published = false
         self.root = createTile()
         self.root?.type = TileType.root.rawValue
+    }
+    
+    convenience init(webVersion: FirebaseGame, managedContext: NSManagedObjectContext) {
+        self.init(context: managedContext)
+        //self.author = webVersion.author (change model!)
+        self.published = true
+        self.author = StoredUser(webVersion: FirebaseUser(id: webVersion.author, username: webVersion.authorUsername!), managedContext: managedContext)
+        //self.root = something (fetch the tiles)
+        self.id = UUID(uuidString: webVersion.id!)
+        self.name = webVersion.name
+        self.createCount = Int32(webVersion.createCount)
+        self.publishedOn = webVersion.publishedOn
+        self.image = webVersion.image
+        self.desc = webVersion.desc
+        self.tags = webVersion.tags
     }
     
     func createTile() -> StoredTile {
@@ -61,58 +76,52 @@ public class StoredGame: NSManagedObject {
     }
     
     func addImage(image: UIImage) {
-        self.image = image.pngData()
+        self.image = image.jpegData(compressionQuality: 0.75)
     }
 
     func fetchImage() -> UIImage? {
         return self.image != nil ? UIImage(data: self.image!) : nil
     }
 
-    func uploadToFirebase(_ db: Firestore, _ storage: StorageReference) -> String {
+    func uploadToFirebase(_ db: Firestore, _ storage: StorageReference) {
         let docString: String = self.id!.uuidString
         let tiles = fetchAllTiles() ?? []
         var tileIDs = tiles.map { ($0.id ?? UUID()).uuidString }
-        let imagePathRef = storage.child("gamePreviews/\(docString).png")
+        let publishDate = Date()
         
         var data = [
             "name": self.name ?? "",
             "desc": self.desc ?? "",
             "tags": self.tags ?? [],
             "createCount": self.createCount,
+            "publishedOn": publishDate,
             "author": self.author?.id ?? "",
             "tiles": tileIDs,
             "root": self.root?.id?.uuidString ?? "-1",
         ] as [String : Any]
-        
-        if let dateObj = self.createdOn {
-            data["createdOn"] = dateObj
-        }
-        
         // todo better use of async
         if let pic = self.image {
-            let _ = imagePathRef.putData(pic, metadata: nil) { (metadata, error) in
-              guard let metadata = metadata else {
-                // Uh-oh, an error occurred!
-                return
-              }
-              // You can also access to download URL after upload.
-                imagePathRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                  // Uh-oh, an error occurred!
-                  return
-                }
-                let picURL = downloadURL.absoluteString
-                data["image"] = picURL
-                db.collection("games").document(docString).setData(data)
-              }
-            }
-        } else {
-            db.collection("games").document(docString).setData(data)
+            let imagePathRef = storage.child("gamePreviews/\(docString).jpeg")
+            let _ = imagePathRef.putData(pic, metadata: nil)
         }
+        
+        db.collection("games").document(docString).setData(data)
 
         tiles.forEach { $0.uploadToFirebase(db, storage) }
-        
-        return "Success"
+        self.published = true
+        self.publishedOn = publishDate
+    }
+    
+    func unpublish() {
+        let documentID: String = id!.uuidString
+        Task {
+            try? await GlobalInfo.db.collection("games").document(documentID).delete()
+            let imagePathRef = GlobalInfo.storage.child("gamePreviews/\(documentID).jpeg")
+            try? await imagePathRef.delete()
+        }
+        let tiles = fetchAllTiles() ?? []
+        tiles.forEach { $0.unpublish() }
+        self.published = false
     }
 }
 

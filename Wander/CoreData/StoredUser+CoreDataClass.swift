@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import FirebaseStorage
 
 
 public class StoredUser: NSManagedObject {
@@ -15,13 +16,25 @@ public class StoredUser: NSManagedObject {
         self.init(context: context)
         self.id = id
         self.username = username
-        self.createCount = 0
         self.createdOn = Date()
     }
     
+    convenience init(webVersion: FirebaseUser, managedContext: NSManagedObjectContext) {
+        self.init(context: managedContext)
+        self.id = webVersion.id
+        self.username = webVersion.username
+        let path = "userProfiles/\(webVersion.id!).jpeg"
+        let reference = GlobalInfo.storage.child(path)
+        reference.getData(maxSize: (5 * 1024 * 1024)) { (data, error) in
+            if (error == nil || data != nil) {
+                self.picture = data
+            }
+        }
+    }
+    
+    
     func createGame() -> StoredGame {
         let newGame = StoredGame(creator: self)
-        self.createCount += 1
         try! self.managedObjectContext?.save()
         return newGame
     }

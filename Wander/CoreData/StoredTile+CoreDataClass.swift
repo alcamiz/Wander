@@ -36,94 +36,93 @@ public class StoredTile: NSManagedObject {
         self.title = "Tile #\(game.createCount)"
         self.type = TileType.empty.rawValue
         self.createdOn = Date()
+        self.leftButton = "Button 1"
+        self.rightButton = "Button 2"
+    }
+    
+    convenience init(game: StoredGame, webVersion: FirebaseTile) {
+        self.init(context: game.managedObjectContext!)
+        self.id = UUID(uuidString: webVersion.id!)
+        self.game = game
+        self.text = webVersion.text
+        self.title = webVersion.title
+        self.type = Int16(webVersion.type)
+        self.createdOn = Date()
+        if getType() != .win && getType() != .lose {
+            self.leftButton = "Button 1"
+            self.rightButton = "Button 2"
+        }
+    }
+    
+    func initializeOptions(webVersion: FirebaseTile) {
+        guard webVersion.options.count == 2, webVersion.children.count == 2 else {return}
+        self.leftTile = game?.fetchTile(tileID: UUID(uuidString: webVersion.children[0])!)
+        self.leftButton = webVersion.options[0]
+        self.rightTile = game?.fetchTile(tileID: UUID(uuidString: webVersion.children[1])!)
+        self.rightButton =  webVersion.options[1]
     }
     
     func getType() -> TileType {
         return TileType(rawValue: self.type)!
     }
     
-    func createOption(tile: StoredTile?, desc: String) -> StoredOption {
-        let opt = StoredOption(parent: self, child: tile, desc: desc)
-        self.addToOptions(opt)
-        return opt
-    }
-    
-    func fetchOption(optionID : UUID) -> StoredOption? {
-        let predicate = NSPredicate(format: "id == %@", optionID as CVarArg)
-        let res = self.options?.filtered(using: predicate) as? Set<StoredOption>
-        return res != nil && res!.isEmpty ? res!.first : nil
-    }
-    
-    func fetchAllOptions() -> [StoredOption]? {
-        return (self.options?.allObjects as? [StoredOption])?.sorted(by:{ $0.createdOn ?? Date.distantPast < $1.createdOn ?? Date.distantPast })
-    }
-    
     func fetchAllChildren() -> [StoredTile?] {
-        let options = fetchAllOptions() ?? []
-        return options.map { $0.child }
-    }
-    
-    func deleteOption(option: StoredOption) -> Bool {
-        guard option.parent == self else {return false}
-        self.managedObjectContext?.delete(option)
-        try! self.managedObjectContext?.save()
-        return true
-    }
-    
-    func deleteAllOptions() -> Bool {
-        for option in self.options! {
-            self.managedObjectContext?.delete(option as! StoredOption)
-        }
-        try! self.managedObjectContext?.save()
-        return true
+        return [self.leftTile, self.rightTile]
     }
     
     func addImage(image: UIImage) {
-        self.image = image.pngData()
+        self.image = image.jpegData(compressionQuality: 0.75)
     }
     
     func fetchImage() -> UIImage? {
         return self.image != nil ? UIImage(data: self.image!) : nil
     }
     
+    func downloadImage(callback: @escaping (Data?) -> Void) {
+        let reference = GlobalInfo.storage.child("tilePics/\(id!.uuidString).jpeg")
+        reference.getData(maxSize: (5 * 1024 * 1024)) { (data, error) in
+            if error == nil && data != nil {
+                self.image = data
+                callback(data)
+            }
+        }
+    }
+    
     func uploadToFirebase(_ db: Firestore, _ storage: StorageReference) {
         let docString: String = self.id!.uuidString
-        let imagePathRef = storage.child("tilePics/\(docString).png")
+        let imagePathRef = storage.child("tilePics/\(docString).jpeg")
         var data = [
             "title": self.title ?? "",
             "text": self.text ?? "",
             "type": self.type,
-            "root": self.game?.id?.uuidString ?? "-1",
+            "game": self.game?.id?.uuidString ?? "-1",
+            "children": [],
+            "options": []
         ] as [String : Any]
-        
-        if let childOptions = fetchAllOptions() {
-            let childIDs = childOptions.compactMap {$0.child?.id?.uuidString}
-            let buttonTexts = childOptions.compactMap {$0.desc}
-            data["children"] = childIDs
-            data["options"] = buttonTexts
-        }
-        
-        if let dateObj = self.createdOn {
-            data["createdOn"] = dateObj
+         
+        if getType() != .win && getType() != .lose {
+            data["children"] = [
+                self.leftTile?.id?.uuidString ?? "",
+                self.rightTile?.id?.uuidString ?? "",
+            ]
+            data["options"] = [self.leftButton ?? "", self.rightButton ?? ""]
         }
         
         // todo better use of async
         if let pic = self.image {
-            let _ = imagePathRef.putData(pic, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    return
-                }
-                imagePathRef.downloadURL { (url, error) in
-                    guard let downloadURL = url else {
-                        return
-                    }
-                    let picURL = downloadURL.absoluteString
-                    data["image"] = picURL
-                    db.collection("tiles").document(docString).setData(data)
-                }
-            }
-        } else {
-            db.collection("tiles").document(docString).setData(data)
+            let path = "tilePreviews/\(id!).jpeg"
+            let _ = imagePathRef.putData(pic, metadata: nil)
+        }
+        db.collection("tiles").document(docString).setData(data)
+
+    }
+    
+    func unpublish() {
+        let documentID: String = id!.uuidString
+        Task {
+            try? await GlobalInfo.db.collection("tiles").document(documentID).delete()
+            let imagePathRef = GlobalInfo.storage.child("tilePics/\(documentID).jpeg")
+            try? await imagePathRef.delete()
         }
     }
     

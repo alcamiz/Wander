@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Game List-->
+        <scene sceneID="7GH-Om-b6L">
+            <objects>
+                <viewController storyboardIdentifier="GameList" id="XC7-aT-vYC" customClass="GameList" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fgO-Ny-6A5">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BNG-J9-jtS">
+                                <rect key="frame" x="0.0" y="134" width="393" height="684"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GameCell" textLabel="vfQ-rI-SlH" style="IBUITableViewCellStyleDefault" id="xne-mk-kRW">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xne-mk-kRW" id="zcu-LF-fyI">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vfQ-rI-SlH">
+                                                    <rect key="frame" x="20" y="0.0" width="353" height="43.666667938232422"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="tIO-8A-Syc" kind="show" identifier="OpenGameSegue" id="74u-PK-xK3"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTO-cO-4H1">
+                                <rect key="frame" x="61.666666666666657" y="79" width="270" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="270" id="KtB-nh-r99"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Create New Game"/>
+                                <connections>
+                                    <segue destination="tIO-8A-Syc" kind="show" identifier="CreateGameSegue" id="Z8L-31-qlo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="R1R-Fs-Hww"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="R1R-Fs-Hww" firstAttribute="bottom" secondItem="BNG-J9-jtS" secondAttribute="bottom" id="bdZ-Zl-4u4"/>
+                            <constraint firstItem="JTO-cO-4H1" firstAttribute="top" secondItem="R1R-Fs-Hww" secondAttribute="top" constant="20" id="bdr-6d-czx"/>
+                            <constraint firstItem="JTO-cO-4H1" firstAttribute="centerX" secondItem="fgO-Ny-6A5" secondAttribute="centerX" id="cDu-1R-RZN"/>
+                            <constraint firstItem="BNG-J9-jtS" firstAttribute="top" secondItem="JTO-cO-4H1" secondAttribute="bottom" constant="20" id="mQE-TT-4SF"/>
+                            <constraint firstItem="R1R-Fs-Hww" firstAttribute="trailing" secondItem="BNG-J9-jtS" secondAttribute="trailing" id="s8D-7q-Kfy"/>
+                            <constraint firstItem="BNG-J9-jtS" firstAttribute="leading" secondItem="R1R-Fs-Hww" secondAttribute="leading" id="xdL-Wp-FOX"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="NJQ-Hn-lhj"/>
+                    <connections>
+                        <outlet property="allGamesTableView" destination="BNG-J9-jtS" id="5IE-7J-DZt"/>
+                        <outlet property="createNewGameButton" destination="JTO-cO-4H1" id="9jT-Td-2H7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CVW-g2-KGm" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="954.96183206106866" y="3.5211267605633805"/>
+        </scene>
+        <!--GameView-->
+        <scene sceneID="zRC-jl-H4L">
+            <objects>
+                <viewControllerPlaceholder storyboardName="GameView" referencedIdentifier="GameView" id="tIO-8A-Syc" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="guv-zL-eJx"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dSh-Sc-WMR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1785" y="4"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Z8L-31-qlo"/>
+    </inferredMetricsTieBreakers>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
