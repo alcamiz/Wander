@@ -15,7 +15,7 @@ class ResultCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+                
         imageScreen.backgroundColor = .lightGray
         imageScreen.layer.cornerRadius = 12
         imageScreen.clipsToBounds = true

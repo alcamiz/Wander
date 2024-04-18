@@ -128,22 +128,22 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.tagID, for: indexPath) as! ContractionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.tagID, for: indexPath) as! TagCell
         
         if !debug {
-            cell.mainLabel.text = infoGame!.tags[indexPath.row]
+            cell.labelView.text = infoGame!.tags[indexPath.row]
         } else {
             switch indexPath.row % 4 {
                 case 0:
-                    cell.mainLabel.text = "Horror"
+                    cell.labelView.text = "Horror"
                 case 1:
-                    cell.mainLabel.text = "Gaming"
+                    cell.labelView.text = "Gaming"
                 case 2:
-                    cell.mainLabel.text = "Sci-Fi"
+                    cell.labelView.text = "Sci-Fi"
                 case 3:
-                    cell.mainLabel.text = "Drama"
+                    cell.labelView.text = "Drama"
                 default:
-                    cell.mainLabel.text = "Nil"
+                    cell.labelView.text = "Nil"
             }
         }
         return cell

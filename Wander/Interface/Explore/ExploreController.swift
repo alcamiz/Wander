@@ -36,7 +36,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         if !debug {
             switch collectionView.accessibilityIdentifier {
                 case "popularView":
-                    guard newGames.count > 0 else {
+                    guard popularGames.count > 0 else {
                         return 1
                     }
                     return popularGames.count
@@ -46,7 +46,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
                     }
                     return newGames.count
                 case "historyView":
-                    guard newGames.count > 0 else {
+                    guard historyGames.count > 0 else {
                         return 1
                     }
                     return historyGames.count
@@ -114,11 +114,9 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
             await UIView.animateKeyframes(withDuration: 0.1, delay: 0) {
                 UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/2) {
                     cell.alpha = 0.6
-//                    cell.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
                 }
                 UIView.addKeyframe(withRelativeStartTime: 1/2, relativeDuration: 1/2) {
                     cell.alpha = 1
-//                    cell.transform = CGAffineTransform(scaleX: 1, y: 1)
                 }
             }
         }
@@ -152,14 +150,13 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-//        collectionViewLayout.sec
         let height = collectionView.frame.height - collectionView.contentInset.top - collectionView.contentInset.bottom
-        return CGSize(width: 0.75 * collectionView.frame.height, height: collectionView.frame.height)
+        return CGSize(width: 0.75 * height, height: height)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 0)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 0)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -175,10 +172,6 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         popularView.accessibilityIdentifier = "popularView"
         newView.accessibilityIdentifier = "newView"
         historyView.accessibilityIdentifier = "historyView"
-        
-//        popularView.layer.cornerRadius = 12
-//        newView.layer.cornerRadius = 12
-//        historyView.layer.cornerRadius = 12
 
         popularView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
         newView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")

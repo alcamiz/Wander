@@ -78,6 +78,9 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         filterView.resultView = self.resultView
+        if let presentationController = filterView.presentationController as? UISheetPresentationController {
+            presentationController.detents = [.medium()]
+        }
         self.present(filterView, animated: true)
     }
     
