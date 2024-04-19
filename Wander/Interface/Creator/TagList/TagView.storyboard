@@ -27,20 +27,33 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EH5-x2-DIh">
-                                                    <rect key="frame" x="20" y="11" width="297" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EH5-x2-DIh">
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="297" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Md5-qc-5ob"/>
+                                                        <constraint firstAttribute="width" constant="297" id="cj1-9G-Kub"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGG-mb-Dej">
-                                                    <rect key="frame" x="325" y="4" width="48" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGG-mb-Dej">
+                                                    <rect key="frame" x="325" y="4.3333333333333321" width="48" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="48" id="OyL-Qg-lKH"/>
+                                                        <constraint firstAttribute="height" constant="35" id="mm8-zB-hf9"/>
+                                                    </constraints>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="checkmark" catalog="system" title=""/>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="EH5-x2-DIh" firstAttribute="centerY" secondItem="ioz-MZ-PD0" secondAttribute="centerY" id="7Qz-UA-vdS"/>
+                                                <constraint firstItem="zGG-mb-Dej" firstAttribute="centerY" secondItem="ioz-MZ-PD0" secondAttribute="centerY" id="7hK-9U-PWd"/>
+                                                <constraint firstAttribute="trailing" secondItem="zGG-mb-Dej" secondAttribute="trailing" constant="20" symbolic="YES" id="JdI-Ye-Ox4"/>
+                                                <constraint firstItem="EH5-x2-DIh" firstAttribute="leading" secondItem="ioz-MZ-PD0" secondAttribute="leading" constant="20" symbolic="YES" id="WGe-W7-FyW"/>
+                                                <constraint firstItem="zGG-mb-Dej" firstAttribute="leading" secondItem="EH5-x2-DIh" secondAttribute="trailing" constant="8" symbolic="YES" id="YLI-p1-rTd"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="checkedButton" destination="zGG-mb-Dej" id="KcL-at-m7Q"/>

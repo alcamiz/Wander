@@ -9,7 +9,7 @@ import UIKit
 
 class PlaymodeViewController: UIViewController {
     var game: StoredGame?
-    var currentTile: StoredTile? // Take out
+    var currentTile: StoredTile?
     
     var currentTileID: UUID?
     var options: [StoredOption]?
@@ -20,14 +20,15 @@ class PlaymodeViewController: UIViewController {
     @IBOutlet weak var tileButton1: UIButton!
     @IBOutlet weak var tileButton2: UIButton!
     
+    
+    @IBOutlet weak var endTileView: UIView!
+    @IBOutlet weak var winButton: UIButton!
+    @IBOutlet weak var loseButton: UIButton!
     @IBOutlet weak var completeGameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let gameObj = game {
-            completeGameLabel.textColor = .red
-        }
         /*else {
             let alert = UIAlertController(title: "Invalid Game", message: "game is nil", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -50,6 +51,18 @@ class PlaymodeViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
             return
         }*/
+        
+            
+        endTileView.backgroundColor = Color.primary
+        completeGameLabel.textColor = .black
+        
+        winButton.backgroundColor = Color.secondary
+        winButton.setTitleColor(.white, for: .normal)
+        winButton.setTitle("Exit Game", for: .normal)
+        
+        loseButton.backgroundColor = Color.secondary
+        loseButton.setTitleColor(.white, for: .normal)
+        loseButton.setTitle("Try Again?", for: .normal)
     }
     
     func displayTile(tileID: UUID) {
@@ -59,37 +72,79 @@ class PlaymodeViewController: UIViewController {
             return
         }
         
-        guard let currentTile = game.fetchTile(tileID: tileID) else {
+        guard let fetchedTile = game.fetchTile(tileID: tileID) else {
             print("currentTile is nil")
             return
         }
-
-        titleLabel.text = currentTile.title
-        tileImageView.image = currentTile.fetchImage()
-        tileTextView.text = currentTile.text
         
-        if currentTile.type == TileType.win.rawValue || currentTile.type == TileType.lose.rawValue {
+        currentTile = fetchedTile
+        titleLabel.text = currentTile!.title
+        tileImageView.image = currentTile!.fetchImage()
+        tileTextView.text = currentTile!.text
+        
+        if currentTile!.type == TileType.win.rawValue || currentTile!.type == TileType.lose.rawValue {
             tileButton1.isHidden = true
             tileButton2.isHidden = true
+            endTileView.isHidden = false
             
-            let winText = "You have just completed \"\(game.name!)\" and WON!! Congratulations!!"
-            let loseText = "You have just completed \"\(game.name!)\"...and lost. Womp womp."
-            
-            completeGameLabel.text = (currentTile.type == TileType.win.rawValue) ? winText : loseText
-            completeGameLabel.isHidden = false
+            if currentTile!.type == TileType.win.rawValue {
+                displayWinTile()
+            }
+            else {
+                displayLoseTile()
+            }
         }
         else {
             tileButton1.isHidden = false
             tileButton2.isHidden = false
             // Button names are option desc for button1, button 2
-            options = currentTile.fetchAllOptions()
+            options = currentTile!.fetchAllOptions()
             if (options?.count)! > 0 {
                 tileButton1.setTitle(options?[0].desc, for: .normal)
             }
             if (options?.count)! > 1 {
                 tileButton2.setTitle(options?[1].desc, for: .normal)
             }
-            completeGameLabel.isHidden = true
+            endTileView.isHidden = true
+        }
+    }
+    
+    func displayWinTile() {
+        if let currentGame = game {
+            loseButton.isHidden = true
+            winButton.isHidden = false
+            
+            let winText = "Congratulations!\nYou just won \"\(currentGame.name!)\"."
+            let attributedWinText = NSAttributedString(string: winText, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
+            completeGameLabel.attributedText = attributedWinText
+        }
+    }
+    
+    func displayLoseTile() {
+        if let currentGame = game {
+            loseButton.isHidden = false
+            winButton.isHidden = true
+            
+            let loseText = "Oh no!\nYou just lost \"\(currentGame.name!)\"."
+            let attributedLoseText = NSAttributedString(string: loseText, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
+            completeGameLabel.attributedText = attributedLoseText
+        }
+    }
+    
+    @IBAction func winButtonPressed(_ sender: Any) {
+        
+        if let navigationController = self.navigationController {
+            // `PlayMode` is embedded in a navigation controller
+            navigationController.popViewController(animated: true)
+        }
+    }
+    
+    @IBAction func loseButtonPressed(_ sender: Any) {
+        if let rootTile = game?.root, let rootID = rootTile.id {
+            displayTile(tileID: rootID)
+        }
+        else {
+            return
         }
     }
     

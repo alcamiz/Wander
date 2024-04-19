@@ -259,10 +259,16 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
             nextVC.delegate = self
             nextVC.currentTags = game.tags.map { $0 }
         }
-        else if segue.identifier == "PlaytestGameSegue", let nextVC = segue.destination as? PlaymodeViewController {
+        else if segue.identifier == "PlaytestGameSegue",
+                let nextVC = segue.destination as? PlaymodeViewController {
             nextVC.game = game
-            nextVC.currentTile = game.root
-            nextVC.currentTileID = game.root?.id
+            if let gameRoot = game.root {
+                nextVC.currentTile = game.root
+                nextVC.currentTileID = game.root!.id
+            }
+            else {
+                print("no game root")
+            }
         }
     }
     @IBAction func publishButtonPressed(_ sender: Any) {
