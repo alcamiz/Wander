@@ -32,9 +32,20 @@ func storeAfterLogin(managedContext: NSManagedObjectContext, userInfo: User) asy
     } else { // pull info from Firebase
         do {
             let user = try await db.collection("users").document(userInfo.uid).getDocument(as: FirebaseUser.self)
-            GlobalInfo.currentUser = StoredUser(webVersion: user, managedContext: managedContext)
+            let storedUser = StoredUser(webVersion: user, managedContext: managedContext)
             // store the picture
-            try managedContext.save()
+            let reference = GlobalInfo.storage.child("userProfiles/\(userInfo.uid).jpeg")
+            GlobalInfo.currentUser = storedUser
+            try? managedContext.save()
+            reference.getData(maxSize: (5 * 1024 * 1024)) { (data, error) in
+                if error == nil && data != nil {
+                    storedUser.picture = data
+                    try? managedContext.save()
+                }
+                print("yeah shawn")
+            }
+
+
         } catch {}
     }
 }
