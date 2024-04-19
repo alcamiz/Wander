@@ -14,7 +14,7 @@ import CropViewController
 
 class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate,
                              UIImagePickerControllerDelegate, CropViewControllerDelegate {
-    let publishedGames: [StoredGame] = []
+    var publishedGames: [FirebaseGame] = []
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var publishedGamesCollectionView: UICollectionView!
     
@@ -52,8 +52,12 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     override func viewWillAppear(_ animated: Bool) {
         //publishedGames
-        
-        publishedGamesCollectionView.reloadData()
+        guard let userID = GlobalInfo.currentUser?.id else {return}
+        Task {
+            publishedGames = await FirebaseHelper.gamesByAuthor(userID: userID)
+            publishedGamesCollectionView.reloadData()
+        }
+       
        
     }
     
@@ -64,7 +68,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reUsable", for: indexPath) as! ExploreCell
         
-        var game: StoredGame
+        var game: FirebaseGame
         game = publishedGames[indexPath.row]
         
         cell.titleLabel.text = game.name

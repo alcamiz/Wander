@@ -56,5 +56,21 @@ class FirebaseHelper {
         }
     }
     
+    static func gamesByAuthor(userID: String) async -> [FirebaseGame] {
+        var queriedGames: [FirebaseGame] = []
+        let querySnapshot = try? await db.collection("games").whereField("author", isEqualTo: userID).getDocuments()
+         
+        for document in querySnapshot?.documents ?? [] {
+            do {
+                let gameObj = try document.data(as: FirebaseGame.self)
+                let author = try await db.collection("users").document(gameObj.author).getDocument(as: FirebaseUser.self)
+                gameObj.authorUsername = author.username
+                queriedGames.append(gameObj)
+            } catch {
+            }
+        }
+        return queriedGames
+    }
+    
     
 }

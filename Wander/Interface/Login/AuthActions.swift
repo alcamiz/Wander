@@ -33,6 +33,7 @@ func storeAfterLogin(managedContext: NSManagedObjectContext, userInfo: User) asy
         do {
             let user = try await db.collection("users").document(userInfo.uid).getDocument(as: FirebaseUser.self)
             GlobalInfo.currentUser = StoredUser(webVersion: user, managedContext: managedContext)
+            // store the picture
             try managedContext.save()
         } catch {}
     }
