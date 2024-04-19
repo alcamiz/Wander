@@ -55,6 +55,8 @@
 		FF3A50762BCDCB8F003D4E33 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3A50732BCDCB8F003D4E33 /* TagCell.swift */; };
 		FF486D382BC4AEDD00133C46 /* TileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF486D352BC4AEDD00133C46 /* TileCell.swift */; };
 		FF486D392BC4AEDD00133C46 /* TileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF486D362BC4AEDD00133C46 /* TileCell.xib */; };
+		FF78680D2BD0CAA5007E3990 /* NewEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF78680C2BD0CAA5007E3990 /* NewEditor.storyboard */; };
+		FF78680F2BD0CAAF007E3990 /* NewEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF78680E2BD0CAAF007E3990 /* NewEditor.swift */; };
 		FF7880CF2BB0F60F00689BEC /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880CE2BB0F60F00689BEC /* CropViewController */; };
 		FF7880D12BB0F60F00689BEC /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880D02BB0F60F00689BEC /* TOCropViewController */; };
 		FF94C44C2BA9468A0089E47C /* StoredGame+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */; };
@@ -130,6 +132,8 @@
 		FF3A50742BCDCB8F003D4E33 /* TagCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCell.xib; sourceTree = "<group>"; };
 		FF486D352BC4AEDD00133C46 /* TileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileCell.swift; sourceTree = "<group>"; };
 		FF486D362BC4AEDD00133C46 /* TileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TileCell.xib; sourceTree = "<group>"; };
+		FF78680C2BD0CAA5007E3990 /* NewEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewEditor.storyboard; sourceTree = "<group>"; };
+		FF78680E2BD0CAAF007E3990 /* NewEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEditor.swift; sourceTree = "<group>"; };
 		FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredGame+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF94C4472BA9468A0089E47C /* StoredTile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredTile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF94C44B2BA9468A0089E47C /* StoredUser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredUser+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -289,6 +293,7 @@
 		FF486D372BC4AEDD00133C46 /* Creator */ = {
 			isa = PBXGroup;
 			children = (
+				FF7868072BD0C9EB007E3990 /* NewEditor */,
 				FF3A50772BCDCB94003D4E33 /* TagCell */,
 				FF0DC43D2BCC4A24009ABE78 /* EditForm */,
 				FFB36F642BC7404A006C790A /* EditorNavigation */,
@@ -300,6 +305,15 @@
 				FFB36F522BC73DC4006C790A /* TileCell */,
 			);
 			path = Creator;
+			sourceTree = "<group>";
+		};
+		FF7868072BD0C9EB007E3990 /* NewEditor */ = {
+			isa = PBXGroup;
+			children = (
+				FF78680C2BD0CAA5007E3990 /* NewEditor.storyboard */,
+				FF78680E2BD0CAAF007E3990 /* NewEditor.swift */,
+			);
+			path = NewEditor;
 			sourceTree = "<group>";
 		};
 		FF94C4432BA9465D0089E47C /* CoreData */ = {
@@ -556,6 +570,7 @@
 				B6CF7E722BC209A50044AED4 /* ExploreCell.xib in Resources */,
 				B6953E8A2BC0A3B100CE543D /* LoginFlow.storyboard in Resources */,
 				B6CF7E9B2BC2211B0044AED4 /* Playmode.storyboard in Resources */,
+				FF78680D2BD0CAA5007E3990 /* NewEditor.storyboard in Resources */,
 				FFB36F562BC73E95006C790A /* LinkView.storyboard in Resources */,
 				B6CF7E962BC209B40044AED4 /* ResultCell.xib in Resources */,
 				FFB1EF322BCB92030051637B /* ResultView.xib in Resources */,
@@ -584,6 +599,7 @@
 				B6CF7E8C2BC209B40044AED4 /* FilterView.swift in Sources */,
 				FF3A50762BCDCB8F003D4E33 /* TagCell.swift in Sources */,
 				B6CF7E952BC209B40044AED4 /* ResultCell.swift in Sources */,
+				FF78680F2BD0CAAF007E3990 /* NewEditor.swift in Sources */,
 				534AEF222BBDF87A00890812 /* ProfileViewController.swift in Sources */,
 				FF94C44F2BA9468A0089E47C /* StoredTile+CoreDataClass.swift in Sources */,
 				B6CF7ED22BCDA4A70044AED4 /* FirebaseUser.swift in Sources */,

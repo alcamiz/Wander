@@ -490,19 +490,19 @@ class EditorView: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "LinkButtonOneSegue",
-           let nextVC = segue.destination as? LinkView {
-            nextVC.parentTile = self.tile
-            nextVC.delegate = self
-            nextVC.linkTitle = "Button One"
-            //saveToCore()
-        } else if segue.identifier == "LinkButtonTwoSegue",
-            let nextVC = segue.destination as? LinkView {
-            nextVC.parentTile = self.tile
-            nextVC.delegate = self
-            nextVC.linkTitle = "Button Two"
-            //saveToCore()
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "LinkButtonOneSegue",
+//           let nextVC = segue.destination as? LinkView {
+//            nextVC.parentTile = self.tile
+//            nextVC.delegate = self
+//            nextVC.linkTitle = "Button One"
+//            //saveToCore()
+//        } else if segue.identifier == "LinkButtonTwoSegue",
+//            let nextVC = segue.destination as? LinkView {
+//            nextVC.parentTile = self.tile
+//            nextVC.delegate = self
+//            nextVC.linkTitle = "Button Two"
+//            //saveToCore()
+//        }
+//    }
 }

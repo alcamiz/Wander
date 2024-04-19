@@ -11,17 +11,21 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var game:StoredGame?
     var tileList:[StoredTile] = []
     var textCellIdentifier = "TileCell"
-    var selectedTileIndex:IndexPath?
-    
-    @IBOutlet weak var createTileButton: UIButton!
+    var createButton: UIBarButtonItem?
     
     @IBOutlet weak var allTilesTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        createTileButton.backgroundColor = Color.primary
-        createTileButton.tintColor = .white
+        if self.navigationController != nil {
+            createButton = UIBarButtonItem(title: "Create")
+            createButton?.target = self
+            createButton?.action = #selector(createTile)
+
+            self.navigationItem.rightBarButtonItem = createButton
+            self.navigationItem.leftBarButtonItem?.title = "Cancel"
+        }
         
         allTilesTableView.delegate = self
         allTilesTableView.dataSource = self
@@ -32,10 +36,23 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if selectedTileIndex != nil {
-            allTilesTableView.reloadRows(at: [selectedTileIndex!], with: .automatic)
-        }
+    }
+    
+    @objc
+    func createTile() {
+        let storyboard = UIStoryboard(name: "NewEditor", bundle: nil)
+        let editorView = storyboard.instantiateViewController(withIdentifier: "NewEditor") as! NewEditor
         
+        editorView.createHandler = { tile in
+            guard tile != nil else {
+                return
+            }
+            let indexPath = IndexPath(row: self.tileList.count, section: 0)
+            self.tileList.append(tile!)
+            self.allTilesTableView.insertRows(at: [indexPath], with: .automatic)
+            
+        }
+        self.navigationController?.pushViewController(editorView, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,13 +63,6 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
         let row = indexPath.row
         cell.textLabel?.text = formatCellText(tile: tileList[row])
-        
-//        if tileList[row].getType().rawValue == TileType.root.rawValue {
-//            cell.textLabel?.text = "\(tileList[row].title!) (root)"
-//        }
-//        else {
-//            cell.textLabel?.text = tileList[row].title
-//        }
         return cell
     }
     
@@ -78,6 +88,17 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [action])
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "NewEditor", bundle: nil)
+        let editorView = storyboard.instantiateViewController(withIdentifier: "NewEditor") as! NewEditor
+        
+        editorView.storedTile = tileList[indexPath.row]
+        editorView.updateHandler = { _ in
+            self.allTilesTableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        self.navigationController?.pushViewController(editorView, animated: true)
+    }
+    
     func formatCellText(tile: StoredTile) -> String {
         var cellText = tile.title!
         if tile.getType().rawValue == TileType.root.rawValue {
@@ -96,26 +117,5 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         return cellText
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if let nextVC = segue.destination as? EditorView {
-
-            if segue.identifier == "CreateTileSegue"{
-                let newTile = game?.createTile()
-                tileList.append(newTile!)
-                let idxPath = IndexPath(row: allTilesTableView.numberOfRows(inSection: 0), section: 0)
-                allTilesTableView.insertRows(at: [idxPath], with: .automatic)
-                nextVC.tile = newTile
-                selectedTileIndex = idxPath
-
-            } else if segue.identifier == "OpenTileSegue" {
-                let tileIndex = allTilesTableView.indexPathForSelectedRow?.row
-                let idxPath = IndexPath(row: tileIndex!, section: 0)
-                nextVC.tile = tileList[tileIndex!]
-                selectedTileIndex = idxPath
-            }
-        }
     }
 }

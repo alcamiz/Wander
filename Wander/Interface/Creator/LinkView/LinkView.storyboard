@@ -17,9 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="B7x-r2-hTX">
-                                <rect key="frame" x="0.0" y="103" width="393" height="749"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="B7x-r2-hTX">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TileCell" textLabel="dhh-8I-3y1" style="IBUITableViewCellStyleDefault" id="wRg-Mm-XYA" customClass="LinkView">
@@ -41,27 +40,26 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JAw-S4-xhY">
-                                <rect key="frame" x="-7" y="59" width="398" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Link for Button 1" id="You-0C-xND"/>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Tpc-Dc-g3T"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Tpc-Dc-g3T" firstAttribute="trailing" secondItem="B7x-r2-hTX" secondAttribute="trailing" id="85x-C1-6cG"/>
+                            <constraint firstItem="B7x-r2-hTX" firstAttribute="leading" secondItem="Tpc-Dc-g3T" secondAttribute="leading" id="JG7-Ry-3Ej"/>
+                            <constraint firstItem="Tpc-Dc-g3T" firstAttribute="bottom" secondItem="B7x-r2-hTX" secondAttribute="bottom" id="Yo0-41-Dds"/>
+                            <constraint firstItem="B7x-r2-hTX" firstAttribute="top" secondItem="Tpc-Dc-g3T" secondAttribute="top" id="k8Y-cF-HXc"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8Vi-Gc-peR"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="allTilesTableView" destination="B7x-r2-hTX" id="mMK-Lj-BAc"/>
-                        <outlet property="linkingNavigationBar" destination="JAw-S4-xhY" id="qhx-rw-bFz"/>
-                        <outlet property="linkingNavigationItem" destination="You-0C-xND" id="gyj-Pn-nsx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z2s-P6-2Ow" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="460" y="-4"/>
+            <point key="canvasLocation" x="458.77862595419845" y="-4.2253521126760569"/>
         </scene>
     </scenes>
     <resources>

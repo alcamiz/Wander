@@ -10,31 +10,21 @@ import UIKit
 class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var allTilesTableView: UITableView!
-    @IBOutlet weak var linkingNavigationBar: UINavigationBar!
-    @IBOutlet weak var linkingNavigationItem: UINavigationItem!
     
-    
+    var selectAction: ((StoredTile?) -> Void)?
     var linkTitle: String!
     var tileList:[StoredTile] = []
+    
     var textCellIdentifier = "TileCell"
     var parentTile:StoredTile?
-    var delegate:EditorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         allTilesTableView.delegate = self
         allTilesTableView.dataSource = self
         
-        linkingNavigationItem.title = "Link for \(linkTitle ?? "ERROR")"
+        self.navigationController?.title = "Link for \(linkTitle ?? "ERROR")"
         tileList = parentTile?.game?.fetchAllTiles() ?? []
-        
-        linkingNavigationBar.backgroundColor = Color.secondary
-        linkingNavigationItem.titleView?.tintColor = .white
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        //tileList = game?.getTiles() ?? []
-        allTilesTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,23 +40,10 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedTile = tileList[indexPath.row]
-        
-        if parentTile?.getType().rawValue != TileType.root.rawValue {
-            parentTile?.type = TileType.between.rawValue
+        if selectAction != nil {
+            selectAction!(selectedTile)
         }
-        
-        switch (linkTitle) {
-            case "Button One":
-                parentTile?.leftTile = selectedTile
-                try? parentTile?.managedObjectContext?.save()
-                self.navigationController?.popViewController(animated: true)
-            case "Button Two":
-                parentTile?.rightTile = selectedTile
-                try? parentTile?.managedObjectContext?.save()
-                self.navigationController?.popViewController(animated: true)
-            default:
-                break
-        }
+        self.navigationController?.popViewController(animated: true)
     }
     
     func formatCellText(tile: StoredTile) -> String {
