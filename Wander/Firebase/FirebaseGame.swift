@@ -26,7 +26,6 @@ public class FirebaseGame: Codable, ImageableFirebase {
     var tiles: [String]
     var tags: [String]
     var image: Data?
-    var liked: Int16 = LikeType.neither.rawValue
     var likes: UInt
     var dislikes: UInt
     

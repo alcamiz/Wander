@@ -53,7 +53,7 @@ class InfoGame {
         } else {
             self.image = UIImage(systemName: "questionmark")
         }
-        self.liked = LikeType(rawValue: firebaseGame.liked)!
+        self.liked = LikeType.neither
         self.firebaseGame = firebaseGame
     }
     
