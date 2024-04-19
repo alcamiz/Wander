@@ -61,7 +61,7 @@ class SignupViewController: UIViewController {
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) {
                 (authResult, error) in
                 guard (error as NSError?) == nil else {
-                    self.showAlert(message: "Invalid username or password.")
+                    self.showAlert(message: "Invalid email or password.")
                     return
                 }
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
