@@ -72,5 +72,13 @@ class FirebaseHelper {
         return queriedGames
     }
     
+    static func usernameAlreadyExists(username: String) async -> Bool {
+        let querySnapshot = try? await db.collection("users").whereField("username", isEqualTo: username).getDocuments()
+        if let snapshot = querySnapshot, snapshot.count > 0 {
+            return true
+        }
+        return false
+    }
+    
     
 }

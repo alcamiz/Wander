@@ -47,32 +47,37 @@ class SignupViewController: UIViewController {
     }
 
     @IBAction func onSignupPressed(_ sender: Any) {
-        if(emailTextField.text != nil && passwordTextField.text != nil) {
+        guard emailTextField.text != nil && passwordTextField.text != nil && usernameTextField.text != nil else {
+            self.showAlert(message: "Please enter both email, username and password.")
+            return
+        }
+        
+        Task {
+            let usernameTaken = await FirebaseHelper.usernameAlreadyExists(username: usernameTextField.text!)
+            guard !usernameTaken else {
+                self.showAlert(message: "Username \(usernameTextField.text!) is already in use.")
+                return
+            }
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) {
                 (authResult, error) in
-                if (error as NSError?) != nil {
+                guard (error as NSError?) == nil else {
                     self.showAlert(message: "Invalid username or password.")
-                } else {
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let managedContext = appDelegate.persistentContainer.viewContext
+                    return
+                }
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let managedContext = appDelegate.persistentContainer.viewContext
 
-                    if let userInfo = Auth.auth().currentUser,
-                        let username = self.usernameTextField.text {
-                        db.collection("users").document(userInfo.uid).setData([
-                            "email": userInfo.email!,
-                            "username": username,
-                        ])
-                        GlobalInfo.currentUser = storeAfterSignup(managedContext: managedContext, userInfo: userInfo, username: username)
-                        self.performSegue(withIdentifier: "SuccessfulSignupSegue", sender: nil)
-
-                    }
-
+                if let userInfo = Auth.auth().currentUser,
+                    let username = self.usernameTextField.text {
+                    db.collection("users").document(userInfo.uid).setData([
+                        "email": userInfo.email!,
+                        "username": username,
+                    ])
+                    GlobalInfo.currentUser = storeAfterSignup(managedContext: managedContext, userInfo: userInfo, username: username)
+                    self.performSegue(withIdentifier: "SuccessfulSignupSegue", sender: nil)
                 }
             }
-        } else {
-            self.showAlert(message: "Please enter both username and password.")
         }
-        print("wow!")
     }
     
     
