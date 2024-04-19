@@ -51,18 +51,11 @@ class PlaymodeViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
             return
         }*/
-        
             
-        endTileView.backgroundColor = Color.primary
-        completeGameLabel.textColor = .black
-        
-        winButton.backgroundColor = Color.secondary
-        winButton.setTitleColor(.white, for: .normal)
+        endTileView.backgroundColor = Color.secondary
+        completeGameLabel.textColor = .white
         winButton.setTitle("Exit Game", for: .normal)
-        
-        loseButton.backgroundColor = Color.secondary
-        loseButton.setTitleColor(.white, for: .normal)
-        loseButton.setTitle("Try Again?", for: .normal)
+        loseButton.setTitle("Try Again", for: .normal)
     }
     
     func displayTile(tileID: UUID) {
@@ -115,8 +108,7 @@ class PlaymodeViewController: UIViewController {
             winButton.isHidden = false
             
             let winText = "Congratulations!\nYou just won \"\(currentGame.name!)\"."
-            let attributedWinText = NSAttributedString(string: winText, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
-            completeGameLabel.attributedText = attributedWinText
+            completeGameLabel.text = winText
         }
     }
     
@@ -126,8 +118,7 @@ class PlaymodeViewController: UIViewController {
             winButton.isHidden = true
             
             let loseText = "Oh no!\nYou just lost \"\(currentGame.name!)\"."
-            let attributedLoseText = NSAttributedString(string: loseText, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
-            completeGameLabel.attributedText = attributedLoseText
+            completeGameLabel.text = loseText
         }
     }
     
