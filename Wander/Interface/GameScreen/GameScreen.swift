@@ -19,6 +19,11 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var tagHeight: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var likeCount: UILabel!
+    @IBOutlet weak var dislikeButton: UIButton!
+    @IBOutlet weak var dislikeCount: UILabel!
+    
     var infoGame: InfoGame?
 //    var tags: [String]?
     var tagID: String = UUID().uuidString
@@ -49,6 +54,8 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             }
 
             descriptionLabel.text = infoGame!.desc
+            likeCount.text = String(infoGame!.likes)
+            dislikeCount.text = String(infoGame!.dislikes)
 
         } else {
             titleLabel.text = "Empty"
@@ -159,4 +166,35 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         return CGSize(width: cellWidth, height: cellHeight)
     }
 
+    
+
+    @IBAction func likeButtonPressed(_ sender: Any) {
+        if !debug && infoGame!.liked != .like {
+            likeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+            infoGame!.likes += 1
+            likeCount.text = String(infoGame!.likes)
+            if infoGame!.liked == .dislike {
+                dislikeButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+                infoGame!.dislikes -= 1
+                dislikeCount.text = String(infoGame!.dislikes)
+            }
+            infoGame!.liked = .like
+          
+        }
+    }
+    @IBAction func dislikeButtonPressed(_ sender: Any) {
+        if !debug && infoGame!.liked != .dislike {
+            dislikeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+            infoGame!.dislikes += 1
+            dislikeCount.text = String(infoGame!.dislikes)
+            
+            if infoGame!.liked == .like {
+                likeButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+                infoGame!.likes -= 1
+                likeCount.text = String(infoGame!.likes)
+            }
+            infoGame!.liked = .dislike
+        }
+        
+    }
 }

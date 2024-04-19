@@ -12,6 +12,11 @@ import UIKit
 import FirebaseFirestore
 import FirebaseStorage
 
+enum LikeType:Int16 {
+    case neither
+    case like
+    case dislike
+}
 
 public class StoredGame: NSManagedObject {
     convenience init(creator: StoredUser) {
@@ -24,6 +29,7 @@ public class StoredGame: NSManagedObject {
         self.createCount = 0
         self.createdOn = Date()
         self.published = false
+        self.liked = LikeType.neither.rawValue
         self.root = createTile()
         self.root?.type = TileType.root.rawValue
     }
@@ -41,6 +47,7 @@ public class StoredGame: NSManagedObject {
         self.image = webVersion.image
         self.desc = webVersion.desc
         self.tags = webVersion.tags
+        self.liked = LikeType.neither.rawValue
     }
     
     func createTile() -> StoredTile {

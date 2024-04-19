@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -81,6 +81,38 @@
                                     <outletCollection property="gestureRecognizers" destination="8iP-Af-TnR" appends="YES" id="q0W-SE-VgV"/>
                                 </connections>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNf-GZ-f7M">
+                                <rect key="frame" x="289" y="668" width="74" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Dislike"/>
+                                <connections>
+                                    <action selector="dislikeButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="4NT-hb-6dO"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3y-WE-oK6">
+                                <rect key="frame" x="30" y="639" width="73" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sb-V4-Pqi">
+                                <rect key="frame" x="290" y="639" width="73" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FAr-aW-EBI">
+                                <rect key="frame" x="39" y="668" width="73" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Like"/>
+                                <connections>
+                                    <action selector="likeButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="xEa-EU-FF9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -107,7 +139,11 @@
                     <connections>
                         <outlet property="authorLabel" destination="s3V-nP-eM0" id="qzW-BM-04I"/>
                         <outlet property="descriptionLabel" destination="JFl-Jx-YXE" id="bYH-mR-hO7"/>
+                        <outlet property="dislikeButton" destination="wNf-GZ-f7M" id="64y-Wa-ISP"/>
+                        <outlet property="dislikeCount" destination="2sb-V4-Pqi" id="0PU-jd-3o0"/>
                         <outlet property="imageScreen" destination="cyh-7O-OtK" id="kdj-H5-Mzx"/>
+                        <outlet property="likeButton" destination="FAr-aW-EBI" id="dBP-w5-fOs"/>
+                        <outlet property="likeCount" destination="u3y-WE-oK6" id="wtc-ah-dJj"/>
                         <outlet property="playButton" destination="r3v-o3-RL3" id="3h9-nm-YmL"/>
                         <outlet property="tagHeight" destination="S1q-WF-PZq" id="TZJ-pZ-MVw"/>
                         <outlet property="tagView" destination="CCY-Di-4jH" id="nZ7-VI-kem"/>

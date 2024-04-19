@@ -2,7 +2,7 @@
 //  StoredGame+CoreDataProperties.swift
 //  Wander
 //
-//  Created by Benjamin Gordon on 4/12/24.
+//  Created by Benjamin Gordon on 4/18/24.
 //
 //
 
@@ -26,6 +26,7 @@ extension StoredGame {
     @NSManaged public var published: Bool
     @NSManaged public var publishedOn: Date?
     @NSManaged public var tags: [String]?
+    @NSManaged public var liked: Int16
     @NSManaged public var author: StoredUser?
     @NSManaged public var root: StoredTile?
     @NSManaged public var tiles: NSSet?
