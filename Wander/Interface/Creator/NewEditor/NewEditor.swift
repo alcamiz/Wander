@@ -80,6 +80,15 @@ class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigation
                 titleEntryTwo.text = storedTile!.rightButton!
             }
             
+            switch TileType(rawValue: storedTile!.type) {
+                case .win:
+                    typeSelector.selectedSegmentIndex = 1
+                case .lose:
+                    typeSelector.selectedSegmentIndex = 2
+                default:
+                    break
+            }
+            
             linkedTiles.0 = storedTile!.leftTile
             linkedTiles.1 = storedTile!.rightTile
 

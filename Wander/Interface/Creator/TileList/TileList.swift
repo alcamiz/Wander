@@ -42,6 +42,7 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func createTile() {
         let storyboard = UIStoryboard(name: "NewEditor", bundle: nil)
         let editorView = storyboard.instantiateViewController(withIdentifier: "NewEditor") as! NewEditor
+        editorView.storedGame = self.game
         
         editorView.createHandler = { tile in
             guard tile != nil else {

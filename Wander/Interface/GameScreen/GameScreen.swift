@@ -29,7 +29,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tagView.register(UINib(nibName: "ContractionCell", bundle: nil), forCellWithReuseIdentifier: self.tagID)
+        self.tagView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: self.tagID)
         self.imageScreen.backgroundColor = .lightGray
         self.descriptionLabel.textColor = .gray
         
