@@ -27,7 +27,6 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         super.viewDidLoad()
         picker.delegate = self
         
-        imageButton.setTitle("Change Image", for: .normal)
         imageButton.setTitleColor(.white, for: .normal)
         imageButton.layer.backgroundColor = Color.primary.cgColor
         imageButton.layer.cornerRadius = 12
@@ -35,14 +34,18 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         if storedGame!.image != nil {
             imageScene.image = UIImage(data: storedGame!.image!)
+            imageScene.contentMode = .scaleAspectFill
+            imageButton.setTitle("Change Image", for: .normal)
         } else {
             imageScene.image = UIImage(systemName: "questionmark")
+            imageScene.contentMode = .scaleAspectFit
+            imageButton.setTitle("Add Image", for: .normal)
         }
         
         imageScene.layer.backgroundColor = UIColor.lightGray.cgColor
         imageScene.layer.cornerRadius = 12
-        imageButton.clipsToBounds = true
-        imageScene.contentMode = .scaleAspectFill
+        imageScene.clipsToBounds = true
+        imageScene.tintColor = .black
         
         if storedGame!.name != nil && storedGame!.name!.count != 0 {
             titleEntry.text = storedGame!.name!
@@ -87,8 +90,9 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         shouldSaveImage = true
-        let chosenImage = info[.originalImage] as! UIImage
-        imageScene.image = chosenImage
+        imageScene.image = info[.originalImage] as? UIImage
+        imageScene.contentMode = .scaleAspectFill
+        imageButton.setTitle("Change Image", for: .normal)
         dismiss(animated: true)
     }
     
