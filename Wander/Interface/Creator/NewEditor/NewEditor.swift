@@ -154,6 +154,7 @@ class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigation
             updateHandler?(storedTile)
         }
         
+        try! storedTile?.managedObjectContext?.save()
         self.navigationController?.popViewController(animated: true)
     }
     

@@ -282,7 +282,6 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
             nextVC.game = game
             if let gameRoot = game.root {
                 nextVC.currentTile = game.root
-                nextVC.currentTileID = game.root!.id
             }
             else {
                 print("no game root")

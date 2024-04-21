@@ -28,6 +28,10 @@ class PlaymodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if game != nil {
+            currentTile = game?.root
+        }
+        
         /*else {
             let alert = UIAlertController(title: "Invalid Game", message: "game is nil", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -56,23 +60,25 @@ class PlaymodeViewController: UIViewController {
             
         endTileView.backgroundColor = Color.secondary
         completeGameLabel.textColor = .white
+        winButton.setTitleColor(Color.secondary, for: .normal)
+        loseButton.setTitleColor(Color.secondary, for: .normal)
         winButton.setTitle("Exit Game", for: .normal)
         loseButton.setTitle("Try Again", for: .normal)
     }
     
     func displayTile(tile: StoredTile?) {
         //currentTileID = tileID
-        guard let game = game else {
+        if game == nil {
             print("game is nil")
             return
         }
         
-        guard let currentTile = tile else {
+        if tile == nil {
             print("currentTile is nil")
             return
         }
         
-        currentTile = fetchedTile
+        currentTile = tile
         titleLabel.text = currentTile!.title
         tileImageView.image = currentTile!.fetchImage()
         tileTextView.text = currentTile!.text
@@ -93,8 +99,8 @@ class PlaymodeViewController: UIViewController {
             tileButton1.isHidden = false
             tileButton2.isHidden = false
             // Button names are option desc for button1, button 2
-            tileButton1.setTitle(newCurrentTile.leftButton, for: .normal)
-            tileButton2.setTitle(newCurrentTile.rightButton, for: .normal)
+            tileButton1.setTitle(currentTile!.leftButton, for: .normal)
+            tileButton2.setTitle(currentTile!.rightButton, for: .normal)
             endTileView.isHidden = true
         }
     }
@@ -128,8 +134,8 @@ class PlaymodeViewController: UIViewController {
     }
     
     @IBAction func loseButtonPressed(_ sender: Any) {
-        if let rootTile = game?.root, let rootID = rootTile.id {
-            displayTile(tileID: rootID)
+        if let rootTile = game?.root {
+            displayTile(tile: rootTile)
         }
         else {
             return
@@ -137,6 +143,12 @@ class PlaymodeViewController: UIViewController {
     }
     
     @IBAction func button1Pressed(_ sender: Any) {
+        if currentTile == nil {
+            print("current is nil")
+        }
+        if currentTile?.leftTile == nil {
+            print("left child is nil")
+        }
         displayTile(tile: currentTile?.leftTile)
     }
     
