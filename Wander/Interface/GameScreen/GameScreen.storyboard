@@ -82,10 +82,10 @@
                                 </connections>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNf-GZ-f7M">
-                                <rect key="frame" x="289" y="668" width="74" height="35"/>
+                                <rect key="frame" x="301" y="668" width="50" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Dislike"/>
+                                <buttonConfiguration key="configuration" style="plain" image="hand.thumbsdown" catalog="system"/>
                                 <connections>
                                     <action selector="dislikeButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="4NT-hb-6dO"/>
                                 </connections>
@@ -105,10 +105,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FAr-aW-EBI">
-                                <rect key="frame" x="39" y="668" width="73" height="35"/>
+                                <rect key="frame" x="42" y="668" width="61" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Like"/>
+                                <buttonConfiguration key="configuration" style="plain" image="hand.thumbsup" catalog="system"/>
                                 <connections>
                                     <action selector="likeButtonPressed:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="xEa-EU-FF9"/>
                                 </connections>
@@ -161,6 +161,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="hand.thumbsdown" catalog="system" width="123" height="128"/>
+        <image name="hand.thumbsup" catalog="system" width="123" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
