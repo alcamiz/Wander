@@ -15,21 +15,45 @@ private var storage = Storage.storage().reference()
 
 class FirebaseHelper {
     
-    static func queryGames(query: String?, tag: String?, sort: String?) async -> [FirebaseGame] {
+    static func queryGames(domain: String?, query: String?, tag: String?, sort: String?) async -> [FirebaseGame] {
+        let domainString: String = domain != nil ? domain! : "Title"
+        
+        
         var queriedGames: [FirebaseGame] = []
-        var queryObj = db.collection("games").whereField("name", notIn: [""])
+        var queryObj: Query? = db.collection("games").whereField("name", notIn: [""])
         if let queryString = query, queryString.count > 0 {
             var truncatedQuery = queryString.prefix(queryString.count - 1)
             let lastChar = (queryString.last?.unicodeScalars.first!.value)! + 1
             truncatedQuery.append(Character(UnicodeScalar(lastChar)!))
-            queryObj = queryObj.whereField("name", isGreaterThanOrEqualTo: queryString)
-                .whereField("name", isLessThan: truncatedQuery)
+            
+            if domainString == "Title" {
+                queryObj = db.collection("games").whereField("name", isGreaterThanOrEqualTo: queryString)
+                    .whereField("name", isLessThan: truncatedQuery)
+            } else {
+                var authors: [String] = []
+                var authorQuery = db.collection("users").whereField("username", isGreaterThanOrEqualTo: queryString)
+                    .whereField("username", isLessThan: truncatedQuery)
+                let authorSnapshot = try? await authorQuery.getDocuments()
+                if let authorList = authorSnapshot?.documents {
+                    for author in authorList {
+                        if let authorId = try? author.data(as: FirebaseUser.self).id {
+                            authors.append(authorId)
+                        }
+                    }
+                }
+                queryObj = authors.count > 0 ? db.collection("games").whereField("author", in: authors) : nil
+            }
+            
+            
+        }
+        guard var queryObject: Query = queryObj else {
+            return []
         }
         if let tagString = tag, tagString.count > 0 {
-            queryObj = queryObj.whereField("tags", arrayContains: tagString)
+            queryObject = queryObject.whereField("tags", arrayContains: tagString)
         }
         do {
-            let querySnapshot = try await queryObj.getDocuments()
+            let querySnapshot = try await queryObject.getDocuments()
              
             for document in querySnapshot.documents {
                 do {
