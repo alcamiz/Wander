@@ -42,7 +42,6 @@ func storeAfterLogin(managedContext: NSManagedObjectContext, userInfo: User) asy
                     storedUser.picture = data
                     try? managedContext.save()
                 }
-                print("yeah shawn")
             }
 
 

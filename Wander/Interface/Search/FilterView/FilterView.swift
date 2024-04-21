@@ -50,6 +50,8 @@ class FilterView: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
         if selectedTag != nil {
             resultView?.selectedFilter = tagList[selectedTag!.row]
+        } else {
+            resultView?.selectedFilter = nil
         }
         resultView?.tableView.reloadData()
     }
