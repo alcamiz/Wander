@@ -50,7 +50,7 @@ class ResultView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func reloadQuery() async {
         // TODO: Load queried games (FirebaseGame), using query, filter, sort
-        queriedGames = await FirebaseHelper.queryGames(query: query, tag: selectedFilter, sort: selectedSort)
+        queriedGames = await FirebaseHelper.queryGames(domain: selectedDomain, query: query, tag: selectedFilter, sort: selectedSort)
         tableView.reloadData()
         FirebaseHelper.loadPictures(imageList: queriedGames, basepath: "gamePreviews") { (index, data) in
             self.queriedGames[index].image = data

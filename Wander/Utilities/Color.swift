@@ -27,7 +27,7 @@ extension UIColor {
 class Color {
     
     // Blue
-    static let primary = UIColor(hex: "#ADDAE6") // light blue
+    static let primary = UIColor(hex: "#64A0Ef") // light blue
     static let secondary = UIColor(hex: "#191970") // dark blue
     
     // Green

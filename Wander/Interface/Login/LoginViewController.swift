@@ -38,7 +38,10 @@ class LoginViewController: UIViewController {
                 if (error as NSError?) != nil {
                     self.showAlert(message: "Invalid username or password")
                 } else {
-                    self.performSegue(withIdentifier: "SuccessfulLoginSegue", sender: nil)
+                    Task {
+                        await storeAfterLogin(managedContext: GlobalInfo.managedContext!, userInfo: authResult!.user)
+                        self.performSegue(withIdentifier: "SuccessfulLoginSegue", sender: nil)
+                    }
                 }
             }
         } else {
