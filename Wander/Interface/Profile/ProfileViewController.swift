@@ -41,7 +41,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         profilePictureImageView.layer.borderColor = UIColor.gray.cgColor
         
         if let currentUser = GlobalInfo.currentUser {
-            usernameLabel.text = currentUser.username
+            usernameLabel.text = "@\(currentUser.username ?? "unknownuser")"
             if let pic = currentUser.picture {
                 profilePictureImageView.image = UIImage(data: pic)
                 pfpLabel.text = ""
@@ -96,17 +96,21 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
-    @IBAction func onUpdateUsernamePressed(_ sender: Any) {
-        let alertController = UIAlertController(title: "Update Username", message: "Enter your new username", preferredStyle: .alert)
+    @IBAction func onUpdatePasswordPressed(_ sender: Any) {
+        let alertController = UIAlertController(title: "Update Password", message: "Enter your old password and new password", preferredStyle: .alert)
 
-        alertController.addTextField { (textField) in
-            textField.placeholder = "New Username"
+        alertController.addTextField { (oldPasstextField) in
+            oldPasstextField.placeholder = "Old Password"
+        }
+        
+        alertController.addTextField { (newPasstextField) in
+            newPasstextField.placeholder = "New Password"
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let updateAction = UIAlertAction(title: "Update", style: .default) { (_) in
-            if let newUsername = alertController.textFields?[0].text {
-                self.updateUsername(newUsername: newUsername)
+            if let newPassword = alertController.textFields?[0].text {
+                self.updatePassword(newPassword: newPassword)
             }
         }
 
@@ -116,26 +120,29 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         present(alertController, animated: true, completion: nil)
     }
     
-    func updateUsername(newUsername: String) {
+    func updatePassword(newPassword: String) {
 
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             print("User not authenticated")
             return
         }
 
-        // Update in Firebase
-        GlobalInfo.db.collection("users").document(currentUserID)
-            .updateData(["username":newUsername])
-        
-        // Update in CoreData
-        GlobalInfo.currentUser?.username = newUsername
-        try! GlobalInfo.managedContext?.save()
-
-        usernameLabel.text = newUsername
+//        // Update in Firebase
+//        GlobalInfo.db.collection("users").document(currentUserID)
+//            .updateData(["username":newPassword])
+//        
+//        // Update in CoreData
+//        GlobalInfo.currentUser?.username = newPassword
+//        try! GlobalInfo.managedContext?.save()
     }
     
-    @IBAction func onUpdatePasswordPressed(_ sender: Any) {
+    @IBAction func onHelpGuidePressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Welcome to Wander!", message: "This app helps create choose your own adventure games easily. Here’s how you can get started:\n\n- On the task bar click on Explore to see and play games made by others.\n- Click on Create+ and create new game to make a game of your own! \n- You can create new tiles and link them together to create different options for the person playing your game \n\nExplore the app to discover more features! Have Fun! \n - Wander Team", preferredStyle: .alert)
+                
+        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+        self.present(alert, animated: true)
     }
+    
     
     @objc func gameImageViewTapped(_ sender: UITapGestureRecognizer) {
         let alertController = UIAlertController(title: "Import Image", message: "Select image source", preferredStyle: .actionSheet)
