@@ -188,13 +188,22 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         historyView.delegate = self
         
         Task {
-            popularGames = await FirebaseHelper.queryGames(domain: "", query: "", tag: "", sort: "")
+            popularGames = await FirebaseHelper.queryGames(domain: "", query: "", tag: "", sort: "Most Popular")
             popularView.reloadData()
             FirebaseHelper.loadPictures(imageList: popularGames, basepath: "gamePreviews") { (index, data) in
                 self.popularGames[index].image = data
                 let indexPath = IndexPath(row: index, section: 0)
                 self.popularView.reloadItems(at: [indexPath])
             }
+            
+            newGames = await FirebaseHelper.queryGames(domain: "", query: "", tag: "", sort: "Newest")
+            newView.reloadData()
+            FirebaseHelper.loadPictures(imageList: newGames, basepath: "gamePreviews") { (index, data) in
+                self.newGames[index].image = data
+                let indexPath = IndexPath(row: index, section: 0)
+                self.newView.reloadItems(at: [indexPath])
+            }
+            
         }
     
     }
