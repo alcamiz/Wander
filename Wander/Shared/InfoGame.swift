@@ -22,6 +22,7 @@ class InfoGame {
     var liked: LikeType = .neither
     var storedGame: StoredGame?
     var firebaseGame: FirebaseGame?
+    var idString: String?
     
     init (storedGame: StoredGame) {
         self.title = storedGame.name ?? "Untitled"
@@ -37,6 +38,7 @@ class InfoGame {
             self.image = UIImage(systemName: "questionmark")
         }
         self.storedGame = storedGame
+        self.idString = storedGame.id?.uuidString
         self.liked = LikeType(rawValue: storedGame.liked)!
 
     }
@@ -55,6 +57,7 @@ class InfoGame {
         }
         self.liked = LikeType.neither
         self.firebaseGame = firebaseGame
+        self.idString = firebaseGame.id
     }
     
     init () {

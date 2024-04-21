@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import FirebaseFirestore
 
 
 class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -34,7 +35,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tagView.register(UINib(nibName: "ContractionCell", bundle: nil), forCellWithReuseIdentifier: self.tagID)
+        self.tagView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: self.tagID)
         self.imageScreen.backgroundColor = .lightGray
         self.descriptionLabel.textColor = .gray
         
@@ -173,9 +174,12 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             likeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
             infoGame!.likes += 1
             likeCount.text = String(infoGame!.likes)
+            let doc = GlobalInfo.db.collection("games").document(infoGame?.idString ?? "m")
+            doc.updateData(["likes": FieldValue.increment(Int64(1))])
             if infoGame!.liked == .dislike {
                 dislikeButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
                 infoGame!.dislikes -= 1
+                doc.updateData(["dislikes": FieldValue.increment(Int64(-1))])
                 dislikeCount.text = String(infoGame!.dislikes)
             }
             infoGame!.liked = .like
@@ -187,11 +191,13 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             dislikeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
             infoGame!.dislikes += 1
             dislikeCount.text = String(infoGame!.dislikes)
-            
+            let doc = GlobalInfo.db.collection("games").document(infoGame?.idString ?? "m")
+            doc.updateData(["dislikes": FieldValue.increment(Int64(1))])
             if infoGame!.liked == .like {
                 likeButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
                 infoGame!.likes -= 1
                 likeCount.text = String(infoGame!.likes)
+                doc.updateData(["likes": FieldValue.increment(Int64(-1))])
             }
             infoGame!.liked = .dislike
         }

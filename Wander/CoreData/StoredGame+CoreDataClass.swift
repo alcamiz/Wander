@@ -105,6 +105,8 @@ public class StoredGame: NSManagedObject {
             "author": self.author?.id ?? "",
             "tiles": tileIDs,
             "root": self.root?.id?.uuidString ?? "-1",
+            "likes": 0,
+            "dislikes": 0
         ] as [String : Any]
         // todo better use of async
         if let pic = self.image {
