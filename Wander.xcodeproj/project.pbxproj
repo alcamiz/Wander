@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		031EFE722BD09B52006E7086 /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031EFE712BD09B52006E7086 /* TagTableViewCell.swift */; };
 		039EE9932BBA2C6500E67A61 /* TabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039EE9922BBA2C6500E67A61 /* TabBar.storyboard */; };
 		039EE9992BBA360400E67A61 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039EE9982BBA360400E67A61 /* Profile.storyboard */; };
 		039EE99D2BBA3C9000E67A61 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039EE99C2BBA3C9000E67A61 /* TabBar.swift */; };
+		03D9637E2BC9E329004471CF /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9637D2BC9E329004471CF /* TagViewController.swift */; };
+		03D963802BC9E33E004471CF /* TagView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03D9637F2BC9E33E004471CF /* TagView.storyboard */; };
 		534AEF222BBDF87A00890812 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534AEF212BBDF87A00890812 /* ProfileViewController.swift */; };
 		53A70C922BA4DAA0008FC76C /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A70C912BA4DAA0008FC76C /* LinkView.swift */; };
 		53B010BE2B9922BB008C0BA8 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B010BD2B9922BB008C0BA8 /* GameView.swift */; };
@@ -81,9 +84,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		031EFE712BD09B52006E7086 /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
 		039EE9922BBA2C6500E67A61 /* TabBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabBar.storyboard; sourceTree = "<group>"; };
 		039EE9982BBA360400E67A61 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		039EE99C2BBA3C9000E67A61 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		03D9637D2BC9E329004471CF /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
+		03D9637F2BC9E33E004471CF /* TagView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagView.storyboard; sourceTree = "<group>"; };
 		534AEF212BBDF87A00890812 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		53A70C912BA4DAA0008FC76C /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		53B010BD2B9922BB008C0BA8 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -168,6 +174,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03D9637C2BC9E2F4004471CF /* TagList */ = {
+			isa = PBXGroup;
+			children = (
+				03D9637D2BC9E329004471CF /* TagViewController.swift */,
+				03D9637F2BC9E33E004471CF /* TagView.storyboard */,
+				031EFE712BD09B52006E7086 /* TagTableViewCell.swift */,
+			);
+			path = TagList;
+			sourceTree = "<group>";
+		};
 		534AEF202BBDF86200890812 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,6 +305,7 @@
 		FF486D372BC4AEDD00133C46 /* Creator */ = {
 			isa = PBXGroup;
 			children = (
+				03D9637C2BC9E2F4004471CF /* TagList */,
 				FF0DC43D2BCC4A24009ABE78 /* EditForm */,
 				FF7868072BD0C9EB007E3990 /* NewEditor */,
 				FFB36F642BC7404A006C790A /* EditorNavigation */,
@@ -541,6 +558,7 @@
 				B6CF7E742BC209A50044AED4 /* ExploreFlow.storyboard in Resources */,
 				039EE9932BBA2C6500E67A61 /* TabBar.storyboard in Resources */,
 				FF9A35A42B8D510900A38D62 /* LaunchScreen.storyboard in Resources */,
+				03D963802BC9E33E004471CF /* TagView.storyboard in Resources */,
 				B6CF7E972BC209B40044AED4 /* SearchFlow.storyboard in Resources */,
 				FFB36F5D2BC73F71006C790A /* TileList.storyboard in Resources */,
 				FFB36F602BC73FB2006C790A /* GameView.storyboard in Resources */,
@@ -584,6 +602,7 @@
 				B6CF7E8C2BC209B40044AED4 /* FilterView.swift in Sources */,
 				FF3A50762BCDCB8F003D4E33 /* TagCell.swift in Sources */,
 				B6CF7E952BC209B40044AED4 /* ResultCell.swift in Sources */,
+				03D9637E2BC9E329004471CF /* TagViewController.swift in Sources */,
 				FF78680F2BD0CAAF007E3990 /* NewEditor.swift in Sources */,
 				534AEF222BBDF87A00890812 /* ProfileViewController.swift in Sources */,
 				FF94C44F2BA9468A0089E47C /* StoredTile+CoreDataClass.swift in Sources */,
@@ -609,6 +628,7 @@
 				FF0DC4402BCC4A34009ABE78 /* EditForm.swift in Sources */,
 				53A70C922BA4DAA0008FC76C /* LinkView.swift in Sources */,
 				B66C780B2B8FD4E0005A736E /* TileList.swift in Sources */,
+				031EFE722BD09B52006E7086 /* TagTableViewCell.swift in Sources */,
 				53B010BE2B9922BB008C0BA8 /* GameView.swift in Sources */,
 				B6CF7E712BC209A50044AED4 /* ExploreCell.swift in Sources */,
 				FF486D382BC4AEDD00133C46 /* TileCell.swift in Sources */,

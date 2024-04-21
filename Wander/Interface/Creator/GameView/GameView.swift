@@ -7,13 +7,20 @@
 
 import UIKit
 import CropViewController
-
 import FirebaseFirestore
 import FirebaseStorage
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
+// TODO: remove all tag modification stuff and move over to Alex's "Edit Info" page!
+/**
+ - ModifyGameTagsDelegate
+ - setGameTags function
+ - "TagViewSegue" info
+ - Remove "Tags" button
+ */
+
+class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, ModifyGameTagsDelegate {
     
     var delegate: GameList!
     
@@ -43,7 +50,7 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         gameTitleLabel.text = game.name
         gameTitleLabel.isHidden = false // Display title
         gameTitleLabel.textAlignment = .center
@@ -265,9 +272,21 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
            let nextVC = segue.destination as? TileList {
             nextVC.game = game
         }
-        else if segue.identifier == "PlaytestGameSegue", let nextVC = segue.destination as? PlaymodeViewController {
+        else if segue.identifier == "TagViewSegue",
+                let nextVC = segue.destination as? TagViewController {
+            nextVC.delegate = self
+            nextVC.currentTags = game.tags.map { $0 }
+        }
+        else if segue.identifier == "PlaytestGameSegue",
+                let nextVC = segue.destination as? PlaymodeViewController {
             nextVC.game = game
-            nextVC.currentTile = game.root
+            if let gameRoot = game.root {
+                nextVC.currentTile = game.root
+                nextVC.currentTileID = game.root!.id
+            }
+            else {
+                print("no game root")
+            }
         }
     }
     @IBAction func publishButtonPressed(_ sender: Any) {
@@ -293,4 +312,7 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         self.navigationController?.pushViewController(editForm, animated: true)
     }
     
+    func setGameTags(newTags: [String]) {
+        game.tags = newTags.map { $0 }
+    }
 }
