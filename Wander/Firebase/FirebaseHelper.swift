@@ -25,6 +25,9 @@ class FirebaseHelper {
             queryObj = queryObj.whereField("name", isGreaterThanOrEqualTo: queryString)
                 .whereField("name", isLessThan: truncatedQuery)
         }
+        if let tagString = tag, tagString.count > 0 {
+            queryObj = queryObj.whereField("tags", arrayContains: tagString)
+        }
         do {
             let querySnapshot = try await queryObj.getDocuments()
              
@@ -35,10 +38,12 @@ class FirebaseHelper {
                     gameObj.authorUsername = author.username
                     queriedGames.append(gameObj)
                 } catch {
+                    print("inner error")
                 }
             }
-        
-        } catch {}
+        } catch {
+            print("outer error")
+        }
         
         return queriedGames
     }
