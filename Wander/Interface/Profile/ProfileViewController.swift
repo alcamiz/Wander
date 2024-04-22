@@ -37,17 +37,21 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         profilePictureImageView.isUserInteractionEnabled = true
         profilePictureImageView.addGestureRecognizer(gameImageTapGesture)
         
-        profilePictureImageView.layer.borderWidth = 3
-        profilePictureImageView.layer.borderColor = UIColor.gray.cgColor
-        
         if let currentUser = GlobalInfo.currentUser {
-            usernameLabel.text = currentUser.username
+            usernameLabel.text = "\(currentUser.username ?? "unknown")"
             if let pic = currentUser.picture {
                 profilePictureImageView.image = UIImage(data: pic)
                 pfpLabel.text = ""
             }
         }
+        
+        usernameLabel.textColor = .gray
 
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2
     }
     
     override func viewWillAppear(_ animated: Bool) {
