@@ -19,7 +19,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.view.backgroundColor = Color.primary
+        self.view.backgroundColor = Color.primaryLogin
         
         loginButton.tintColor = Color.secondary
         loginButton.configuration?.baseForegroundColor = Color.background

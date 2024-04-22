@@ -50,6 +50,8 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
 
     }
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         //publishedGames
         guard let userID = GlobalInfo.currentUser?.id else {return}
@@ -79,6 +81,16 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
             UIImage(systemName: "italic")
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let height = collectionView.frame.height - collectionView.contentInset.top - collectionView.contentInset.bottom
+        return CGSize(width: 0.75 * height, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 0)
     }
     
     @IBAction func onLogOutPressed(_ sender: Any) {

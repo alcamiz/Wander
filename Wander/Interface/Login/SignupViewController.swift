@@ -27,7 +27,7 @@ class SignupViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.view.backgroundColor = Color.primary
+        self.view.backgroundColor = Color.primaryLogin
         
         signupButton.tintColor = Color.secondary
         signupButton.configuration?.baseForegroundColor = Color.background

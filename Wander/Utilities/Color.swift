@@ -30,6 +30,10 @@ class Color {
     static let primary = UIColor(hex: "#64A0Ef") // light blue
     static let secondary = UIColor(hex: "#191970") // dark blue
     
+    // Blue
+    static let primaryLogin = UIColor(hex: "#ADDAE6") // light blue
+    static let secondaryLogin = UIColor(hex: "#191970") // dark blue
+    
     // Green
     static let primaryGreen = UIColor(hex: "#74A672") // light green
     static let secondaryGreen = UIColor(hex: "#055902") // dark green
