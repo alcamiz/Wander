@@ -22,12 +22,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMj-5G-9b9">
-                                <rect key="frame" x="175.66666666666666" y="314" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8U-z3-Ql7">
                                 <rect key="frame" x="26.666666666666671" y="529.33333333333337" width="160" height="92.333333333333371"/>
                                 <state key="normal" title="Button"/>
@@ -87,14 +81,12 @@
                             <constraint firstItem="hwx-08-fPK" firstAttribute="centerX" secondItem="1XQ-lk-vVs" secondAttribute="centerX" id="WWP-fV-Kpf"/>
                             <constraint firstItem="Lrp-LK-OQo" firstAttribute="bottom" secondItem="C7T-bV-ytc" secondAttribute="bottom" constant="45" id="c9i-9u-ehD"/>
                             <constraint firstItem="eyv-As-zYb" firstAttribute="top" secondItem="Lrp-LK-OQo" secondAttribute="top" constant="16" id="cXi-IH-e51"/>
-                            <constraint firstItem="SMj-5G-9b9" firstAttribute="centerY" secondItem="hwx-08-fPK" secondAttribute="centerY" id="f6f-Jc-M6o"/>
                             <constraint firstItem="Dmo-Gu-gKN" firstAttribute="top" secondItem="hwx-08-fPK" secondAttribute="bottom" constant="65" id="fFC-nt-Mpw"/>
                             <constraint firstItem="Dmo-Gu-gKN" firstAttribute="width" secondItem="B8U-z3-Ql7" secondAttribute="width" id="hos-NG-Axw"/>
                             <constraint firstItem="Dmo-Gu-gKN" firstAttribute="leading" secondItem="B8U-z3-Ql7" secondAttribute="trailing" constant="20" id="j7z-J2-Mah"/>
                             <constraint firstItem="Dmo-Gu-gKN" firstAttribute="height" secondItem="B8U-z3-Ql7" secondAttribute="height" id="n9g-GO-sAC"/>
                             <constraint firstItem="C7T-bV-ytc" firstAttribute="height" secondItem="B8U-z3-Ql7" secondAttribute="height" id="oFm-K8-JqQ"/>
                             <constraint firstItem="Lrp-LK-OQo" firstAttribute="bottom" secondItem="cfc-MZ-ITX" secondAttribute="bottom" constant="45" id="qL9-hJ-K63"/>
-                            <constraint firstItem="SMj-5G-9b9" firstAttribute="centerX" secondItem="hwx-08-fPK" secondAttribute="centerX" id="qyd-eA-c4Q"/>
                             <constraint firstItem="hwx-08-fPK" firstAttribute="top" secondItem="eyv-As-zYb" secondAttribute="bottom" constant="45" id="tIi-m9-GHl"/>
                             <constraint firstItem="C7T-bV-ytc" firstAttribute="top" secondItem="B8U-z3-Ql7" secondAttribute="bottom" constant="10" id="u1S-Sk-wWR"/>
                             <constraint firstItem="B8U-z3-Ql7" firstAttribute="top" secondItem="hwx-08-fPK" secondAttribute="bottom" constant="65" id="xht-BG-gzc"/>
@@ -112,7 +104,6 @@
                     <connections>
                         <outlet property="deleteGameButton" destination="cfc-MZ-ITX" id="FdZ-7G-UAO"/>
                         <outlet property="editGameButton" destination="Dmo-Gu-gKN" id="aZb-B5-Ruo"/>
-                        <outlet property="gameImagePlaceholder" destination="SMj-5G-9b9" id="IpQ-a4-HD2"/>
                         <outlet property="gameImageView" destination="hwx-08-fPK" id="Q4j-qP-pl5"/>
                         <outlet property="gameTitleLabel" destination="eyv-As-zYb" id="ae9-dQ-pi1"/>
                         <outlet property="playtestGameButton" destination="B8U-z3-Ql7" id="l8V-et-IoM"/>
