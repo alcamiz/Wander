@@ -60,6 +60,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         Task {
             publishedGames = await FirebaseHelper.gamesByAuthor(userID: userID)
             publishedGamesCollectionView.reloadData()
+            FirebaseHelper.loadPictures(imageList: publishedGames, basepath: "gamePreviews") { (index, data) in
+                self.publishedGames[index].image = data
+                let indexPath = IndexPath(row: index, section: 0)
+                self.publishedGamesCollectionView.reloadItems(at: [indexPath])
+            }
         }
        
        
@@ -77,11 +82,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         
         cell.titleLabel.text = game.name
         cell.imageView.backgroundColor = .secondarySystemBackground
-//        cell.imageView.image = if game.image != nil {
-//            UIImage(data: game.image!)
-//        } else {
-//            UIImage(systemName: "italic")
-//        }
+        cell.imageView.image = if game.image != nil {
+            UIImage(data: game.image!)
+        } else {
+            UIImage(systemName: "questionmark")
+        }
         return cell
     }
     
