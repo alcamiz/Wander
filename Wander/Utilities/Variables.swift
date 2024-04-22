@@ -27,7 +27,7 @@ struct GlobalInfo {
     static var currentUser: StoredUser?
     static var tagList = ["Horror", "Adventure", "Drama", "Romance", "Sports", "Sci-Fi", "Fantasy", "Historical", "Mystery", "Historical", "Educational", "Indie"]
     static var domainList = ["Title", "Author"]
-    static var sortList = ["Ascending", "Descending"]
+    static var sortList = ["Most Popular", "Least Popular", "Newest", "Oldest"]
     static var db = Firestore.firestore()
     static var storage = Storage.storage().reference()
 }

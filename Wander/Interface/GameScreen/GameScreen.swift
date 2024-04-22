@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import FirebaseFirestore
 
 
 class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -18,6 +19,11 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var tagHeight: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
+    
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var likeCount: UILabel!
+    @IBOutlet weak var dislikeButton: UIButton!
+    @IBOutlet weak var dislikeCount: UILabel!
     
     var infoGame: InfoGame?
 //    var tags: [String]?
@@ -49,6 +55,13 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             }
 
             descriptionLabel.text = infoGame!.desc
+            likeCount.text = String(infoGame!.likes)
+            dislikeCount.text = String(infoGame!.dislikes)
+            if infoGame!.liked == .like {
+                likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            } else if infoGame!.liked == .dislike {
+                likeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+            }
 
         } else {
             titleLabel.text = "Empty"
@@ -159,4 +172,40 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         return CGSize(width: cellWidth, height: cellHeight)
     }
 
+    
+
+    @IBAction func likeButtonPressed(_ sender: Any) {
+        if !debug && infoGame!.liked != .like {
+            likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            infoGame!.likes += 1
+            likeCount.text = String(infoGame!.likes)
+            let doc = GlobalInfo.db.collection("games").document(infoGame?.idString ?? "m")
+            doc.updateData(["likes": FieldValue.increment(Int64(1))])
+            if infoGame!.liked == .dislike {
+                dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+                infoGame!.dislikes -= 1
+                doc.updateData(["dislikes": FieldValue.increment(Int64(-1))])
+                dislikeCount.text = String(infoGame!.dislikes)
+            }
+            infoGame!.liked = .like
+          
+        }
+    }
+    @IBAction func dislikeButtonPressed(_ sender: Any) {
+        if !debug && infoGame!.liked != .dislike {
+            dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+            infoGame!.dislikes += 1
+            dislikeCount.text = String(infoGame!.dislikes)
+            let doc = GlobalInfo.db.collection("games").document(infoGame?.idString ?? "m")
+            doc.updateData(["dislikes": FieldValue.increment(Int64(1))])
+            if infoGame!.liked == .like {
+                likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+                infoGame!.likes -= 1
+                likeCount.text = String(infoGame!.likes)
+                doc.updateData(["likes": FieldValue.increment(Int64(-1))])
+            }
+            infoGame!.liked = .dislike
+        }
+        
+    }
 }
