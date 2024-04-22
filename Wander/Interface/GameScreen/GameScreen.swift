@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import FirebaseFirestore
 
 
 class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -19,6 +20,11 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var tagHeight: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var likeCount: UILabel!
+    @IBOutlet weak var dislikeButton: UIButton!
+    @IBOutlet weak var dislikeCount: UILabel!
+    
     var infoGame: InfoGame?
 //    var tags: [String]?
     var tagID: String = UUID().uuidString
@@ -30,12 +36,12 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         super.viewDidLoad()
         
         self.tagView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: self.tagID)
-        self.imageScreen.backgroundColor = .lightGray
+        self.imageScreen.backgroundColor = .secondarySystemBackground
         self.descriptionLabel.textColor = .gray
         
         imageScreen.layer.cornerRadius = 12
         imageScreen.clipsToBounds = true
-        imageScreen.tintColor = .black
+        imageScreen.tintColor = .lightGray
         
         authorLabel.textColor = Color.primary
         
@@ -49,7 +55,8 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             }
 
             descriptionLabel.text = infoGame!.desc
-
+            likeCount.text = String(infoGame!.likes)
+            dislikeCount.text = String(infoGame!.dislikes)
         } else {
             titleLabel.text = "Empty"
             authorLabel.text = "User"
@@ -61,6 +68,21 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         tagView.dataSource = self
         playButton.tintColor = Color.primary
         playButton.titleLabel?.textColor = Color.primary
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await infoGame!.initializeLiked()
+            if infoGame!.liked == .like {
+                likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            } else if infoGame!.liked == .dislike {
+                dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+            }
+            await infoGame!.initializeCount()
+            likeCount.text = String(infoGame!.likes)
+            dislikeCount.text = String(infoGame!.dislikes)
+        }
     }
     
     @IBAction func playAction(_ sender: Any) {
@@ -159,4 +181,29 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         return CGSize(width: cellWidth, height: cellHeight)
     }
 
+    
+
+    @IBAction func likeButtonPressed(_ sender: Any) {
+        if !debug {
+            Task {
+                await infoGame!.like()
+                likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+                likeCount.text = String(infoGame!.likes)
+                dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+                dislikeCount.text = String(infoGame!.dislikes)
+            }
+            
+        }
+    }
+    @IBAction func dislikeButtonPressed(_ sender: Any) {
+        if !debug {
+            Task {
+                await infoGame!.dislike()
+                likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+                likeCount.text = String(infoGame!.likes)
+                dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+                dislikeCount.text = String(infoGame!.dislikes)
+            }
+        }
+    }
 }

@@ -47,13 +47,21 @@ class FilterView: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
         if selectedSort != nil {
             resultView?.selectedSort = sortList[selectedSort!.row]
+        } else {
+            resultView?.selectedSort = nil
         }
+        
+        
         if selectedTag != nil {
             resultView?.selectedFilter = tagList[selectedTag!.row]
         } else {
             resultView?.selectedFilter = nil
         }
-        resultView?.tableView.reloadData()
+        
+        Task {
+           await resultView?.reloadQuery()
+        }
+            
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

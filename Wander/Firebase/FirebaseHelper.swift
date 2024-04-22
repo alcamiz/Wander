@@ -17,8 +17,6 @@ class FirebaseHelper {
     
     static func queryGames(domain: String?, query: String?, tag: String?, sort: String?) async -> [FirebaseGame] {
         let domainString: String = domain != nil ? domain! : "Title"
-        
-        
         var queriedGames: [FirebaseGame] = []
         var queryObj: Query? = db.collection("games").whereField("name", notIn: [""])
         if let queryString = query, queryString.count > 0 {
@@ -43,14 +41,23 @@ class FirebaseHelper {
                 }
                 queryObj = authors.count > 0 ? db.collection("games").whereField("author", in: authors) : nil
             }
-            
-            
         }
         guard var queryObject: Query = queryObj else {
             return []
         }
         if let tagString = tag, tagString.count > 0 {
             queryObject = queryObject.whereField("tags", arrayContains: tagString)
+        }
+        if let sortString = sort {
+            if sortString == "Newest" {
+                queryObject = queryObject.order(by: "publishedOn", descending: true).limit(to: 25)
+            } else if sortString == "Oldest" {
+                queryObject = queryObject.order(by: "publishedOn", descending: false).limit(to: 25)
+            } else if sortString == "Least Popular" {
+                queryObject = queryObject.order(by: "likes", descending: false).limit(to: 25)
+            } else {
+                queryObject = queryObject.order(by: "likes", descending: true).limit(to: 25)
+            }
         }
         do {
             let querySnapshot = try await queryObject.getDocuments()
@@ -61,12 +68,12 @@ class FirebaseHelper {
                     let author = try await db.collection("users").document(gameObj.author).getDocument(as: FirebaseUser.self)
                     gameObj.authorUsername = author.username
                     queriedGames.append(gameObj)
-                } catch {
-                    print("inner error")
+                } catch let innerErr {
+                    print("inner error \(innerErr)")
                 }
             }
-        } catch {
-            print("outer error")
+        } catch let outerErr {
+            print("outer error \(outerErr)")
         }
         
         return queriedGames

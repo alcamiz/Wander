@@ -30,6 +30,9 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
         searchControl.searchBar.tintColor = .white
         let searchText = searchControl.searchBar.value(forKey: "searchField") as? UITextField
         searchText?.backgroundColor = Color.primary
+        
+        searchControl.searchBar.autocapitalizationType = .none
+        searchControl.searchBar.autocorrectionType = .no
 
         self.navigationItem.searchController = searchControl
         searchControl.delegate = self

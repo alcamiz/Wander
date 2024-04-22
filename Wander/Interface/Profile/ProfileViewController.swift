@@ -37,9 +37,6 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         profilePictureImageView.isUserInteractionEnabled = true
         profilePictureImageView.addGestureRecognizer(gameImageTapGesture)
         
-        profilePictureImageView.layer.borderWidth = 3
-        profilePictureImageView.layer.borderColor = UIColor.gray.cgColor
-        
         if let currentUser = GlobalInfo.currentUser {
             usernameLabel.text = "@\(currentUser.username ?? "unknownuser")"
             if let pic = currentUser.picture {
@@ -47,10 +44,15 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
                 pfpLabel.text = ""
             }
         }
+        
+        usernameLabel.textColor = .gray
 
     }
     
-    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         //publishedGames
@@ -74,12 +76,12 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         game = publishedGames[indexPath.row]
         
         cell.titleLabel.text = game.name
-        cell.imageView.backgroundColor = .lightGray
-        cell.imageView.image = if game.image != nil {
-            UIImage(data: game.image!)
-        } else {
-            UIImage(systemName: "italic")
-        }
+        cell.imageView.backgroundColor = .secondarySystemBackground
+//        cell.imageView.image = if game.image != nil {
+//            UIImage(data: game.image!)
+//        } else {
+//            UIImage(systemName: "italic")
+//        }
         return cell
     }
     
@@ -97,7 +99,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         do {
             try Auth.auth().signOut()
             navigateToLandingPage()
-        } catch let error as NSError {
+        } catch _ as NSError {
             print("error signing out")
         }
     }

@@ -18,6 +18,10 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let backItem = UIBarButtonItem()
+        backItem.title = "Cancel"
+        self.navigationItem.backBarButtonItem = backItem
+        
         if self.navigationController != nil {
             createButton = UIBarButtonItem(title: "Create")
             createButton?.target = self

@@ -56,9 +56,14 @@ public class StoredTile: NSManagedObject {
     
     func initializeOptions(webVersion: FirebaseTile) {
         guard webVersion.options.count == 2, webVersion.children.count == 2 else {return}
-        self.leftTile = game?.fetchTile(tileID: UUID(uuidString: webVersion.children[0])!)
+        if let leftID = UUID(uuidString: webVersion.children[0]) {
+            self.leftTile = game?.fetchTile(tileID: leftID)
+        }
         self.leftButton = webVersion.options[0]
-        self.rightTile = game?.fetchTile(tileID: UUID(uuidString: webVersion.children[1])!)
+        
+        if let rightID = UUID(uuidString: webVersion.children[1]) {
+            self.rightTile = game?.fetchTile(tileID: rightID)
+        }
         self.rightButton =  webVersion.options[1]
     }
     
@@ -110,7 +115,7 @@ public class StoredTile: NSManagedObject {
         
         // todo better use of async
         if let pic = self.image {
-            let path = "tilePreviews/\(id!).jpeg"
+//            let path = "tilePreviews/\(id!).jpeg"
             let _ = imagePathRef.putData(pic, metadata: nil)
         }
         db.collection("tiles").document(docString).setData(data)

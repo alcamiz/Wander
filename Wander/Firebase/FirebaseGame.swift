@@ -26,6 +26,8 @@ public class FirebaseGame: Codable, ImageableFirebase {
     var tiles: [String]
     var tags: [String]
     var image: Data?
+    var likes: UInt
+    var dislikes: UInt
     
     func downloadTiles(_ storedGame: StoredGame) async {
         // first pass: initialize objects
