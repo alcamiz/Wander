@@ -29,6 +29,11 @@ class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigation
     var linkedTiles: (StoredTile?, StoredTile?)
     let picker = UIImagePickerController()
     
+    @IBOutlet weak var branchLabelOne: UILabel!
+    @IBOutlet weak var branchLabelTwo: UILabel!
+    @IBOutlet weak var linkOutletOne: UIButton!
+    @IBOutlet weak var linkOutletTwo: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         picker.delegate = self
@@ -80,10 +85,28 @@ class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
             switch TileType(rawValue: storedTile!.type) {
                 case .win:
+                    branchLabelOne.isHidden = true
+                    titleEntryOne.isHidden = true
+                    linkOutletOne.isHidden = true
+                    branchLabelTwo.isHidden = true
+                    titleEntryTwo.isHidden = true
+                    linkOutletTwo.isHidden = true
                     typeSelector.selectedSegmentIndex = 1
                 case .lose:
+                    branchLabelOne.isHidden = true
+                    titleEntryOne.isHidden = true
+                    linkOutletOne.isHidden = true
+                    branchLabelTwo.isHidden = true
+                    titleEntryTwo.isHidden = true
+                    linkOutletTwo.isHidden = true
                     typeSelector.selectedSegmentIndex = 2
                 default:
+                    branchLabelOne.isHidden = false
+                    titleEntryOne.isHidden = false
+                    linkOutletOne.isHidden = false
+                    branchLabelTwo.isHidden = false
+                    titleEntryTwo.isHidden = false
+                    linkOutletTwo.isHidden = false
                     break
             }
             
@@ -197,4 +220,31 @@ class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigation
         dismiss(animated: true)
     }
 
+    @IBAction func selectorUpdater(_ sender: Any) {
+        
+        switch typeSelector.selectedSegmentIndex {
+            case 1:
+                branchLabelOne.isHidden = true
+                titleEntryOne.isHidden = true
+                linkOutletOne.isHidden = true
+                branchLabelTwo.isHidden = true
+                titleEntryTwo.isHidden = true
+                linkOutletTwo.isHidden = true
+            case 2:
+                branchLabelOne.isHidden = true
+                titleEntryOne.isHidden = true
+                linkOutletOne.isHidden = true
+                branchLabelTwo.isHidden = true
+                titleEntryTwo.isHidden = true
+                linkOutletTwo.isHidden = true
+            default:
+                branchLabelOne.isHidden = false
+                titleEntryOne.isHidden = false
+                linkOutletOne.isHidden = false
+                branchLabelTwo.isHidden = false
+                titleEntryTwo.isHidden = false
+                linkOutletTwo.isHidden = false
+                break
+        }
+    }
 }

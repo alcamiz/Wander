@@ -35,7 +35,6 @@ class GameView: UIViewController, UINavigationControllerDelegate {
         gameImageView.tintColor = .lightGray
         gameImageView.layer.cornerRadius = 12
         gameImageView.clipsToBounds = true
-
         
         playtestGameButton.backgroundColor = Color.primary
         editGameButton.backgroundColor = Color.primary
@@ -59,8 +58,10 @@ class GameView: UIViewController, UINavigationControllerDelegate {
         
         if game.image == nil {
             gameImageView.image = UIImage(systemName: "questionmark")
+            gameImageView.contentMode = .scaleAspectFit
         } else {
             gameImageView.image = game.fetchImage()
+            gameImageView.contentMode = .scaleAspectFill
         }
     }
     

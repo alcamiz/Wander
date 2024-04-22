@@ -34,6 +34,9 @@
                                                     <segment title="Win"/>
                                                     <segment title="Lose"/>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="selectorUpdater:" destination="JuR-In-IDq" eventType="valueChanged" id="waq-4h-EZR"/>
+                                                </connections>
                                             </segmentedControl>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tf5-Rg-2Ee">
                                                 <rect key="frame" x="96" y="60" width="200" height="34"/>
@@ -188,8 +191,12 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="393" height="1000"/>
                     <connections>
+                        <outlet property="branchLabelOne" destination="PAk-am-gC7" id="Y9k-lY-JD5"/>
+                        <outlet property="branchLabelTwo" destination="cBt-RF-vtW" id="gIW-H1-jwV"/>
                         <outlet property="imageButton" destination="cqR-s1-PGM" id="kVB-hZ-pCW"/>
                         <outlet property="imageScene" destination="564-Js-Wht" id="083-vO-vdg"/>
+                        <outlet property="linkOutletOne" destination="jyi-DG-Emg" id="Mrg-sp-YMB"/>
+                        <outlet property="linkOutletTwo" destination="hik-PF-rXV" id="2F9-fX-JNw"/>
                         <outlet property="textEntry" destination="hYH-am-bbx" id="ivV-VJ-wzd"/>
                         <outlet property="titleEntry" destination="tf5-Rg-2Ee" id="j9b-D5-Ycm"/>
                         <outlet property="titleEntryOne" destination="BDB-Fl-eQI" id="JI8-7X-NvX"/>
@@ -208,7 +215,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
