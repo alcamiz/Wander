@@ -37,6 +37,13 @@ class InfoGame {
         }
     }
     
+    func initializeCount() async {
+        let doc = GlobalInfo.db.collection("games").document(idString!)
+        let docFields = try! await doc.getDocument(as: FirebaseGame.self)
+        likes = docFields.likes
+        dislikes = docFields.dislikes
+    }
+    
     func updateUserLikes() async {
         let userID: String = GlobalInfo.currentUser!.id!
         let doc = GlobalInfo.db.collection("users").document(userID)

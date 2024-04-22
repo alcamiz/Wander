@@ -79,6 +79,9 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             } else if infoGame!.liked == .dislike {
                 dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
             }
+            await infoGame!.initializeCount()
+            likeCount.text = String(infoGame!.likes)
+            dislikeCount.text = String(infoGame!.dislikes)
         }
     }
     
@@ -184,6 +187,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         if !debug {
             Task {
                 await infoGame!.like()
+                likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
                 likeCount.text = String(infoGame!.likes)
                 dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
                 dislikeCount.text = String(infoGame!.dislikes)
