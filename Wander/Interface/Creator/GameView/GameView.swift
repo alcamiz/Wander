@@ -30,19 +30,12 @@ class GameView: UIViewController, UINavigationControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        gameTitleLabel.text = game.name
         
         gameImageView.backgroundColor = .secondarySystemBackground
         gameImageView.tintColor = .lightGray
         gameImageView.layer.cornerRadius = 12
         gameImageView.clipsToBounds = true
 
-        if game.image == nil {
-            gameImageView.image = UIImage(systemName: "questionmark")
-        } else {
-            gameImageView.image = game.fetchImage()
-        }
         
         playtestGameButton.backgroundColor = Color.primary
         editGameButton.backgroundColor = Color.primary
@@ -57,6 +50,17 @@ class GameView: UIViewController, UINavigationControllerDelegate {
             deleteGameButton.isHidden = true
         } else {
             publishGameButton.backgroundColor = Color.primary
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        gameTitleLabel.text = game.name
+        
+        if game.image == nil {
+            gameImageView.image = UIImage(systemName: "questionmark")
+        } else {
+            gameImageView.image = game.fetchImage()
         }
     }
     
