@@ -29,6 +29,7 @@ class LoginViewController: UIViewController {
         
         formatTextField(emailTextField)
         formatTextField(passwordTextField)
+        passwordTextField.isSecureTextEntry = true
     }
     
     @IBAction func onLoginPressed(_ sender: Any) {
