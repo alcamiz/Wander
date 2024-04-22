@@ -7,15 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		031EFE722BD09B52006E7086 /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031EFE712BD09B52006E7086 /* TagTableViewCell.swift */; };
 		039EE9932BBA2C6500E67A61 /* TabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039EE9922BBA2C6500E67A61 /* TabBar.storyboard */; };
 		039EE9992BBA360400E67A61 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039EE9982BBA360400E67A61 /* Profile.storyboard */; };
 		039EE99D2BBA3C9000E67A61 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039EE99C2BBA3C9000E67A61 /* TabBar.swift */; };
+		03D9637E2BC9E329004471CF /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9637D2BC9E329004471CF /* TagViewController.swift */; };
+		03D963802BC9E33E004471CF /* TagView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03D9637F2BC9E33E004471CF /* TagView.storyboard */; };
 		534AEF222BBDF87A00890812 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534AEF212BBDF87A00890812 /* ProfileViewController.swift */; };
 		53A70C922BA4DAA0008FC76C /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A70C912BA4DAA0008FC76C /* LinkView.swift */; };
 		53B010BE2B9922BB008C0BA8 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B010BD2B9922BB008C0BA8 /* GameView.swift */; };
 		53DA0CC32BC1F9BC00CEB3A0 /* Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DA0CC22BC1F9BC00CEB3A0 /* Format.swift */; };
 		B6552B4D2BAE29F300D06004 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6552B4C2BAE29F300D06004 /* GoogleService-Info.plist */; };
-		B66C78092B8FD4C6005A736E /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C78082B8FD4C6005A736E /* EditorView.swift */; };
 		B66C780B2B8FD4E0005A736E /* TileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66C780A2B8FD4E0005A736E /* TileList.swift */; };
 		B68F56D22B9A92A200179D09 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68F56D12B9A92A200179D09 /* GameManager.swift */; };
 		B6953E7B2BC0857900CE543D /* FirebaseGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6953E7A2BC0857900CE543D /* FirebaseGame.swift */; };
@@ -55,6 +57,8 @@
 		FF3A50762BCDCB8F003D4E33 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3A50732BCDCB8F003D4E33 /* TagCell.swift */; };
 		FF486D382BC4AEDD00133C46 /* TileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF486D352BC4AEDD00133C46 /* TileCell.swift */; };
 		FF486D392BC4AEDD00133C46 /* TileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF486D362BC4AEDD00133C46 /* TileCell.xib */; };
+		FF78680D2BD0CAA5007E3990 /* NewEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF78680C2BD0CAA5007E3990 /* NewEditor.storyboard */; };
+		FF78680F2BD0CAAF007E3990 /* NewEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF78680E2BD0CAAF007E3990 /* NewEditor.swift */; };
 		FF7880CF2BB0F60F00689BEC /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880CE2BB0F60F00689BEC /* CropViewController */; };
 		FF7880D12BB0F60F00689BEC /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = FF7880D02BB0F60F00689BEC /* TOCropViewController */; };
 		FF94C44C2BA9468A0089E47C /* StoredGame+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */; };
@@ -70,7 +74,6 @@
 		FFB1EF322BCB92030051637B /* ResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFB1EF312BCB92030051637B /* ResultView.xib */; };
 		FFB1EF332BCB92030051637B /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB1EF302BCB92030051637B /* ResultView.swift */; };
 		FFB36F562BC73E95006C790A /* LinkView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFB36F552BC73E95006C790A /* LinkView.storyboard */; };
-		FFB36F592BC73F1F006C790A /* EditorView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFB36F582BC73F1F006C790A /* EditorView.storyboard */; };
 		FFB36F5D2BC73F71006C790A /* TileList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFB36F5C2BC73F71006C790A /* TileList.storyboard */; };
 		FFB36F602BC73FB2006C790A /* GameView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFB36F5F2BC73FB2006C790A /* GameView.storyboard */; };
 		FFB36F632BC7402B006C790A /* GameList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFB36F622BC7402B006C790A /* GameList.storyboard */; };
@@ -81,16 +84,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		031EFE712BD09B52006E7086 /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
 		039EE9922BBA2C6500E67A61 /* TabBar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabBar.storyboard; sourceTree = "<group>"; };
 		039EE9982BBA360400E67A61 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		039EE99C2BBA3C9000E67A61 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		03D9637D2BC9E329004471CF /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
+		03D9637F2BC9E33E004471CF /* TagView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagView.storyboard; sourceTree = "<group>"; };
 		534AEF212BBDF87A00890812 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		53A70C912BA4DAA0008FC76C /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		53B010BD2B9922BB008C0BA8 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		53DA0CC22BC1F9BC00CEB3A0 /* Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Format.swift; sourceTree = "<group>"; };
 		B6552B4C2BAE29F300D06004 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6552B852BAE2ABC00D06004 /* Wander.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wander.entitlements; sourceTree = "<group>"; };
-		B66C78082B8FD4C6005A736E /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		B66C780A2B8FD4E0005A736E /* TileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileList.swift; sourceTree = "<group>"; };
 		B68F56D12B9A92A200179D09 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		B6953E7A2BC0857900CE543D /* FirebaseGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseGame.swift; sourceTree = "<group>"; };
@@ -130,6 +135,8 @@
 		FF3A50742BCDCB8F003D4E33 /* TagCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCell.xib; sourceTree = "<group>"; };
 		FF486D352BC4AEDD00133C46 /* TileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileCell.swift; sourceTree = "<group>"; };
 		FF486D362BC4AEDD00133C46 /* TileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TileCell.xib; sourceTree = "<group>"; };
+		FF78680C2BD0CAA5007E3990 /* NewEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewEditor.storyboard; sourceTree = "<group>"; };
+		FF78680E2BD0CAAF007E3990 /* NewEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEditor.swift; sourceTree = "<group>"; };
 		FF94C4442BA9468A0089E47C /* StoredGame+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredGame+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF94C4472BA9468A0089E47C /* StoredTile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredTile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FF94C44B2BA9468A0089E47C /* StoredUser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredUser+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -145,7 +152,6 @@
 		FFB1EF302BCB92030051637B /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		FFB1EF312BCB92030051637B /* ResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultView.xib; sourceTree = "<group>"; };
 		FFB36F552BC73E95006C790A /* LinkView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LinkView.storyboard; sourceTree = "<group>"; };
-		FFB36F582BC73F1F006C790A /* EditorView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditorView.storyboard; sourceTree = "<group>"; };
 		FFB36F5C2BC73F71006C790A /* TileList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TileList.storyboard; sourceTree = "<group>"; };
 		FFB36F5F2BC73FB2006C790A /* GameView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GameView.storyboard; sourceTree = "<group>"; };
 		FFB36F622BC7402B006C790A /* GameList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GameList.storyboard; sourceTree = "<group>"; };
@@ -168,6 +174,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03D9637C2BC9E2F4004471CF /* TagList */ = {
+			isa = PBXGroup;
+			children = (
+				03D9637D2BC9E329004471CF /* TagViewController.swift */,
+				03D9637F2BC9E33E004471CF /* TagView.storyboard */,
+				031EFE712BD09B52006E7086 /* TagTableViewCell.swift */,
+			);
+			path = TagList;
+			sourceTree = "<group>";
+		};
 		534AEF202BBDF86200890812 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,17 +305,26 @@
 		FF486D372BC4AEDD00133C46 /* Creator */ = {
 			isa = PBXGroup;
 			children = (
-				FF3A50772BCDCB94003D4E33 /* TagCell */,
+				03D9637C2BC9E2F4004471CF /* TagList */,
 				FF0DC43D2BCC4A24009ABE78 /* EditForm */,
+				FF7868072BD0C9EB007E3990 /* NewEditor */,
 				FFB36F642BC7404A006C790A /* EditorNavigation */,
 				FFB36F612BC7401E006C790A /* GameList */,
 				FFB36F5E2BC73FA5006C790A /* GameView */,
 				FFB36F5A2BC73F55006C790A /* TileList */,
-				FFB36F572BC73F07006C790A /* EditorView */,
 				FFB36F542BC73E7C006C790A /* LinkView */,
 				FFB36F522BC73DC4006C790A /* TileCell */,
 			);
 			path = Creator;
+			sourceTree = "<group>";
+		};
+		FF7868072BD0C9EB007E3990 /* NewEditor */ = {
+			isa = PBXGroup;
+			children = (
+				FF78680C2BD0CAA5007E3990 /* NewEditor.storyboard */,
+				FF78680E2BD0CAAF007E3990 /* NewEditor.swift */,
+			);
+			path = NewEditor;
 			sourceTree = "<group>";
 		};
 		FF94C4432BA9465D0089E47C /* CoreData */ = {
@@ -385,15 +410,6 @@
 			path = LinkView;
 			sourceTree = "<group>";
 		};
-		FFB36F572BC73F07006C790A /* EditorView */ = {
-			isa = PBXGroup;
-			children = (
-				FFB36F582BC73F1F006C790A /* EditorView.storyboard */,
-				B66C78082B8FD4C6005A736E /* EditorView.swift */,
-			);
-			path = EditorView;
-			sourceTree = "<group>";
-		};
 		FFB36F5A2BC73F55006C790A /* TileList */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,6 +477,7 @@
 		FFBEBC242BC76182008A2CB4 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				FF3A50772BCDCB94003D4E33 /* TagCell */,
 				B68F56D12B9A92A200179D09 /* GameManager.swift */,
 				FFA468222BC499A700AE3FAB /* InfoGame.swift */,
 			);
@@ -537,11 +554,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFB36F662BC7405E006C790A /* EditorNavigation.storyboard in Resources */,
-				FFB36F592BC73F1F006C790A /* EditorView.storyboard in Resources */,
 				FF3A50752BCDCB8F003D4E33 /* TagCell.xib in Resources */,
 				B6CF7E742BC209A50044AED4 /* ExploreFlow.storyboard in Resources */,
 				039EE9932BBA2C6500E67A61 /* TabBar.storyboard in Resources */,
 				FF9A35A42B8D510900A38D62 /* LaunchScreen.storyboard in Resources */,
+				03D963802BC9E33E004471CF /* TagView.storyboard in Resources */,
 				B6CF7E972BC209B40044AED4 /* SearchFlow.storyboard in Resources */,
 				FFB36F5D2BC73F71006C790A /* TileList.storyboard in Resources */,
 				FFB36F602BC73FB2006C790A /* GameView.storyboard in Resources */,
@@ -556,6 +573,7 @@
 				B6CF7E722BC209A50044AED4 /* ExploreCell.xib in Resources */,
 				B6953E8A2BC0A3B100CE543D /* LoginFlow.storyboard in Resources */,
 				B6CF7E9B2BC2211B0044AED4 /* Playmode.storyboard in Resources */,
+				FF78680D2BD0CAA5007E3990 /* NewEditor.storyboard in Resources */,
 				FFB36F562BC73E95006C790A /* LinkView.storyboard in Resources */,
 				B6CF7E962BC209B40044AED4 /* ResultCell.xib in Resources */,
 				FFB1EF322BCB92030051637B /* ResultView.xib in Resources */,
@@ -584,6 +602,8 @@
 				B6CF7E8C2BC209B40044AED4 /* FilterView.swift in Sources */,
 				FF3A50762BCDCB8F003D4E33 /* TagCell.swift in Sources */,
 				B6CF7E952BC209B40044AED4 /* ResultCell.swift in Sources */,
+				03D9637E2BC9E329004471CF /* TagViewController.swift in Sources */,
+				FF78680F2BD0CAAF007E3990 /* NewEditor.swift in Sources */,
 				534AEF222BBDF87A00890812 /* ProfileViewController.swift in Sources */,
 				FF94C44F2BA9468A0089E47C /* StoredTile+CoreDataClass.swift in Sources */,
 				B6CF7ED22BCDA4A70044AED4 /* FirebaseUser.swift in Sources */,
@@ -606,9 +626,9 @@
 				B6CF7E702BC209A50044AED4 /* ExploreNavigation.swift in Sources */,
 				B6CF7ECE2BC9DFA20044AED4 /* StoredUser+CoreDataProperties.swift in Sources */,
 				FF0DC4402BCC4A34009ABE78 /* EditForm.swift in Sources */,
-				B66C78092B8FD4C6005A736E /* EditorView.swift in Sources */,
 				53A70C922BA4DAA0008FC76C /* LinkView.swift in Sources */,
 				B66C780B2B8FD4E0005A736E /* TileList.swift in Sources */,
+				031EFE722BD09B52006E7086 /* TagTableViewCell.swift in Sources */,
 				53B010BE2B9922BB008C0BA8 /* GameView.swift in Sources */,
 				B6CF7E712BC209A50044AED4 /* ExploreCell.swift in Sources */,
 				FF486D382BC4AEDD00133C46 /* TileCell.swift in Sources */,

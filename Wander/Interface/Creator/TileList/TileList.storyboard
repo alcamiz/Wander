@@ -17,19 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ul7-cF-QAH">
-                                <rect key="frame" x="61.666666666666657" y="79" width="270" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="270" id="j6g-Xm-Pmw"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Create New Tile"/>
-                                <connections>
-                                    <segue destination="ps4-EE-PkB" kind="show" identifier="CreateTileSegue" id="4mP-80-t3u"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qHs-3H-LmL">
-                                <rect key="frame" x="0.0" y="124" width="393" height="694"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TileCell" textLabel="iZv-eU-Co0" style="IBUITableViewCellStyleDefault" id="yH3-a7-lik">
@@ -48,9 +37,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="ps4-EE-PkB" kind="show" identifier="OpenTileSegue" id="3x1-zv-Jmu"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -58,38 +44,27 @@
                         <viewLayoutGuide key="safeArea" id="SNg-UQ-zaT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ul7-cF-QAH" firstAttribute="centerX" secondItem="vWc-Kx-1nO" secondAttribute="centerX" id="7um-Sm-AfF"/>
-                            <constraint firstItem="ul7-cF-QAH" firstAttribute="top" secondItem="SNg-UQ-zaT" secondAttribute="top" constant="20" id="R9D-RG-d73"/>
+                            <constraint firstItem="qHs-3H-LmL" firstAttribute="bottom" secondItem="SNg-UQ-zaT" secondAttribute="bottom" id="6a0-LM-XzA"/>
+                            <constraint firstItem="qHs-3H-LmL" firstAttribute="trailing" secondItem="SNg-UQ-zaT" secondAttribute="trailing" id="Keq-Z8-G3T"/>
                             <constraint firstItem="SNg-UQ-zaT" firstAttribute="bottom" secondItem="qHs-3H-LmL" secondAttribute="bottom" id="Uax-s2-cio"/>
-                            <constraint firstItem="qHs-3H-LmL" firstAttribute="top" secondItem="ul7-cF-QAH" secondAttribute="bottom" constant="10" id="nNE-JB-7wu"/>
+                            <constraint firstItem="qHs-3H-LmL" firstAttribute="leading" secondItem="SNg-UQ-zaT" secondAttribute="leading" id="btF-eu-koE"/>
+                            <constraint firstItem="qHs-3H-LmL" firstAttribute="top" secondItem="SNg-UQ-zaT" secondAttribute="top" id="v8G-0Q-Qxi"/>
                             <constraint firstItem="qHs-3H-LmL" firstAttribute="leading" secondItem="SNg-UQ-zaT" secondAttribute="leading" id="wdw-Nm-E3R"/>
                             <constraint firstItem="SNg-UQ-zaT" firstAttribute="trailing" secondItem="qHs-3H-LmL" secondAttribute="trailing" id="zgN-ju-5sz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EDs-Nu-lIi"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="allTilesTableView" destination="qHs-3H-LmL" id="bgx-TI-H9z"/>
-                        <outlet property="createTileButton" destination="ul7-cF-QAH" id="FnX-t0-7M2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6F0-A5-OaD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2631.2977099236641" y="3.5211267605633805"/>
         </scene>
-        <!--EditorView-->
-        <scene sceneID="4Dw-sa-tLz">
-            <objects>
-                <viewControllerPlaceholder storyboardName="EditorView" referencedIdentifier="EditorView" id="ps4-EE-PkB" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="UcP-TH-ekM"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="o0Q-4c-kbs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3280" y="4"/>
-        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="3x1-zv-Jmu"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

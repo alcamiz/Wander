@@ -73,11 +73,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         
         cell.titleLabel.text = game.name
         cell.imageView.backgroundColor = .lightGray
-        cell.imageView.image = if game.image != nil {
-            UIImage(data: game.image!)
-        } else {
-            UIImage(systemName: "italic")
-        }
+//        cell.imageView.image = if game.image != nil {
+//            UIImage(data: game.image!)
+//        } else {
+//            UIImage(systemName: "italic")
+//        }
         return cell
     }
     

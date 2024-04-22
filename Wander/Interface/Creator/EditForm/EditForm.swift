@@ -7,8 +7,8 @@
 
 import UIKit
 
-class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
-
+class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate {
+    
     @IBOutlet weak var imageScene: UIImageView!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var titleEntry: UITextField!
@@ -27,7 +27,6 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         super.viewDidLoad()
         picker.delegate = self
         
-        imageButton.setTitle("Change Image", for: .normal)
         imageButton.setTitleColor(.white, for: .normal)
         imageButton.layer.backgroundColor = Color.primary.cgColor
         imageButton.layer.cornerRadius = 12
@@ -35,14 +34,18 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         if storedGame!.image != nil {
             imageScene.image = UIImage(data: storedGame!.image!)
+            imageScene.contentMode = .scaleAspectFill
+            imageButton.setTitle("Change Image", for: .normal)
         } else {
             imageScene.image = UIImage(systemName: "questionmark")
+            imageScene.contentMode = .scaleAspectFit
+            imageButton.setTitle("Add Image", for: .normal)
         }
         
         imageScene.layer.backgroundColor = UIColor.lightGray.cgColor
         imageScene.layer.cornerRadius = 12
-        imageButton.clipsToBounds = true
-        imageScene.contentMode = .scaleAspectFill
+        imageScene.clipsToBounds = true
+        imageScene.tintColor = .black
         
         if storedGame!.name != nil && storedGame!.name!.count != 0 {
             titleEntry.text = storedGame!.name!
@@ -51,8 +54,8 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         if storedGame!.desc != nil && storedGame!.desc!.count != 0 {
             descriptionEntry.text = storedGame!.desc!
         }
-//        tags = storedGame!.tags ?? []
-        tags = GlobalInfo.tagList // TODO: Change with proper list for final
+        tags = storedGame!.tags ?? []
+//        tags = GlobalInfo.tagList // TODO: Change with proper list for final
         
         if self.navigationController != nil {
             saveButton = UIBarButtonItem(title: "Save")
@@ -87,8 +90,9 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         shouldSaveImage = true
-        let chosenImage = info[.originalImage] as! UIImage
-        imageScene.image = chosenImage
+        imageScene.image = info[.originalImage] as? UIImage
+        imageScene.contentMode = .scaleAspectFill
+        imageButton.setTitle("Change Image", for: .normal)
         dismiss(animated: true)
     }
     
@@ -114,7 +118,24 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     }
     
     @IBAction func tagAction(_ sender: Any) {
-        print("Tag Action!")
+        let storyboard = UIStoryboard(name: "TagView", bundle: nil)
+        let tagView = storyboard.instantiateViewController(withIdentifier: "tagViewController") as! TagViewController
+        
+        tagView.delegate = self
+        tagView.currentTags = storedGame?.tags
+        
+        self.navigationController?.pushViewController(tagView, animated: true)
+    }
+    
+    func setGameTags(newTags: [String]) {
+        if storedGame != nil {
+            storedGame!.tags = newTags.map { $0 }
+            tags = storedGame!.tags ?? []
+            tagDisplay.reloadData()
+        }
+        else {
+            print("storedGame is nil when trying to set tags")
+        }
     }
     
     /*
