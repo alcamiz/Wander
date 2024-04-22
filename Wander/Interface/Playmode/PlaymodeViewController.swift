@@ -143,16 +143,27 @@ class PlaymodeViewController: UIViewController {
     }
     
     @IBAction func button1Pressed(_ sender: Any) {
-        if currentTile == nil {
+        guard let displayedTile = currentTile else {
             print("current is nil")
+            return
         }
-        if currentTile?.leftTile == nil {
+        guard let leftTile = displayedTile.leftTile else {
             print("left child is nil")
+            return
         }
-        displayTile(tile: currentTile?.leftTile)
+        displayTile(tile: leftTile)//currentTile?.leftTile)
     }
     
     @IBAction func button2Pressed(_ sender: Any) {
-        displayTile(tile: currentTile?.rightTile)
+        guard let displayedTile = currentTile else {
+            print("current is nil")
+            return
+        }
+        guard let rightTile = displayedTile.rightTile else {
+            print("right child is nil")
+            return
+        }
+        displayTile(tile: rightTile)
+//        displayTile(tile: currentTile?.rightTile)
     }
 }
