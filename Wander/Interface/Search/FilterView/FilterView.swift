@@ -57,7 +57,11 @@ class FilterView: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else {
             resultView?.selectedFilter = nil
         }
-        resultView?.tableView.reloadData()
+        
+        Task {
+           await resultView?.reloadQuery()
+        }
+            
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
