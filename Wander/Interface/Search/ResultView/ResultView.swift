@@ -80,12 +80,14 @@ class ResultView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if !debug {
             let curGame = queriedGames[indexPath.row]
             cell.titleLabel.text = curGame.name
-            cell.authorLabel.text = curGame.author
-//            cell.imageScreen.image = if curGame.image != nil {
-//                UIImage.init(data: curGame.image!)
-//            } else {
-//                UIImage(systemName: "italic")
-//            }
+            cell.authorLabel.text = curGame.authorUsername
+            if curGame.image != nil {
+                cell.imageScreen.image = UIImage.init(data: curGame.image!)
+                cell.imageScreen.contentMode = .scaleAspectFill
+            } else {
+                cell.imageScreen.image = UIImage(systemName: "questionmark")
+                cell.imageScreen.contentMode = .scaleAspectFit
+            }
         } else {
             cell.titleLabel.text = "Untitled"
             cell.authorLabel.text = "Unknown"

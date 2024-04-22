@@ -1,5 +1,5 @@
 //
-//  LinkingViewController.swift
+//  LinkingView.swift
 //  Wander
 //
 //  Created by Nihar Rao on 3/15/24.

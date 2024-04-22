@@ -32,10 +32,14 @@ class GameView: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
                 
         gameTitleLabel.text = game.name
+        
+        gameImageView.backgroundColor = .secondarySystemBackground
+        gameImageView.tintColor = .lightGray
+        gameImageView.layer.cornerRadius = 12
+        gameImageView.clipsToBounds = true
 
         if game.image == nil {
-            gameImageView.layer.borderWidth = 3
-            gameImageView.layer.borderColor = UIColor.gray.cgColor
+            gameImageView.image = UIImage(systemName: "questionmark")
         } else {
             gameImageView.image = game.fetchImage()
         }

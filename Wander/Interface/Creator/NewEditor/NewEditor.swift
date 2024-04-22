@@ -37,9 +37,7 @@ class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigation
             saveButton = UIBarButtonItem(title: "Save")
             saveButton?.target = self
             saveButton?.action = #selector(saveInfo)
-
             self.navigationItem.rightBarButtonItem = saveButton
-            self.navigationItem.leftBarButtonItem?.title = "Cancel"
         }
         
         if storedTile?.type == TileType.root.rawValue {
@@ -56,10 +54,10 @@ class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigation
             imageButton.setTitle("Add Image", for: .normal)
         }
         
-        imageScene.layer.backgroundColor = UIColor.lightGray.cgColor
+        imageScene.backgroundColor = .systemGray5
         imageScene.layer.cornerRadius = 12
         imageScene.clipsToBounds = true
-        imageScene.tintColor = .black
+        imageScene.tintColor = .lightGray
         
         if storedTile != nil {
             if storedTile!.title != nil && storedTile!.title!.count > 0 {

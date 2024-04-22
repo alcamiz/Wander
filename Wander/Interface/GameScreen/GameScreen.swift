@@ -36,12 +36,12 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         super.viewDidLoad()
         
         self.tagView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: self.tagID)
-        self.imageScreen.backgroundColor = .lightGray
+        self.imageScreen.backgroundColor = .secondarySystemBackground
         self.descriptionLabel.textColor = .gray
         
         imageScreen.layer.cornerRadius = 12
         imageScreen.clipsToBounds = true
-        imageScreen.tintColor = .black
+        imageScreen.tintColor = .lightGray
         
         authorLabel.textColor = Color.primary
         

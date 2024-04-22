@@ -42,10 +42,10 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             imageButton.setTitle("Add Image", for: .normal)
         }
         
-        imageScene.layer.backgroundColor = UIColor.lightGray.cgColor
+        imageScene.backgroundColor = .systemGray5
         imageScene.layer.cornerRadius = 12
         imageScene.clipsToBounds = true
-        imageScene.tintColor = .black
+        imageScene.tintColor = .lightGray
         
         if storedGame!.name != nil && storedGame!.name!.count != 0 {
             titleEntry.text = storedGame!.name!

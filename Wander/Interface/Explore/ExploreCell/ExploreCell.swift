@@ -18,10 +18,10 @@ class ExploreCell: UICollectionViewCell {
         titleLabel.textColor = .black
         authorLabel.textColor = .lightGray
         
-        imageView.backgroundColor = .lightGray
+        imageView.backgroundColor = .secondarySystemBackground
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
-        imageView.tintColor = .black
+        imageView.tintColor = .lightGray
     }
 
 }

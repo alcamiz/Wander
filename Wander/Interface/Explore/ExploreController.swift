@@ -90,7 +90,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
             }
 
             cell.imageView.image = game.image
-            cell.imageView.backgroundColor = .lightGray
+            cell.imageView.backgroundColor = .secondarySystemBackground
             
             cell.titleLabel.text = game.title
             cell.titleLabel.adjustsFontSizeToFitWidth = false
@@ -100,7 +100,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
 
         } else {
             cell.titleLabel.text = "Test"
-            cell.imageView.backgroundColor = .lightGray
+            cell.imageView.backgroundColor = .secondarySystemBackground
             cell.imageView.image = UIImage(systemName: "italic")
         }
         

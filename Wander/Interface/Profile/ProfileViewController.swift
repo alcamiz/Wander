@@ -72,7 +72,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         game = publishedGames[indexPath.row]
         
         cell.titleLabel.text = game.name
-        cell.imageView.backgroundColor = .lightGray
+        cell.imageView.backgroundColor = .secondarySystemBackground
 //        cell.imageView.image = if game.image != nil {
 //            UIImage(data: game.image!)
 //        } else {
@@ -85,7 +85,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         do {
             try Auth.auth().signOut()
             navigateToLandingPage()
-        } catch let error as NSError {
+        } catch _ as NSError {
             print("error signing out")
         }
     }

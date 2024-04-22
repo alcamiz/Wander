@@ -16,10 +16,10 @@ class ResultCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
                 
-        imageScreen.backgroundColor = .lightGray
+        imageScreen.backgroundColor = .secondarySystemBackground
         imageScreen.layer.cornerRadius = 12
         imageScreen.clipsToBounds = true
-        imageScreen.tintColor = .black
+        imageScreen.tintColor = .lightGray
         
         titleLabel.textColor = .black
         authorLabel.textColor = .lightGray

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,13 +18,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example Game Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyv-As-zYb">
-                                <rect key="frame" x="20" y="118.99999999999999" width="353" height="20.333333333333329"/>
+                                <rect key="frame" x="20" y="127.99999999999999" width="353" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8U-z3-Ql7">
-                                <rect key="frame" x="26.666666666666671" y="529.33333333333337" width="160" height="92.333333333333371"/>
+                                <rect key="frame" x="26.666666666666671" y="518.33333333333337" width="160" height="98"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Playtest"/>
                                 <connections>
@@ -31,7 +32,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dmo-Gu-gKN">
-                                <rect key="frame" x="206.66666666666663" y="529.33333333333337" width="160" height="92.333333333333371"/>
+                                <rect key="frame" x="206.66666666666663" y="518.33333333333337" width="160" height="98"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Edit"/>
                                 <connections>
@@ -39,7 +40,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C7T-bV-ytc">
-                                <rect key="frame" x="26.666666666666671" y="631.66666666666663" width="160" height="92.333333333333371"/>
+                                <rect key="frame" x="26.666666666666671" y="626.33333333333337" width="160" height="97.666666666666629"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Publish"/>
                                 <connections>
@@ -47,7 +48,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfc-MZ-ITX">
-                                <rect key="frame" x="206.66666666666663" y="631.66666666666663" width="160" height="92.333333333333371"/>
+                                <rect key="frame" x="206.66666666666663" y="626.33333333333337" width="160" height="97.666666666666629"/>
                                 <color key="tintColor" systemColor="systemGray6Color"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="Delete">
@@ -58,7 +59,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hwx-08-fPK">
-                                <rect key="frame" x="56.666666666666657" y="184.33333333333337" width="280" height="280"/>
+                                <rect key="frame" x="56.666666666666657" y="173.33333333333337" width="280" height="280"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="hwx-08-fPK" secondAttribute="height" multiplier="1:1" id="Y37-CQ-tUk"/>
                                     <constraint firstAttribute="height" constant="280" id="upg-2O-Pbs"/>
@@ -80,14 +81,14 @@
                             <constraint firstItem="cfc-MZ-ITX" firstAttribute="top" secondItem="Dmo-Gu-gKN" secondAttribute="bottom" constant="10" id="Tyt-SJ-CYf"/>
                             <constraint firstItem="hwx-08-fPK" firstAttribute="centerX" secondItem="1XQ-lk-vVs" secondAttribute="centerX" id="WWP-fV-Kpf"/>
                             <constraint firstItem="Lrp-LK-OQo" firstAttribute="bottom" secondItem="C7T-bV-ytc" secondAttribute="bottom" constant="45" id="c9i-9u-ehD"/>
-                            <constraint firstItem="eyv-As-zYb" firstAttribute="top" secondItem="Lrp-LK-OQo" secondAttribute="top" constant="16" id="cXi-IH-e51"/>
+                            <constraint firstItem="eyv-As-zYb" firstAttribute="top" secondItem="Lrp-LK-OQo" secondAttribute="top" constant="25" id="cXi-IH-e51"/>
                             <constraint firstItem="Dmo-Gu-gKN" firstAttribute="top" secondItem="hwx-08-fPK" secondAttribute="bottom" constant="65" id="fFC-nt-Mpw"/>
                             <constraint firstItem="Dmo-Gu-gKN" firstAttribute="width" secondItem="B8U-z3-Ql7" secondAttribute="width" id="hos-NG-Axw"/>
                             <constraint firstItem="Dmo-Gu-gKN" firstAttribute="leading" secondItem="B8U-z3-Ql7" secondAttribute="trailing" constant="20" id="j7z-J2-Mah"/>
                             <constraint firstItem="Dmo-Gu-gKN" firstAttribute="height" secondItem="B8U-z3-Ql7" secondAttribute="height" id="n9g-GO-sAC"/>
                             <constraint firstItem="C7T-bV-ytc" firstAttribute="height" secondItem="B8U-z3-Ql7" secondAttribute="height" id="oFm-K8-JqQ"/>
                             <constraint firstItem="Lrp-LK-OQo" firstAttribute="bottom" secondItem="cfc-MZ-ITX" secondAttribute="bottom" constant="45" id="qL9-hJ-K63"/>
-                            <constraint firstItem="hwx-08-fPK" firstAttribute="top" secondItem="eyv-As-zYb" secondAttribute="bottom" constant="45" id="tIi-m9-GHl"/>
+                            <constraint firstItem="hwx-08-fPK" firstAttribute="top" secondItem="eyv-As-zYb" secondAttribute="bottom" constant="25" id="tIi-m9-GHl"/>
                             <constraint firstItem="C7T-bV-ytc" firstAttribute="top" secondItem="B8U-z3-Ql7" secondAttribute="bottom" constant="10" id="u1S-Sk-wWR"/>
                             <constraint firstItem="B8U-z3-Ql7" firstAttribute="top" secondItem="hwx-08-fPK" secondAttribute="bottom" constant="65" id="xht-BG-gzc"/>
                         </constraints>
@@ -140,10 +141,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
