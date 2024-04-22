@@ -153,20 +153,22 @@ class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         if linkedTiles.0 != nil {
             storedTile?.leftTile = linkedTiles.0
-            if titleEntryOne.text != nil && titleEntryOne.text!.count > 0 {
-                storedTile?.leftButton = titleEntryOne.text
-            } else {
-                storedTile?.leftButton = "Left Option"
-            }
+        }
+        
+        if titleEntryOne.text != nil && titleEntryOne.text!.count > 0 {
+            storedTile?.leftButton = titleEntryOne.text
+        } else {
+            storedTile?.leftButton = "Left Option"
         }
         
         if linkedTiles.1 != nil {
             storedTile?.rightTile = linkedTiles.1
-            if titleEntryTwo.text != nil && titleEntryTwo.text!.count > 0 {
-                storedTile?.rightButton = titleEntryTwo.text
-            } else {
-                storedTile?.rightButton = "Right Option"
-            }
+        }
+        
+        if titleEntryTwo.text != nil && titleEntryTwo.text!.count > 0 {
+            storedTile?.rightButton = titleEntryTwo.text
+        } else {
+            storedTile?.rightButton = "Right Option"
         }
         
         if shouldCreateTile {
