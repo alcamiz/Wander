@@ -15,7 +15,7 @@ private var storage = Storage.storage().reference()
 class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     
     var delegate: GameList!
-    
+
     var game:StoredGame!
     
     // Label and text field for game title

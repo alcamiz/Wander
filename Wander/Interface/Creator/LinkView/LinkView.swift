@@ -22,8 +22,6 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         allTilesTableView.delegate = self
         allTilesTableView.dataSource = self
-        
-        self.navigationController?.title = "Link for \(linkTitle ?? "ERROR")"
         tileList = parentTile?.game?.fetchAllTiles() ?? []
     }
     
