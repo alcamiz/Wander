@@ -67,11 +67,13 @@ class SignupViewController: UIViewController {
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let managedContext = appDelegate.persistentContainer.viewContext
 
+                
                 if let userInfo = Auth.auth().currentUser,
                     let username = self.usernameTextField.text {
                     db.collection("users").document(userInfo.uid).setData([
                         "email": userInfo.email!,
                         "username": username,
+                        "liked": [:] 
                     ])
                     GlobalInfo.currentUser = storeAfterSignup(managedContext: managedContext, userInfo: userInfo, username: username)
                     self.performSegue(withIdentifier: "SuccessfulSignupSegue", sender: nil)
