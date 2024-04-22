@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import FirebaseFirestore
 
 
 
@@ -24,6 +25,34 @@ class InfoGame {
     var firebaseGame: FirebaseGame?
     var idString: String?
     
+    func initializeLiked() async {
+        let userID: String = GlobalInfo.currentUser!.id!
+        let doc = GlobalInfo.db.collection("users").document(userID)
+        let docFields = try? await doc.getDocument()
+        let likeStruct = docFields!.get("liked") as! [String : Int]
+        if let likedVal = likeStruct[idString!] {
+            liked = LikeType(rawValue: Int16(likedVal))!
+        } else {
+            liked = .neither
+        }
+    }
+    
+    func initializeCount() async {
+        let doc = GlobalInfo.db.collection("games").document(idString!)
+        let docFields = try! await doc.getDocument(as: FirebaseGame.self)
+        likes = docFields.likes
+        dislikes = docFields.dislikes
+    }
+    
+    func updateUserLikes() async {
+        let userID: String = GlobalInfo.currentUser!.id!
+        let doc = GlobalInfo.db.collection("users").document(userID)
+        let docFields = try! await doc.getDocument()
+        var likeStruct = docFields.get("liked") as! [String : Int]
+        likeStruct[idString!] = Int(liked.rawValue)
+        try? await doc.updateData(["liked": likeStruct])
+    }
+    
     init (storedGame: StoredGame) {
         self.title = storedGame.name ?? "Untitled"
         self.author = storedGame.author?.username ?? "Unknown"
@@ -40,7 +69,6 @@ class InfoGame {
         self.storedGame = storedGame
         self.idString = storedGame.id?.uuidString
         self.liked = LikeType(rawValue: storedGame.liked)!
-
     }
     
     init (firebaseGame: FirebaseGame) {
@@ -55,7 +83,8 @@ class InfoGame {
         } else {
             self.image = UIImage(systemName: "questionmark")
         }
-        self.liked = LikeType.neither
+        
+        //self.liked = LikeType.neither
         self.firebaseGame = firebaseGame
         self.idString = firebaseGame.id
     }
@@ -66,6 +95,44 @@ class InfoGame {
         self.desc = ""
         self.tags = []
         self.image = UIImage(systemName: "questionmark")
+    }
+    
+    func like() async {
+        await initializeLiked()
+        guard self.liked != .like else {
+            return
+        }
+        do {
+            let doc = GlobalInfo.db.collection("games").document(self.idString ?? "m")
+            try await doc.updateData(["likes": FieldValue.increment(Int64(1))])
+            if self.liked == .dislike {
+                try await doc.updateData(["dislikes": FieldValue.increment(Int64(-1))])
+            }
+            let cloudFields = try await doc.getDocument(as: FirebaseGame.self)
+            self.likes = cloudFields.likes
+            self.dislikes = cloudFields.dislikes
+        } catch {}
+        self.liked = .like
+        await updateUserLikes()
+    }
+    
+    func dislike() async {
+        await initializeLiked()
+        guard self.liked != .dislike else {
+            return
+        }
+        do {
+            let doc = GlobalInfo.db.collection("games").document(self.idString ?? "m")
+            try await doc.updateData(["dislikes": FieldValue.increment(Int64(1))])
+            if self.liked == .like {
+                try await doc.updateData(["likes": FieldValue.increment(Int64(-1))])
+            }
+            let cloudFields = try await doc.getDocument(as: FirebaseGame.self)
+            self.likes = cloudFields.likes
+            self.dislikes = cloudFields.dislikes
+        } catch {}
+        self.liked = .dislike
+        await updateUserLikes()
     }
     
 }

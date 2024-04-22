@@ -57,12 +57,6 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             descriptionLabel.text = infoGame!.desc
             likeCount.text = String(infoGame!.likes)
             dislikeCount.text = String(infoGame!.dislikes)
-            if infoGame!.liked == .like {
-                likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            } else if infoGame!.liked == .dislike {
-                likeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-            }
-
         } else {
             titleLabel.text = "Empty"
             authorLabel.text = "User"
@@ -74,6 +68,21 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         tagView.dataSource = self
         playButton.tintColor = Color.primary
         playButton.titleLabel?.textColor = Color.primary
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await infoGame!.initializeLiked()
+            if infoGame!.liked == .like {
+                likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            } else if infoGame!.liked == .dislike {
+                dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+            }
+            await infoGame!.initializeCount()
+            likeCount.text = String(infoGame!.likes)
+            dislikeCount.text = String(infoGame!.dislikes)
+        }
     }
     
     @IBAction func playAction(_ sender: Any) {
@@ -175,37 +184,26 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
     
 
     @IBAction func likeButtonPressed(_ sender: Any) {
-        if !debug && infoGame!.liked != .like {
-            likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            infoGame!.likes += 1
-            likeCount.text = String(infoGame!.likes)
-            let doc = GlobalInfo.db.collection("games").document(infoGame?.idString ?? "m")
-            doc.updateData(["likes": FieldValue.increment(Int64(1))])
-            if infoGame!.liked == .dislike {
+        if !debug {
+            Task {
+                await infoGame!.like()
+                likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+                likeCount.text = String(infoGame!.likes)
                 dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-                infoGame!.dislikes -= 1
-                doc.updateData(["dislikes": FieldValue.increment(Int64(-1))])
                 dislikeCount.text = String(infoGame!.dislikes)
             }
-            infoGame!.liked = .like
-          
+            
         }
     }
     @IBAction func dislikeButtonPressed(_ sender: Any) {
-        if !debug && infoGame!.liked != .dislike {
-            dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
-            infoGame!.dislikes += 1
-            dislikeCount.text = String(infoGame!.dislikes)
-            let doc = GlobalInfo.db.collection("games").document(infoGame?.idString ?? "m")
-            doc.updateData(["dislikes": FieldValue.increment(Int64(1))])
-            if infoGame!.liked == .like {
+        if !debug {
+            Task {
+                await infoGame!.dislike()
                 likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
-                infoGame!.likes -= 1
                 likeCount.text = String(infoGame!.likes)
-                doc.updateData(["likes": FieldValue.increment(Int64(-1))])
+                dislikeButton.setImage(UIImage(systemName: "hand.thumbsdown.fill"), for: .normal)
+                dislikeCount.text = String(infoGame!.dislikes)
             }
-            infoGame!.liked = .dislike
         }
-        
     }
 }
