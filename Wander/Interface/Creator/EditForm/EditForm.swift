@@ -7,8 +7,8 @@
 
 import UIKit
 
-class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
-
+class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate {
+    
     @IBOutlet weak var imageScene: UIImageView!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var titleEntry: UITextField!
@@ -54,8 +54,8 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         if storedGame!.desc != nil && storedGame!.desc!.count != 0 {
             descriptionEntry.text = storedGame!.desc!
         }
-//        tags = storedGame!.tags ?? []
-        tags = GlobalInfo.tagList // TODO: Change with proper list for final
+        tags = storedGame!.tags ?? []
+//        tags = GlobalInfo.tagList // TODO: Change with proper list for final
         
         if self.navigationController != nil {
             saveButton = UIBarButtonItem(title: "Save")
@@ -118,7 +118,24 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     }
     
     @IBAction func tagAction(_ sender: Any) {
-        print("Tag Action!")
+        let storyboard = UIStoryboard(name: "TagView", bundle: nil)
+        let tagView = storyboard.instantiateViewController(withIdentifier: "tagViewController") as! TagViewController
+        
+        tagView.delegate = self
+        tagView.currentTags = storedGame?.tags
+        
+        self.navigationController?.pushViewController(tagView, animated: true)
+    }
+    
+    func setGameTags(newTags: [String]) {
+        if storedGame != nil {
+            storedGame!.tags = newTags.map { $0 }
+            tags = storedGame!.tags ?? []
+            tagDisplay.reloadData()
+        }
+        else {
+            print("storedGame is nil when trying to set tags")
+        }
     }
     
     /*

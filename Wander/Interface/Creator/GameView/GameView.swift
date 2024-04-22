@@ -12,15 +12,7 @@ import FirebaseStorage
 private var db = Firestore.firestore()
 private var storage = Storage.storage().reference()
 
-// TODO: remove all tag modification stuff and move over to Alex's "Edit Info" page!
-/**
- - ModifyGameTagsDelegate
- - setGameTags function
- - "TagViewSegue" info
- - Remove "Tags" button
- */
-
-class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, ModifyGameTagsDelegate {
+class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     
     var delegate: GameList!
     
@@ -309,9 +301,5 @@ class GameView: UIViewController, UINavigationControllerDelegate, UITextFieldDel
         let editForm = EditForm(nibName: "EditForm", bundle: nil)
         editForm.storedGame = game
         self.navigationController?.pushViewController(editForm, animated: true)
-    }
-    
-    func setGameTags(newTags: [String]) {
-        game.tags = newTags.map { $0 }
     }
 }
