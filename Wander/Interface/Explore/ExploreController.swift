@@ -59,6 +59,8 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reUsable", for: indexPath) as! ExploreCell
+        
+        cell.imageView.contentMode = .scaleAspectFill
 
         if !debug {
         
@@ -88,6 +90,10 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
                 default:
                     return cell
             }
+            
+            if game.storedGame?.image == nil && game.firebaseGame?.image == nil {
+                cell.imageView.contentMode = .scaleAspectFit
+            }
 
             cell.imageView.image = game.image
             cell.imageView.backgroundColor = .secondarySystemBackground
@@ -101,7 +107,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         } else {
             cell.titleLabel.text = "Test"
             cell.imageView.backgroundColor = .secondarySystemBackground
-            cell.imageView.image = UIImage(systemName: "italic")
+            cell.imageView.image = UIImage(systemName: "questionmark")
         }
         
         return cell
