@@ -44,8 +44,8 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @objc
     func createTile() {
-        let storyboard = UIStoryboard(name: "NewEditor", bundle: nil)
-        let editorView = storyboard.instantiateViewController(withIdentifier: "NewEditor") as! NewEditor
+        let storyboard = UIStoryboard(name: "TileEditor", bundle: nil)
+        let editorView = storyboard.instantiateViewController(withIdentifier: "TileEditor") as! TileEditor
         editorView.storedGame = self.game
         
         editorView.createHandler = { tile in
@@ -94,8 +94,8 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "NewEditor", bundle: nil)
-        let editorView = storyboard.instantiateViewController(withIdentifier: "NewEditor") as! NewEditor
+        let storyboard = UIStoryboard(name: "TileEditor", bundle: nil)
+        let editorView = storyboard.instantiateViewController(withIdentifier: "TileEditor") as! TileEditor
         
         editorView.storedTile = tileList[indexPath.row]
         editorView.updateHandler = { _ in

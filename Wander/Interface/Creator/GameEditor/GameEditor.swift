@@ -1,5 +1,5 @@
 //
-//  EditForm.swift
+//  GameEditor.swift
 //  Wander
 //
 //  Created by Alex Cabrera on 4/14/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate {
+class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate {
     
     @IBOutlet weak var imageScene: UIImageView!
     @IBOutlet weak var imageButton: UIButton!

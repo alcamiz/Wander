@@ -1,5 +1,5 @@
 //
-//  NewEditor.swift
+//  TileEditor.swift
 //  Wander
 //
 //  Created by Alex Cabrera on 4/17/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var typeSelector: UISegmentedControl!
     @IBOutlet weak var titleEntry: UITextField!

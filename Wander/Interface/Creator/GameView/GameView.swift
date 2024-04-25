@@ -122,7 +122,7 @@ class GameView: UIViewController, UINavigationControllerDelegate {
     }
     
     @IBAction func editInfo(_ sender: Any) {
-        let editForm = EditForm(nibName: "EditForm", bundle: nil)
+        let editForm = GameEditor(nibName: "GameEditor", bundle: nil)
         editForm.storedGame = game
         self.navigationController?.pushViewController(editForm, animated: true)
     }
