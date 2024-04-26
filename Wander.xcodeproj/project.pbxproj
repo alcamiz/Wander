@@ -776,7 +776,7 @@
 				CODE_SIGN_ENTITLEMENTS = Wander/Wander.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z359RKYSZ3;
+				DEVELOPMENT_TEAM = U5RPX9V2G7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Wander/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -806,7 +806,7 @@
 				CODE_SIGN_ENTITLEMENTS = Wander/Wander.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z359RKYSZ3;
+				DEVELOPMENT_TEAM = U5RPX9V2G7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Wander/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
