@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var typeSelector: UISegmentedControl!
     @IBOutlet weak var titleEntry: UITextField!
@@ -16,8 +16,11 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     @IBOutlet weak var titleEntryOne: UITextField!
     @IBOutlet weak var titleEntryTwo: UITextField!
     @IBOutlet weak var imageButton: UIButton!
+
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+//    var originalBottom: CGFloat = 0.0
     
-    var saveButton: UIBarButtonItem?
+    var exitButton: UIBarButtonItem?
     var storedGame: StoredGame?
     var storedTile: StoredTile?
     var shouldSaveImage = false
@@ -33,16 +36,26 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     @IBOutlet weak var branchLabelTwo: UILabel!
     @IBOutlet weak var linkOutletOne: UIButton!
     @IBOutlet weak var linkOutletTwo: UIButton!
+    @IBOutlet weak var newOutletOne: UIButton!
+    @IBOutlet weak var newOutletTwo: UIButton!
+    @IBOutlet weak var linkLabelOne: UILabel!
+    @IBOutlet weak var linkLabelTwo: UILabel!
+    @IBOutlet weak var newLabelOne: UILabel!
+    @IBOutlet weak var newLabelTwo: UILabel!
+    @IBOutlet weak var linkTextOne: UILabel!
+    @IBOutlet weak var linkTextTwo: UILabel!
+    @IBOutlet weak var staticLabelOne: UILabel!
+    @IBOutlet weak var staticLabelTwo: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         picker.delegate = self
         
         if self.navigationController != nil {
-            saveButton = UIBarButtonItem(title: "Save")
-            saveButton?.target = self
-            saveButton?.action = #selector(saveInfo)
-            self.navigationItem.rightBarButtonItem = saveButton
+            exitButton = UIBarButtonItem(title: "Exit")
+            exitButton?.target = self
+            exitButton?.action = #selector(exitFunc)
+            self.navigationItem.rightBarButtonItem = exitButton
         }
         
         if storedTile?.type == TileType.root.rawValue {
@@ -63,6 +76,11 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         imageScene.layer.cornerRadius = 12
         imageScene.clipsToBounds = true
         imageScene.tintColor = .lightGray
+        
+        titleEntry.delegate = self
+        textEntry.delegate = self
+        titleEntryOne.delegate = self
+        titleEntryTwo.delegate = self
         
         if storedTile != nil {
             if storedTile!.title != nil && storedTile!.title!.count > 0 {
@@ -85,38 +103,55 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             
             switch TileType(rawValue: storedTile!.type) {
                 case .win:
-                    branchLabelOne.isHidden = true
-                    titleEntryOne.isHidden = true
-                    linkOutletOne.isHidden = true
-                    branchLabelTwo.isHidden = true
-                    titleEntryTwo.isHidden = true
-                    linkOutletTwo.isHidden = true
+                    toggleBranches(true)
                     typeSelector.selectedSegmentIndex = 1
                 case .lose:
-                    branchLabelOne.isHidden = true
-                    titleEntryOne.isHidden = true
-                    linkOutletOne.isHidden = true
-                    branchLabelTwo.isHidden = true
-                    titleEntryTwo.isHidden = true
-                    linkOutletTwo.isHidden = true
+                    toggleBranches(true)
                     typeSelector.selectedSegmentIndex = 2
                 default:
-                    branchLabelOne.isHidden = false
-                    titleEntryOne.isHidden = false
-                    linkOutletOne.isHidden = false
-                    branchLabelTwo.isHidden = false
-                    titleEntryTwo.isHidden = false
-                    linkOutletTwo.isHidden = false
+                    toggleBranches(false)
+                    typeSelector.selectedSegmentIndex = 0
                     break
             }
             
-            linkedTiles.0 = storedTile!.leftTile
-            linkedTiles.1 = storedTile!.rightTile
+            if storedTile?.leftTile != nil {
+                self.linkTextOne.text = storedTile?.leftTile?.title
+                self.linkTextOne.textColor = Color.primary
+                linkedTiles.0 = storedTile?.leftTile
+            }
+            
+            if storedTile?.rightTile != nil {
+                self.linkTextTwo.text = storedTile?.rightTile?.title
+                self.linkTextTwo.textColor = Color.primary
+                linkedTiles.1 = storedTile?.rightTile
+            }
 
+        }
+        
+//        originalBottom = bottomConstraint.constant
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        saveInfo()
+    }
+
+    @objc
+    func exitFunc() {
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers ;
+        for aViewController in viewControllers {
+            
+            if aViewController is TileEditor {
+                let iterEditor = aViewController as! TileEditor
+                iterEditor.saveInfo()
+            }
+            
+            if aViewController is TileList {
+               self.navigationController!.popToViewController(aViewController, animated: false);
+            }
         }
     }
     
-    @objc
     func saveInfo() {
         
         if storedTile == nil {
@@ -158,7 +193,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if titleEntryOne.text != nil && titleEntryOne.text!.count > 0 {
             storedTile?.leftButton = titleEntryOne.text
         } else {
-            storedTile?.leftButton = "Left Option"
+            storedTile?.leftButton = nil
         }
         
         if linkedTiles.1 != nil {
@@ -168,7 +203,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if titleEntryTwo.text != nil && titleEntryTwo.text!.count > 0 {
             storedTile?.rightButton = titleEntryTwo.text
         } else {
-            storedTile?.rightButton = "Right Option"
+            storedTile?.rightButton = nil
         }
         
         if shouldCreateTile {
@@ -178,7 +213,6 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         }
         
         try! storedTile?.managedObjectContext?.save()
-        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func linkButtonOne(_ sender: Any) {
@@ -188,6 +222,8 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         linkView.selectAction = {tile in
             self.linkedTiles.0 = tile
+            self.linkTextOne.text = tile?.title
+            self.linkTextOne.textColor = Color.primary
         }
         self.navigationController?.pushViewController(linkView, animated: true)
     }
@@ -199,8 +235,73 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         linkView.selectAction = {tile in
             self.linkedTiles.1 = tile
+            self.linkTextTwo.text = tile?.title
+            self.linkTextTwo.textColor = Color.primary
         }
         self.navigationController?.pushViewController(linkView, animated: true)
+    }
+    
+    @IBAction func newButtonOne(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "TileEditor", bundle: nil)
+        let editorView = storyboard.instantiateViewController(withIdentifier: "TileEditor") as! TileEditor
+        
+        editorView.storedGame = storedTile?.game ?? storedGame
+        editorView.createHandler = {tile in
+            self.linkedTiles.0 = tile
+            self.linkTextOne.text = tile?.title
+            self.linkTextOne.textColor = Color.primary
+        }
+    
+        self.navigationController?.pushViewController(editorView, animated: true)
+    }
+    
+    @IBAction func newButtonTwo(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "TileEditor", bundle: nil)
+        let editorView = storyboard.instantiateViewController(withIdentifier: "TileEditor") as! TileEditor
+        
+        editorView.storedGame = storedTile?.game ?? storedGame
+        editorView.createHandler = {tile in
+            self.linkedTiles.1 = tile
+            self.linkTextTwo.text = tile?.title
+            self.linkTextTwo.textColor = Color.primary
+        }
+    
+        self.navigationController?.pushViewController(editorView, animated: true)
+    }
+    
+    @IBAction func updateExistingOne(recognizer: UITapGestureRecognizer) {
+        print("test")
+        guard self.linkedTiles.0 != nil else {
+            return
+        }
+        
+        let storyboard = UIStoryboard(name: "TileEditor", bundle: nil)
+        let editorView = storyboard.instantiateViewController(withIdentifier: "TileEditor") as! TileEditor
+        
+        editorView.storedTile = self.linkedTiles.0
+        editorView.updateHandler = {tile in
+            self.linkTextTwo.text = tile?.title
+            self.linkTextTwo.textColor = Color.primary
+        }
+        
+        self.navigationController?.pushViewController(editorView, animated: true)
+    }
+    
+    @IBAction func updateExistingTwo(recognizer: UITapGestureRecognizer) {
+        guard self.linkedTiles.1 != nil else {
+            return
+        }
+        
+        let storyboard = UIStoryboard(name: "TileEditor", bundle: nil)
+        let editorView = storyboard.instantiateViewController(withIdentifier: "TileEditor") as! TileEditor
+        
+        editorView.storedTile = self.linkedTiles.1
+        editorView.updateHandler = {tile in
+            self.linkTextTwo.text = tile?.title
+            self.linkTextTwo.textColor = Color.primary
+        }
+        
+        self.navigationController?.pushViewController(editorView, animated: true)
     }
     
     @IBAction func imageAction(_ sender: Any) {
@@ -226,27 +327,40 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         switch typeSelector.selectedSegmentIndex {
             case 1:
-                branchLabelOne.isHidden = true
-                titleEntryOne.isHidden = true
-                linkOutletOne.isHidden = true
-                branchLabelTwo.isHidden = true
-                titleEntryTwo.isHidden = true
-                linkOutletTwo.isHidden = true
+                toggleBranches(true)
             case 2:
-                branchLabelOne.isHidden = true
-                titleEntryOne.isHidden = true
-                linkOutletOne.isHidden = true
-                branchLabelTwo.isHidden = true
-                titleEntryTwo.isHidden = true
-                linkOutletTwo.isHidden = true
+                toggleBranches(true)
             default:
-                branchLabelOne.isHidden = false
-                titleEntryOne.isHidden = false
-                linkOutletOne.isHidden = false
-                branchLabelTwo.isHidden = false
-                titleEntryTwo.isHidden = false
-                linkOutletTwo.isHidden = false
-                break
+                toggleBranches(false)
         }
+    }
+    
+    func toggleBranches(_ toggle: Bool) {
+        branchLabelOne.isHidden = toggle
+        titleEntryOne.isHidden = toggle
+        linkOutletOne.isHidden = toggle
+        newOutletOne.isHidden = toggle
+        linkLabelOne.isHidden = toggle
+        newLabelOne.isHidden = toggle
+        linkTextOne.isHidden = toggle
+        staticLabelOne.isHidden = toggle
+        
+        branchLabelTwo.isHidden = toggle
+        titleEntryTwo.isHidden = toggle
+        linkOutletTwo.isHidden = toggle
+        newOutletTwo.isHidden = toggle
+        linkLabelTwo.isHidden = toggle
+        newLabelTwo.isHidden = toggle
+        linkTextTwo.isHidden = toggle
+        staticLabelTwo.isHidden = toggle
+    }
+    
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

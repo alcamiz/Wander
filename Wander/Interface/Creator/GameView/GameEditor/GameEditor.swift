@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate {
+class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var imageScene: UIImageView!
     @IBOutlet weak var imageButton: UIButton!
@@ -47,6 +47,9 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         imageScene.clipsToBounds = true
         imageScene.tintColor = .lightGray
         
+        titleEntry.delegate = self
+        descriptionEntry.delegate = self
+        
         if storedGame!.name != nil && storedGame!.name!.count != 0 {
             titleEntry.text = storedGame!.name!
         }
@@ -55,7 +58,6 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             descriptionEntry.text = storedGame!.desc!
         }
         tags = storedGame!.tags ?? []
-//        tags = GlobalInfo.tagList // TODO: Change with proper list for final
         
         if self.navigationController != nil {
             saveButton = UIBarButtonItem(title: "Save")
@@ -82,8 +84,9 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if shouldSaveImage {
             storedGame?.image = imageScene.image?.jpegData(compressionQuality: 0.9)
         }
+        storedGame?.tags = tags
         
-        try! storedGame?.managedObjectContext?.save()
+        try? storedGame?.managedObjectContext?.save()
         navigationController?.popViewController(animated: true)
     }
     
@@ -101,10 +104,12 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("Test \(tags.count)")
         return tags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("IN SET")
         let cell = self.tagDisplay.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! TagCell
         cell.labelView.text = tags[indexPath.row]
         cell.layer.cornerRadius = (collectionView.frame.height / 2) - 2 * cell.layer.borderWidth
@@ -122,30 +127,24 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         let tagView = storyboard.instantiateViewController(withIdentifier: "tagViewController") as! TagViewController
         
         tagView.delegate = self
-        tagView.currentTags = storedGame?.tags
+        tagView.currentTags = tags
         
         self.navigationController?.pushViewController(tagView, animated: true)
     }
     
     func setGameTags(newTags: [String]) {
-        if storedGame != nil {
-            storedGame!.tags = newTags.map { $0 }
-            tags = storedGame!.tags ?? []
-            tagDisplay.reloadData()
-        }
-        else {
-            print("storedGame is nil when trying to set tags")
-        }
+        print("Editor: \(newTags)")
+        tags = newTags
+        tagDisplay.reloadData()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
-    */
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
 }

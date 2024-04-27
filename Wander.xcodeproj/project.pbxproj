@@ -250,7 +250,6 @@
 			children = (
 				FFB1EF2F2BCB91E10051637B /* ResultView */,
 				B6CF7E7B2BC209B40044AED4 /* FilterView */,
-				B6CF7E882BC209B40044AED4 /* ResultCell */,
 				B6CF7E8B2BC209B40044AED4 /* SearchFlow.storyboard */,
 				B6CF7E842BC209B40044AED4 /* SearchFlow.swift */,
 			);
@@ -287,6 +286,7 @@
 		FF0DC43D2BCC4A24009ABE78 /* GameEditor */ = {
 			isa = PBXGroup;
 			children = (
+				03D9637C2BC9E2F4004471CF /* TagList */,
 				FF0DC43E2BCC4A34009ABE78 /* GameEditor.swift */,
 				FF0DC43F2BCC4A34009ABE78 /* GameEditor.xib */,
 			);
@@ -305,15 +305,11 @@
 		FF486D372BC4AEDD00133C46 /* Creator */ = {
 			isa = PBXGroup;
 			children = (
-				03D9637C2BC9E2F4004471CF /* TagList */,
-				FF0DC43D2BCC4A24009ABE78 /* GameEditor */,
-				FF7868072BD0C9EB007E3990 /* TileEditor */,
 				FFB36F642BC7404A006C790A /* EditorNavigation */,
 				FFB36F612BC7401E006C790A /* GameList */,
 				FFB36F5E2BC73FA5006C790A /* GameView */,
 				FFB36F5A2BC73F55006C790A /* TileList */,
-				FFB36F542BC73E7C006C790A /* LinkView */,
-				FFB36F522BC73DC4006C790A /* TileCell */,
+				FF7868072BD0C9EB007E3990 /* TileEditor */,
 			);
 			path = Creator;
 			sourceTree = "<group>";
@@ -321,6 +317,7 @@
 		FF7868072BD0C9EB007E3990 /* TileEditor */ = {
 			isa = PBXGroup;
 			children = (
+				FFB36F542BC73E7C006C790A /* LinkView */,
 				FF78680C2BD0CAA5007E3990 /* TileEditor.storyboard */,
 				FF78680E2BD0CAAF007E3990 /* TileEditor.swift */,
 			);
@@ -377,6 +374,7 @@
 		FFB1EF2F2BCB91E10051637B /* ResultView */ = {
 			isa = PBXGroup;
 			children = (
+				B6CF7E882BC209B40044AED4 /* ResultCell */,
 				FFB1EF302BCB92030051637B /* ResultView.swift */,
 				FFB1EF312BCB92030051637B /* ResultView.xib */,
 			);
@@ -413,6 +411,7 @@
 		FFB36F5A2BC73F55006C790A /* TileList */ = {
 			isa = PBXGroup;
 			children = (
+				FFB36F522BC73DC4006C790A /* TileCell */,
 				FFB36F5C2BC73F71006C790A /* TileList.storyboard */,
 				B66C780A2B8FD4E0005A736E /* TileList.swift */,
 			);
@@ -422,6 +421,7 @@
 		FFB36F5E2BC73FA5006C790A /* GameView */ = {
 			isa = PBXGroup;
 			children = (
+				FF0DC43D2BCC4A24009ABE78 /* GameEditor */,
 				FFB36F5F2BC73FB2006C790A /* GameView.storyboard */,
 				53B010BD2B9922BB008C0BA8 /* GameView.swift */,
 			);

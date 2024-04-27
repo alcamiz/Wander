@@ -38,8 +38,9 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.navigationItem.title = "Tile List"
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        allTilesTableView.reloadData()
     }
     
     @objc
@@ -52,10 +53,7 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
             guard tile != nil else {
                 return
             }
-            let indexPath = IndexPath(row: self.tileList.count, section: 0)
             self.tileList.append(tile!)
-            self.allTilesTableView.insertRows(at: [indexPath], with: .automatic)
-            
         }
         self.navigationController?.pushViewController(editorView, animated: true)
     }
