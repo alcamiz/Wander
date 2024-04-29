@@ -53,7 +53,7 @@ public class StoredGame: NSManagedObject {
     func createTile() -> StoredTile {
         let newTile = StoredTile(game: self)
         self.createCount += 1
-        try! self.managedObjectContext?.save()
+        try? self.managedObjectContext?.save()
         return newTile
     }
     
@@ -70,7 +70,7 @@ public class StoredGame: NSManagedObject {
     func deleteTile(tile: StoredTile) -> Bool {
         guard tile.game == self else {return false}
         self.managedObjectContext?.delete(tile)
-        try! self.managedObjectContext?.save()
+        try? self.managedObjectContext?.save()
         return true
     }
     
@@ -78,7 +78,7 @@ public class StoredGame: NSManagedObject {
         for tile in self.tiles! {
             self.managedObjectContext?.delete(tile as! StoredTile)
         }
-        try! self.managedObjectContext?.save()
+        try? self.managedObjectContext?.save()
         return true
     }
     

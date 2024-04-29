@@ -118,11 +118,11 @@ class GameView: UIViewController, UINavigationControllerDelegate {
             publishGameButton.setTitle("Unpublish", for: .normal)
             deleteGameButton.isHidden = true
         }
-        try! GlobalInfo.managedContext?.save()
+        try? GlobalInfo.managedContext?.save()
     }
     
     @IBAction func editInfo(_ sender: Any) {
-        let editForm = EditForm(nibName: "EditForm", bundle: nil)
+        let editForm = GameEditor(nibName: "GameEditor", bundle: nil)
         editForm.storedGame = game
         self.navigationController?.pushViewController(editForm, animated: true)
     }

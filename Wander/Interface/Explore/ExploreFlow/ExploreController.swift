@@ -22,6 +22,7 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     
     @IBOutlet weak var wanderButton: UIButton!
     @IBOutlet weak var wanderLabel: UILabel!
+    @IBOutlet weak var searchButton: UIBarButtonItem!
     
     // TODO: Change to FirebaseGame
     var popularGames: [FirebaseGame] = []
@@ -30,6 +31,69 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
     
     let searchController = UISearchController(searchResultsController: nil)
     let debug = false
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "Explore"
+
+        searchButton.tintColor = Color.primary
+        
+        popularView.delegate = self
+        popularView.dataSource = self
+        popularView.accessibilityIdentifier = "popularView"
+        popularView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
+        
+        newView.delegate = self
+        newView.dataSource = self
+        newView.accessibilityIdentifier = "newView"
+        newView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
+        
+        historyView.delegate = self
+        historyView.dataSource = self
+        historyView.accessibilityIdentifier = "historyView"
+        historyView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
+
+        wanderButton.layer.cornerRadius = 8
+        wanderButton.backgroundColor = UIColor(hex: "#0DCAD6")
+        wanderButton.tintColor = .white
+        wanderLabel.text = "Press the button to learn more about the app!"
+        
+        // Load popular/new games from Firebase
+        Task {
+            popularGames = await FirebaseHelper.queryGames(domain: "", query: "", tag: "", sort: "Most Popular")
+            popularView.reloadData()
+            FirebaseHelper.loadPictures(imageList: popularGames, basepath: "gamePreviews") { (index, data) in
+                self.popularGames[index].image = data
+                let indexPath = IndexPath(row: index, section: 0)
+                self.popularView.reloadItems(at: [indexPath])
+            }
+            
+            newGames = await FirebaseHelper.queryGames(domain: "", query: "", tag: "", sort: "Newest")
+            newView.reloadData()
+            FirebaseHelper.loadPictures(imageList: newGames, basepath: "gamePreviews") { (index, data) in
+                self.newGames[index].image = data
+                let indexPath = IndexPath(row: index, section: 0)
+                self.newView.reloadItems(at: [indexPath])
+            }
+            
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Fetch previously played games from core data (recently played)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = StoredGame.fetchRequest()
+        let predicate = NSPredicate(format: "author != %@", GlobalInfo.currentUser!)
+        fetchRequest.predicate = predicate
+        
+        let res = try! managedContext.fetch(fetchRequest)
+        self.historyGames = res
+
+        historyView.reloadData()
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -164,70 +228,6 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         return UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 0)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.title = "Explore"
-        
-        // TODO: Query game lists
-
-        wanderButton.layer.cornerRadius = 8
-        wanderButton.backgroundColor = UIColor(hex: "#0DCAD6")
-        wanderButton.tintColor = .white
-        wanderLabel.text = "Press the button to learn more about the app!"
-        
-        popularView.accessibilityIdentifier = "popularView"
-        newView.accessibilityIdentifier = "newView"
-        historyView.accessibilityIdentifier = "historyView"
-
-        popularView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
-        newView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
-        historyView.register(UINib(nibName: "ExploreCell", bundle: nil), forCellWithReuseIdentifier: "reUsable")
-                    
-        
-        popularView.dataSource = self
-        popularView.delegate = self
-        
-        newView.dataSource = self
-        newView.delegate = self
-        
-        historyView.dataSource = self
-        historyView.delegate = self
-        
-        Task {
-            popularGames = await FirebaseHelper.queryGames(domain: "", query: "", tag: "", sort: "Most Popular")
-            popularView.reloadData()
-            FirebaseHelper.loadPictures(imageList: popularGames, basepath: "gamePreviews") { (index, data) in
-                self.popularGames[index].image = data
-                let indexPath = IndexPath(row: index, section: 0)
-                self.popularView.reloadItems(at: [indexPath])
-            }
-            
-            newGames = await FirebaseHelper.queryGames(domain: "", query: "", tag: "", sort: "Newest")
-            newView.reloadData()
-            FirebaseHelper.loadPictures(imageList: newGames, basepath: "gamePreviews") { (index, data) in
-                self.newGames[index].image = data
-                let indexPath = IndexPath(row: index, section: 0)
-                self.newView.reloadItems(at: [indexPath])
-            }
-            
-        }
-    
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = StoredGame.fetchRequest()
-        
-        let predicate = NSPredicate(format: "author != %@", GlobalInfo.currentUser!)
-        fetchRequest.predicate = predicate
-        let res = try! managedContext.fetch(fetchRequest)
-        self.historyGames = res
-        historyView.reloadData()
-    }
-    
     @IBAction func wanderAction(_ sender: Any) {
         
         let controller = UIAlertController(
@@ -245,15 +245,5 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         
         present(controller,animated: true)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

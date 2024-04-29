@@ -39,16 +39,16 @@ class InfoGame {
     
     func initializeCount() async {
         let doc = GlobalInfo.db.collection("games").document(idString!)
-        let docFields = try! await doc.getDocument(as: FirebaseGame.self)
-        likes = docFields.likes
-        dislikes = docFields.dislikes
+        let docFields = try? await doc.getDocument(as: FirebaseGame.self)
+        likes = docFields?.likes ?? 0
+        dislikes = docFields?.dislikes ?? 0
     }
     
     func updateUserLikes() async {
         let userID: String = GlobalInfo.currentUser!.id!
         let doc = GlobalInfo.db.collection("users").document(userID)
-        let docFields = try! await doc.getDocument()
-        var likeStruct = docFields.get("liked") as! [String : Int]
+        let docFields = try? await doc.getDocument()
+        var likeStruct = docFields?.get("liked") as! [String : Int]
         likeStruct[idString!] = Int(liked.rawValue)
         try? await doc.updateData(["liked": likeStruct])
     }

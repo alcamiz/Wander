@@ -18,12 +18,7 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var gameList:[StoredGame] = []
     var user:StoredUser?
     var selectedGameIndex: IndexPath?
-    
-    func getUser(managedContext: NSManagedObjectContext) -> StoredUser? {
-        let res = try? managedContext.fetch(StoredUser.fetchRequest())
-        return res != nil && res!.count > 0 ? res![0] : nil
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         allGamesTableView.delegate = self
@@ -31,9 +26,9 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
-
-        if let appUser = getUser(managedContext: managedContext) {
-            user = appUser
+        
+        if GlobalInfo.currentUser != nil {
+            user = GlobalInfo.currentUser
         } else {
             user = StoredUser(context: managedContext, username: "generic@utexas.edu", id: "bIbGX3waQMdkkfBnvF61uEWuWsI2")
         }
@@ -42,7 +37,7 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         createNewGameButton.tintColor = .white
                 
         gameList = user?.fetchAllGames() ?? []
-        self.navigationItem.title = "Game List"
+        self.navigationItem.title = "Create"
     }
     
     override func viewDidAppear(_ animated: Bool) {

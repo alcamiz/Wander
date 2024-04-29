@@ -12,15 +12,16 @@ class ExploreNavigation: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let primary = Color.secondary
-        let secondary = UIColor.white
+        let primary = Color.primary
+        let secondary = Color.secondary
+        let complementary = Color.complementary
         
         let navAppearance = UINavigationBarAppearance()
         navAppearance.configureWithOpaqueBackground()
-        navAppearance.backgroundColor = primary
-        navAppearance.titleTextAttributes = [.foregroundColor: secondary]
-        navAppearance.largeTitleTextAttributes = [.foregroundColor: secondary]
-        navAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: secondary, .backgroundColor: secondary]
+        navAppearance.backgroundColor = secondary
+        navAppearance.titleTextAttributes = [.foregroundColor: complementary]
+        navAppearance.largeTitleTextAttributes = [.foregroundColor: complementary]
+        navAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: primary, .backgroundColor: primary]
 
         self.navigationBar.standardAppearance = navAppearance
         self.navigationBar.scrollEdgeAppearance = navAppearance

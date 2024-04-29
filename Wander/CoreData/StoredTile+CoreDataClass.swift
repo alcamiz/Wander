@@ -33,11 +33,11 @@ public class StoredTile: NSManagedObject {
         self.id = UUID()
         self.game = game
         self.text = nil
-        self.title = "Tile #\(game.createCount)"
+        self.title = ""
         self.type = TileType.empty.rawValue
         self.createdOn = Date()
-        self.leftButton = "Button 1"
-        self.rightButton = "Button 2"
+        self.leftButton = ""
+        self.rightButton = ""
     }
     
     convenience init(game: StoredGame, webVersion: FirebaseTile) {
@@ -49,8 +49,8 @@ public class StoredTile: NSManagedObject {
         self.type = Int16(webVersion.type)
         self.createdOn = Date()
         if getType() != .win && getType() != .lose {
-            self.leftButton = "Button 1"
-            self.rightButton = "Button 2"
+            self.leftButton = ""
+            self.rightButton = ""
         }
     }
     

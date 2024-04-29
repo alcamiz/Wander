@@ -60,7 +60,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         } else {
             titleLabel.text = "Empty"
             authorLabel.text = "User"
-            imageScreen.image = UIImage(systemName: "italic")
+            imageScreen.image = UIImage(systemName: "questionmark")
             descriptionLabel.text = "\(copyPasta)"
         }
 

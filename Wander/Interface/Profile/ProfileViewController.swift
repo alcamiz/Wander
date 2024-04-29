@@ -125,7 +125,14 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         do {
             try Auth.auth().signOut()
             clearCoreData()
+//            let users = (try? GlobalInfo.managedContext?.fetch(StoredUser.fetchRequest())) ?? []
+//            for user in users {
+//                GlobalInfo.managedContext?.delete(user)
+//            }
+//            
+//            try? GlobalInfo.managedContext?.save()
             navigateToLandingPage()
+            
         } catch _ as NSError {
             print("error signing out")
         }
@@ -164,9 +171,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         let storyboard = UIStoryboard(name: "LoginFlow", bundle: nil)
         if let landingVC = storyboard.instantiateViewController(withIdentifier: "LandingViewController") as? LandingViewController {
             
-        landingVC.modalPresentationStyle = .fullScreen
-        self.present(landingVC, animated: true, completion: nil)
-//        navigationController?.pushViewController(landingVC, animated: true)
+            let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate
+            
+            
+            sceneDelegate?.window?.rootViewController?.dismiss(animated: true)
+            sceneDelegate?.window?.rootViewController = landingVC
         }
     }
     
@@ -247,23 +256,6 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
             print("Failed to save updated password in CoreData:", error)
         }
     }
-
-    
-//    func updatePassword(newPassword: String) {
-//
-//        guard let currentUserID = Auth.auth().currentUser?.uid else {
-//            print("User not authenticated")
-//            return
-//        }
-//
-//        // Update in Firebase
-//        GlobalInfo.db.collection("users").document(currentUserID)
-//            .updateData(["username":newPassword])
-//        
-//        // Update in CoreData
-//        GlobalInfo.currentUser?.username = newPassword
-//        try! GlobalInfo.managedContext?.save()
-//    }
     
     @IBAction func onHelpGuidePressed(_ sender: Any) {
         let alert = UIAlertController(title: "Welcome to Wander!", message: "This app helps create choose your own adventure games easily. Here’s how you can get started:\n\n- On the task bar click on Explore to see and play games made by others.\n- Click on Create+ and create new game to make a game of your own! \n- You can create new tiles and link them together to create different options for the person playing your game \n\nExplore the app to discover more features! Have Fun! \n - Wander Team", preferredStyle: .alert)
@@ -365,7 +357,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
             profilePictureImageView.image = UIImage(data: compressedData)
             
             GlobalInfo.currentUser?.picture = compressedData
-            try! GlobalInfo.managedContext?.save()
+            try? GlobalInfo.managedContext?.save()
             
             let imagePathRef = GlobalInfo.storage.child("userProfiles/\(userID).jpeg")
             let _ = imagePathRef.putData(compressedData, metadata: nil)

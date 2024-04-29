@@ -35,7 +35,7 @@ public class StoredUser: NSManagedObject {
     
     func createGame() -> StoredGame {
         let newGame = StoredGame(creator: self)
-        try! self.managedObjectContext?.save()
+        try? self.managedObjectContext?.save()
         return newGame
     }
     
@@ -52,7 +52,7 @@ public class StoredUser: NSManagedObject {
     func deleteGame(game: StoredGame) -> Bool {
         guard game.author == self else {return false}
         self.managedObjectContext?.delete(game)
-        try! self.managedObjectContext?.save()
+        try? self.managedObjectContext?.save()
         return true
     }
     
@@ -60,7 +60,7 @@ public class StoredUser: NSManagedObject {
         for game in self.createdGames! {
             self.managedObjectContext?.delete(game as! StoredGame)
         }
-        try! self.managedObjectContext?.save()
+        try? self.managedObjectContext?.save()
         return true
     }
 }

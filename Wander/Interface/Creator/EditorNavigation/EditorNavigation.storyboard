@@ -11,7 +11,7 @@
         <scene sceneID="wfw-b7-GqS">
             <objects>
                 <navigationController storyboardIdentifier="EditorNavigation" automaticallyAdjustsScrollViewInsets="NO" id="S9j-IY-JVE" customClass="EditorNavigation" customModule="Wander" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Create" image="plus" catalog="system" id="ARs-ew-g7T"/>
+                    <tabBarItem key="tabBarItem" title="Create" image="pencil.tip.crop.circle" catalog="system" id="ARs-ew-g7T"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Yn1-F1-SUO">
@@ -39,6 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="pencil.tip.crop.circle" catalog="system" width="128" height="123"/>
     </resources>
 </document>

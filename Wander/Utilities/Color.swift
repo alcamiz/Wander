@@ -29,6 +29,7 @@ class Color {
     // Blue
     static let primary = UIColor(hex: "#64A0Ef") // light blue
     static let secondary = UIColor(hex: "#191970") // dark blue
+    static let complementary = UIColor.white // opposite color, for text
     
     // Blue
     static let primaryLogin = UIColor(hex: "#ADDAE6") // light blue
