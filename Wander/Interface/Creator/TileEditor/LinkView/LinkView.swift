@@ -29,10 +29,47 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return tileList.count
     }
     
+    // Display TableView in form of TileCells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as! TileCell
         let row = indexPath.row
-        cell.textLabel?.text = formatCellText(tile: tileList[row])
+        let currentTile = tileList[row]
+        
+        // tile's title (for origin tile and end tiles)
+        cell.titleLabel.text = currentTile.title!
+        
+        // tile's type
+        if currentTile.getType().rawValue == TileType.root.rawValue {
+            cell.typeLabel.text = "ORIGIN TILE"
+        }
+        else if currentTile.getType().rawValue == TileType.win.rawValue {
+            cell.typeLabel.text = "WIN TILE"
+        }
+        else if currentTile.getType().rawValue == TileType.lose.rawValue {
+            cell.typeLabel.text = "LOSE TILE"
+        }
+        
+        // tile's children (NOT for end tiles)
+        if currentTile.getType().rawValue != TileType.win.rawValue && currentTile.getType().rawValue != TileType.lose.rawValue {
+            let tileChildren = currentTile.fetchAllChildren()
+            // set first child
+            if let firstChild = tileChildren[0] {
+                cell.firstLinkLabel.text = firstChild.title!
+            }
+            else {
+                return
+            }
+            // set second child
+            if let secondChild = tileChildren[1] {
+                cell.secondLinkLabel.text = secondChild.title!
+            }
+            else {
+                return
+            }
+        }
+        
+        cell.tileImageView.image = currentTile.fetchImage()
+
         return cell
     }
     
@@ -43,36 +80,4 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         self.navigationController?.popViewController(animated: true)
     }
-    
-    func formatCellText(tile: StoredTile) -> String {
-        var cellText = tile.title!
-        if tile.getType().rawValue == TileType.root.rawValue {
-            cellText += " \n\tROOT TILE"
-        }
-        else if tile.getType().rawValue == TileType.win.rawValue {
-            cellText += "\n\tWIN TILE"
-        }
-        else if tile.getType().rawValue == TileType.lose.rawValue {
-            cellText += "\n\tLOSE TILE"
-        }
-        let tileChildren = tile.fetchAllChildren()
-        for (index, tileChild) in tileChildren.enumerated() {
-            if let tileChild = tileChild {
-                cellText += "\n\tButton \(index+1): \(tileChild.title!)"
-            }
-        }
-        return cellText
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
