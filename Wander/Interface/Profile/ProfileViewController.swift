@@ -124,14 +124,21 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBAction func onLogOutPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
-            clearCoreData()
-//            let users = (try? GlobalInfo.managedContext?.fetch(StoredUser.fetchRequest())) ?? []
-//            for user in users {
-//                GlobalInfo.managedContext?.delete(user)
-//            }
-//            
-//            try? GlobalInfo.managedContext?.save()
-            navigateToLandingPage()
+            
+            // Create the alert controller
+            let alert = UIAlertController(title: "Confirm Log Out",
+                message: "This action will delete all non-published games. Are you sure you want to continue?",
+                preferredStyle: .alert)
+                    
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            alert.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { [self] _ in
+                clearCoreData()
+                navigateToLandingPage()
+            }))
+                    
+            // Present the alert
+            self.present(alert, animated: true, completion: nil)
             
         } catch _ as NSError {
             print("error signing out")

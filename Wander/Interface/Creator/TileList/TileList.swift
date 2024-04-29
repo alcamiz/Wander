@@ -89,19 +89,13 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if let firstChild = tileChildren[0] {
                 cell.firstLinkLabel.text = firstChild.title!
             }
-            else {
-                return
-            }
             // set second child
             if let secondChild = tileChildren[1] {
                 cell.secondLinkLabel.text = secondChild.title!
             }
-            else {
-                return
-            }
         }
         
-        cell.tileImageView.image = currentTile.fetchImage()
+        cell.tileCellImageView.image = currentTile.fetchImage()
         
         return cell
     }
