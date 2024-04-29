@@ -41,6 +41,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     var storedTile: StoredTile?
     var shouldSaveImage = false
     var shouldCreateTile = false
+    var keyboardConstrained = false
     
     var updateHandler: ((StoredTile?) -> Void)?
     var createHandler: ((StoredTile?) -> Void)?
@@ -138,9 +139,19 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // adding notification observers for keyboard show and hide
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+   }
+    
     // Save to core data when back is pressed
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
         saveInfo()
     }
     
@@ -434,5 +445,63 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    
+    @objc private func keyboardWillShow(_ notification: NSNotification) {
+       
+       // move the text field when editing
+        updateViewWithKeyboard(notification: notification, viewBottomConstraint: self.bottomConstraint!, keyboardWillShow: true)
+    }
+
+    @objc private func keyboardWillHide(_ notification: NSNotification) {
+
+       // move the field back to the previous position after editing is done
+       updateViewWithKeyboard(notification: notification, viewBottomConstraint: self.bottomConstraint!, keyboardWillShow: false)
+    }
+    
+    private func updateViewWithKeyboard(notification: NSNotification,
+    viewBottomConstraint: NSLayoutConstraint,
+    keyboardWillShow: Bool) {
+
+       // getting keyboard size
+       guard let userInfo = notification.userInfo,
+       let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+          return
+       }
+
+       // getting duration for keyboard animation
+       guard let keyboardDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+          return
+       }
+
+       // getting keyboard animation's curve
+       guard let keyboardCurve = UIView.AnimationCurve(rawValue: userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as! Int) else {
+          return
+       }
+
+       // getting keyboard height
+       let keyboardHeight = keyboardSize.cgRectValue.height - 100
+
+       // setting constant for keyboard show and hide
+       if keyboardWillShow {
+           if !keyboardConstrained {
+               viewBottomConstraint.constant += keyboardHeight
+               keyboardConstrained = true
+           }
+       } else {
+           if keyboardConstrained {
+               viewBottomConstraint.constant -= keyboardHeight
+               keyboardConstrained = false
+           }
+       }
+
+       // animate the view the same way the keyboard animates
+       let animator = UIViewPropertyAnimator(duration: keyboardDuration, curve: keyboardCurve) {
+          [weak self] in self?.view.layoutIfNeeded()
+       }
+
+       // perform the animation
+       animator.startAnimation()
     }
 }

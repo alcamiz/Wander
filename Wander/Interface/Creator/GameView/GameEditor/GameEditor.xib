@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameEditor" customModule="Wander" customModuleProvider="target">
             <connections>
+                <outlet property="bottomConstraint" destination="Lfj-dB-8xM" id="wEH-5B-wVU"/>
                 <outlet property="descriptionEntry" destination="pEe-SF-aHA" id="IEd-LX-BM2"/>
                 <outlet property="imageButton" destination="eQn-Sn-aUB" id="L3y-qE-3Sk"/>
                 <outlet property="imageScene" destination="kwV-dQ-Erg" id="WX1-OB-KgN"/>
