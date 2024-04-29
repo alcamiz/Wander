@@ -22,6 +22,8 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         backItem.title = "Cancel"
         self.navigationItem.backBarButtonItem = backItem
         
+        allTilesTableView.register(UINib(nibName: "TileCell", bundle: nil), forCellReuseIdentifier: "TileCell")
+
         if self.navigationController != nil {
             createButton = UIBarButtonItem(title: "Create")
             createButton?.target = self

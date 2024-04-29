@@ -31,7 +31,7 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Display TableView in form of TileCells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as! TileCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TileCell", for: indexPath) as! TileCell
         let row = indexPath.row
         let currentTile = tileList[row]
         
