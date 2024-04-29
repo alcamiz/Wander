@@ -8,7 +8,7 @@
 import UIKit
 import CropViewController
 
-class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate, UITextFieldDelegate, UITextViewDelegate, CropViewControllerDelegate {
+class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate, UITextFieldDelegate, CropViewControllerDelegate {
     
     // Updateable UI fields
     @IBOutlet weak var imageScene: UIImageView!
@@ -28,6 +28,9 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     override func viewDidLoad() {
         super.viewDidLoad()
         picker.delegate = self
+        
+        let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGestureReconizer)
         
         imageButton.setTitleColor(.white, for: .normal)
         imageButton.layer.backgroundColor = Color.primary.cgColor
@@ -50,7 +53,6 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         imageScene.tintColor = .lightGray
         
         titleEntry.delegate = self
-        descriptionEntry.delegate = self
         
         if storedGame!.name != nil && storedGame!.name!.count != 0 {
             titleEntry.text = storedGame!.name!
@@ -77,6 +79,12 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         tagButton.layer.backgroundColor = Color.primary.cgColor
         tagButton.layer.cornerRadius = 12
         tagButton.clipsToBounds = true
+    }
+    
+    @objc
+    func dismissKeyboard() {
+        titleEntry.endEditing(true)
+        descriptionEntry.endEditing(true)
     }
     
     @objc

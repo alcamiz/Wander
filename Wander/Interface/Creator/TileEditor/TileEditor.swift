@@ -8,7 +8,7 @@
 import UIKit
 import CropViewController
 
-class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, CropViewControllerDelegate  {
+class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, CropViewControllerDelegate  {
     
     // Updateable UI fields
     @IBOutlet weak var typeSelector: UISegmentedControl!
@@ -52,6 +52,9 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         super.viewDidLoad()
         picker.delegate = self
         
+        let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGestureReconizer)
+        
         // Setup exit button
         if self.navigationController != nil {
             exitButton = UIBarButtonItem(title: "Exit")
@@ -83,7 +86,6 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         imageScene.tintColor = .lightGray
         
         titleEntry.delegate = self
-        textEntry.delegate = self
         titleEntryOne.delegate = self
         titleEntryTwo.delegate = self
         
@@ -140,6 +142,14 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         saveInfo()
+    }
+    
+    @objc
+    func dismissKeyboard() {
+        titleEntry.endEditing(true)
+        textEntry.endEditing(true)
+        titleEntryOne.endEditing(true)
+        titleEntryTwo.endEditing(true)
     }
 
     // Save all open tiles to core data, exit to tile list
