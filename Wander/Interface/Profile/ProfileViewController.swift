@@ -179,18 +179,6 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     @objc func gameImageViewTapped(_ sender: UITapGestureRecognizer) {
         let alertController = UIAlertController(title: "Import Image", message: "Select image source", preferredStyle: .actionSheet)
         
-        // Action that adds photo from camera
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            alertController.addAction(UIAlertAction(
-                title: "Camera",
-                style: .default) {_ in
-                    let imagePicker = UIImagePickerController()
-                    imagePicker.delegate = self
-                    imagePicker.sourceType = .camera
-                    self.present(imagePicker, animated: true, completion: nil)
-            })
-        }
-        
         // Action that adds photo from photo library
         alertController.addAction(UIAlertAction(
             title: "Photo Library",

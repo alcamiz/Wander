@@ -13,7 +13,7 @@ class TileCell: UITableViewCell {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var firstLinkLabel: UILabel!
     @IBOutlet weak var secondLinkLabel: UILabel!
-    // Create outlet for ImageView, call it tileImageView
+    // Create outlet for ImageView, call it tileCellImageView
 
     override func awakeFromNib() {
         super.awakeFromNib()

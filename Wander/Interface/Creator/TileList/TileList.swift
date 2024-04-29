@@ -101,7 +101,8 @@ class TileList: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        cell.tileImageView.image = currentTile.fetchImage()
+        // tile's image
+        cell.tileCellImageView.image = currentTile.fetchImage()
         
         return cell
     }
