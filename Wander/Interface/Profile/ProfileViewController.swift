@@ -103,7 +103,14 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBAction func onLogOutPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
+            let users = (try? GlobalInfo.managedContext?.fetch(StoredUser.fetchRequest())) ?? []
+            for user in users {
+                GlobalInfo.managedContext?.delete(user)
+            }
+            
+            try? GlobalInfo.managedContext?.save()
             navigateToLandingPage()
+            
         } catch _ as NSError {
             print("error signing out")
         }
@@ -113,9 +120,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         let storyboard = UIStoryboard(name: "LoginFlow", bundle: nil)
         if let landingVC = storyboard.instantiateViewController(withIdentifier: "LandingViewController") as? LandingViewController {
             
-        landingVC.modalPresentationStyle = .fullScreen
-        self.present(landingVC, animated: true, completion: nil)
-//        navigationController?.pushViewController(landingVC, animated: true)
+            let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate
+            
+            
+            sceneDelegate?.window?.rootViewController?.dismiss(animated: true)
+            sceneDelegate?.window?.rootViewController = landingVC
         }
     }
     
