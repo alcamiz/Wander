@@ -189,8 +189,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kAX-uX-sJq">
-                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" id="q9K-Im-mkD">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" style="plain" id="q9K-Im-mkD">
                             <connections>
                                 <segue destination="vCL-ws-CDD" kind="show" id="iLE-Sz-Ue5"/>
                             </connections>
@@ -201,6 +200,7 @@
                         <outlet property="historyView" destination="Htt-As-KNe" id="CZZ-aM-Nfm"/>
                         <outlet property="newView" destination="cKg-y4-ZOC" id="nLt-FY-Nvk"/>
                         <outlet property="popularView" destination="aPa-Dh-UFg" id="6Gb-fz-DAI"/>
+                        <outlet property="searchButton" destination="q9K-Im-mkD" id="BgZ-Oq-h5I"/>
                         <outlet property="wanderButton" destination="xnT-Qm-F2d" id="xRX-S8-f0E"/>
                         <outlet property="wanderLabel" destination="q45-1T-9eo" id="hOt-4Y-l8H"/>
                     </connections>

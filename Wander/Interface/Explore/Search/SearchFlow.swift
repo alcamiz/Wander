@@ -27,32 +27,28 @@ class SearchFlow: UIViewController, UISearchControllerDelegate, UISearchBarDeleg
         title = "Search"
         
         searchControl = UISearchController(searchResultsController: resultView)
-        searchControl.searchBar.tintColor = .white
-        let searchText = searchControl.searchBar.value(forKey: "searchField") as? UITextField
-        searchText?.backgroundColor = UIColor.systemGray4
-        
-        searchControl.searchBar.autocapitalizationType = .none
-        searchControl.searchBar.autocorrectionType = .no
-
-        self.navigationItem.searchController = searchControl
         searchControl.delegate = self
         searchControl.searchBar.delegate = self
         searchControl.showsSearchResultsController = false
+        
+        searchControl.searchBar.tintColor = Color.primary
+        searchControl.searchBar.autocapitalizationType = .none
+        searchControl.searchBar.autocorrectionType = .no
         searchControl.searchBar.showsBookmarkButton = true
         searchControl.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
+        
+        let searchText = searchControl.searchBar.value(forKey: "searchField") as? UITextField
+        searchText?.backgroundColor = UIColor.systemGray4
+        self.navigationItem.searchController = searchControl
         
         resultView.localSuperView = self
         messageLabel.textColor = .lightGray
         messageLabel.text = "Search for something, dummy"
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
 
-        // Makes the search bar active on initial load
+        // Make search bar active on initial load
         DispatchQueue.main.async {
             self.searchControl.searchBar.becomeFirstResponder()
         }

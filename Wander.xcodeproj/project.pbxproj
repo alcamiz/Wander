@@ -219,10 +219,10 @@
 		B6CF7E692BC209A50044AED4 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
+				FFEFE53C2BDF132A00153F1B /* ExploreFlow */,
+				B6CF7E752BC209AB0044AED4 /* GameScreen */,
+				B6CF7E7A2BC209B40044AED4 /* Search */,
 				B6CF7E6B2BC209A50044AED4 /* ExploreCell */,
-				B6CF7E6F2BC209A50044AED4 /* ExploreFlow.storyboard */,
-				B6CF7E6A2BC209A50044AED4 /* ExploreNavigation.swift */,
-				B6CF7E6E2BC209A50044AED4 /* ExploreController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -248,10 +248,10 @@
 		B6CF7E7A2BC209B40044AED4 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				FFB1EF2F2BCB91E10051637B /* ResultView */,
-				B6CF7E7B2BC209B40044AED4 /* FilterView */,
 				B6CF7E8B2BC209B40044AED4 /* SearchFlow.storyboard */,
 				B6CF7E842BC209B40044AED4 /* SearchFlow.swift */,
+				FFB1EF2F2BCB91E10051637B /* ResultView */,
+				B6CF7E7B2BC209B40044AED4 /* FilterView */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -453,8 +453,6 @@
 				B6953E832BC0A38300CE543D /* Login */,
 				FFB36F532BC73E4F006C790A /* TabBar */,
 				B6CF7E692BC209A50044AED4 /* Explore */,
-				B6CF7E7A2BC209B40044AED4 /* Search */,
-				B6CF7E752BC209AB0044AED4 /* GameScreen */,
 				FF486D372BC4AEDD00133C46 /* Creator */,
 				B6CF7E982BC2211B0044AED4 /* Playmode */,
 				534AEF202BBDF86200890812 /* Profile */,
@@ -482,6 +480,16 @@
 				FFA468222BC499A700AE3FAB /* InfoGame.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		FFEFE53C2BDF132A00153F1B /* ExploreFlow */ = {
+			isa = PBXGroup;
+			children = (
+				B6CF7E6F2BC209A50044AED4 /* ExploreFlow.storyboard */,
+				B6CF7E6A2BC209A50044AED4 /* ExploreNavigation.swift */,
+				B6CF7E6E2BC209A50044AED4 /* ExploreController.swift */,
+			);
+			path = ExploreFlow;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

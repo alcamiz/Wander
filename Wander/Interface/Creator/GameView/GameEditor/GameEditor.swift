@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import CropViewController
 
-class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate, UITextFieldDelegate, UITextViewDelegate {
+class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate, UITextFieldDelegate, UITextViewDelegate, CropViewControllerDelegate {
     
+    // Updateable UI fields
     @IBOutlet weak var imageScene: UIImageView!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var titleEntry: UITextField!
@@ -90,38 +92,20 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         navigationController?.popViewController(animated: true)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        shouldSaveImage = true
-        imageScene.image = info[.originalImage] as? UIImage
-        imageScene.contentMode = .scaleAspectFill
-        imageButton.setTitle("Change Image", for: .normal)
-        dismiss(animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
+    // MARK: - Tag Handling
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Test \(tags.count)")
         return tags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("IN SET")
         let cell = self.tagDisplay.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! TagCell
         cell.labelView.text = tags[indexPath.row]
         cell.layer.cornerRadius = (collectionView.frame.height / 2) - 2 * cell.layer.borderWidth
         return cell
     }
     
-    @IBAction func changeImage(_ sender: Any) {
-        picker.allowsEditing = false
-        picker.sourceType = .photoLibrary
-        present(picker, animated:true)
-    }
-    
+    // Open TagList to modify currently selected tags
     @IBAction func tagAction(_ sender: Any) {
         let storyboard = UIStoryboard(name: "TagView", bundle: nil)
         let tagView = storyboard.instantiateViewController(withIdentifier: "tagViewController") as! TagViewController
@@ -132,12 +116,72 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         self.navigationController?.pushViewController(tagView, animated: true)
     }
     
+    // Send back selected tags, called from TagList
     func setGameTags(newTags: [String]) {
-        print("Editor: \(newTags)")
         tags = newTags
         tagDisplay.reloadData()
     }
     
+    // MARK: - Image Handling
+    
+    @IBAction func changeImage(_ sender: Any) {
+        picker.allowsEditing = false
+        picker.sourceType = .photoLibrary
+        present(picker, animated:true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        dismiss(animated: true)
+        showCrop(image: info[.originalImage] as! UIImage)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    // Set up ViewController for cropping image
+    func showCrop(image: UIImage) {
+        let cropVC = CropViewController(croppingStyle: .default, image: image)
+        cropVC.toolbarPosition = .top
+        
+        // Aspect ratio
+        cropVC.aspectRatioPreset = .presetSquare
+        cropVC.aspectRatioLockEnabled = true
+        
+        // Done button
+        cropVC.doneButtonTitle = "Done"
+        cropVC.doneButtonColor = Color.primary
+        
+        // Cancel button
+        cropVC.cancelButtonTitle = "Cancel"
+        cropVC.cancelButtonColor = .systemRed
+        
+        cropVC.aspectRatioPickerButtonHidden = true
+        cropVC.resetAspectRatioEnabled = false
+     
+        cropVC.delegate = self
+        present(cropVC, animated: true)
+    }
+    
+    // Dismiss CropViewController if "Cancel" tapped
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true)
+    }
+    
+    // When "Done" tapped, dismiss CropViewController and update imageView and selectedImage
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        
+        shouldSaveImage = true
+        imageScene.image = image
+        imageScene.contentMode = .scaleAspectFill
+        imageButton.setTitle("Change Image", for: .normal)
+
+        cropViewController.dismiss(animated: true)
+    }
+    
+    // MARK: - Keyboard Handling
+
     func textFieldShouldReturn(_ textField:UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -146,5 +190,4 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
 }

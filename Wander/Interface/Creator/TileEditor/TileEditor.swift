@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import CropViewController
 
-class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, CropViewControllerDelegate  {
     
+    // Updateable UI fields
     @IBOutlet weak var typeSelector: UISegmentedControl!
     @IBOutlet weak var titleEntry: UITextField!
     @IBOutlet weak var imageScene: UIImageView!
@@ -16,22 +18,9 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     @IBOutlet weak var titleEntryOne: UITextField!
     @IBOutlet weak var titleEntryTwo: UITextField!
     @IBOutlet weak var imageButton: UIButton!
-
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-//    var originalBottom: CGFloat = 0.0
     
-    var exitButton: UIBarButtonItem?
-    var storedGame: StoredGame?
-    var storedTile: StoredTile?
-    var shouldSaveImage = false
-    var shouldCreateTile = false
-    
-    var updateHandler: ((StoredTile?) -> Void)?
-    var createHandler: ((StoredTile?) -> Void)?
-    
-    var linkedTiles: (StoredTile?, StoredTile?)
-    let picker = UIImagePickerController()
-    
+    // Static UI fields (for toggling visibility)
     @IBOutlet weak var branchLabelOne: UILabel!
     @IBOutlet weak var branchLabelTwo: UILabel!
     @IBOutlet weak var linkOutletOne: UIButton!
@@ -47,21 +36,37 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     @IBOutlet weak var staticLabelOne: UILabel!
     @IBOutlet weak var staticLabelTwo: UILabel!
     
+    var exitButton: UIBarButtonItem?
+    var storedGame: StoredGame?
+    var storedTile: StoredTile?
+    var shouldSaveImage = false
+    var shouldCreateTile = false
+    
+    var updateHandler: ((StoredTile?) -> Void)?
+    var createHandler: ((StoredTile?) -> Void)?
+    
+    var linkedTiles: (StoredTile?, StoredTile?)
+    let picker = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         picker.delegate = self
         
+        // Setup exit button
         if self.navigationController != nil {
             exitButton = UIBarButtonItem(title: "Exit")
+            exitButton?.setTitleTextAttributes([.foregroundColor: UIColor.systemRed], for: .normal)
             exitButton?.target = self
             exitButton?.action = #selector(exitFunc)
             self.navigationItem.rightBarButtonItem = exitButton
         }
         
+        // Hide tile types for root tiles
         if storedTile?.type == TileType.root.rawValue {
             typeSelector.isHidden = true
         }
         
+        // Load stored/placeholder image
         if storedTile?.image != nil {
             imageScene.image = UIImage(data: storedTile!.image!)
             imageScene.contentMode = .scaleAspectFill
@@ -82,6 +87,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         titleEntryOne.delegate = self
         titleEntryTwo.delegate = self
         
+        // Load information/placeholders to UI fields
         if storedTile != nil {
             if storedTile!.title != nil && storedTile!.title!.count > 0 {
                 titleEntry.text = storedTile!.title!
@@ -101,6 +107,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 titleEntryTwo.text = storedTile!.rightButton!
             }
             
+            // Hide unecessary UI elements depending on tile type
             switch TileType(rawValue: storedTile!.type) {
                 case .win:
                     toggleBranches(true)
@@ -127,15 +134,15 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             }
 
         }
-        
-//        originalBottom = bottomConstraint.constant
     }
     
+    // Save to core data when back is pressed
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         saveInfo()
     }
 
+    // Save all open tiles to core data, exit to tile list
     @objc
     func exitFunc() {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers ;
@@ -152,6 +159,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         }
     }
     
+    // Write to core data object, and save context
     func saveInfo() {
         
         if storedTile == nil {
@@ -212,9 +220,12 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             updateHandler?(storedTile)
         }
         
-        try! storedTile?.managedObjectContext?.save()
+        try? storedTile?.managedObjectContext?.save()
     }
     
+    // MARK: - Children Tiles Handling
+    
+    // Open LinkView, link selected tile to left branch
     @IBAction func linkButtonOne(_ sender: Any) {
         let storyboard = UIStoryboard(name: "LinkView", bundle: nil)
         let linkView = storyboard.instantiateViewController(withIdentifier: "LinkView") as! LinkView
@@ -228,6 +239,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         self.navigationController?.pushViewController(linkView, animated: true)
     }
     
+    // Open LinkView, link selected tile to right branch
     @IBAction func linkButtonTwo(_ sender: Any) {
         let storyboard = UIStoryboard(name: "LinkView", bundle: nil)
         let linkView = storyboard.instantiateViewController(withIdentifier: "LinkView") as! LinkView
@@ -241,6 +253,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         self.navigationController?.pushViewController(linkView, animated: true)
     }
     
+    // Open new TileEditor, create new tile and link to left branch
     @IBAction func newButtonOne(_ sender: Any) {
         let storyboard = UIStoryboard(name: "TileEditor", bundle: nil)
         let editorView = storyboard.instantiateViewController(withIdentifier: "TileEditor") as! TileEditor
@@ -255,6 +268,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         self.navigationController?.pushViewController(editorView, animated: true)
     }
     
+    // Open new TileEditor, create new tile and link to right branch
     @IBAction func newButtonTwo(_ sender: Any) {
         let storyboard = UIStoryboard(name: "TileEditor", bundle: nil)
         let editorView = storyboard.instantiateViewController(withIdentifier: "TileEditor") as! TileEditor
@@ -269,6 +283,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         self.navigationController?.pushViewController(editorView, animated: true)
     }
     
+    // Open TileEditor to update currently linked left tile
     @IBAction func updateExistingOne(recognizer: UITapGestureRecognizer) {
         print("test")
         guard self.linkedTiles.0 != nil else {
@@ -280,13 +295,14 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         editorView.storedTile = self.linkedTiles.0
         editorView.updateHandler = {tile in
-            self.linkTextTwo.text = tile?.title
-            self.linkTextTwo.textColor = Color.primary
+            self.linkTextOne.text = tile?.title
+            self.linkTextOne.textColor = Color.primary
         }
         
         self.navigationController?.pushViewController(editorView, animated: true)
     }
     
+    // Open TileEditor to update currently linked right tile
     @IBAction func updateExistingTwo(recognizer: UITapGestureRecognizer) {
         guard self.linkedTiles.1 != nil else {
             return
@@ -304,24 +320,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         self.navigationController?.pushViewController(editorView, animated: true)
     }
     
-    @IBAction func imageAction(_ sender: Any) {
-        picker.allowsEditing = false
-        picker.sourceType = .photoLibrary
-        present(picker, animated:true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        shouldSaveImage = true
-        imageScene.image = info[.originalImage] as? UIImage
-        imageScene.contentMode = .scaleAspectFill
-        imageButton.setTitle("Change Image", for: .normal)
-        dismiss(animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
+    // MARK: - Tile Type Handling
 
     @IBAction func selectorUpdater(_ sender: Any) {
         
@@ -335,6 +334,7 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         }
     }
     
+    // Show/hide UI fields based on tile type
     func toggleBranches(_ toggle: Bool) {
         branchLabelOne.isHidden = toggle
         titleEntryOne.isHidden = toggle
@@ -354,6 +354,68 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         linkTextTwo.isHidden = toggle
         staticLabelTwo.isHidden = toggle
     }
+    
+    // MARK: - Image Handling
+    
+    @IBAction func imageAction(_ sender: Any) {
+        picker.allowsEditing = false
+        picker.sourceType = .photoLibrary
+        present(picker, animated:true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        dismiss(animated: true)
+        showCrop(image: info[.originalImage] as! UIImage)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    // Display CropViewController, called after image picker
+    func showCrop(image: UIImage) {
+        let cropVC = CropViewController(croppingStyle: .default, image: image)
+        cropVC.toolbarPosition = .top
+        
+        // Aspect ratio
+        cropVC.aspectRatioPreset = .presetCustom
+        cropVC.customAspectRatio = CGSize(width: 6.0, height: 5.0)
+        cropVC.aspectRatioLockEnabled = true
+        
+        // Done button
+        cropVC.doneButtonTitle = "Done"
+        cropVC.doneButtonColor = Color.primary
+        
+        // Cancel button
+        cropVC.cancelButtonTitle = "Cancel"
+        cropVC.cancelButtonColor = .systemRed
+        
+        cropVC.aspectRatioPickerButtonHidden = true
+        cropVC.resetAspectRatioEnabled = false
+     
+        cropVC.delegate = self
+        present(cropVC, animated: true)
+    }
+    
+    // Dismiss CropViewController if "Cancel" tapped
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true)
+    }
+    
+    // Send back image from CropViewController when "Done" button tapped
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        
+        shouldSaveImage = true
+        imageScene.image = image
+        imageScene.contentMode = .scaleAspectFill
+        imageButton.setTitle("Change Image", for: .normal)
+
+        cropViewController.dismiss(animated: true)
+
+    }
+    
+    // MARK: - Keyboard Handling
     
     func textFieldShouldReturn(_ textField:UITextField) -> Bool {
         textField.resignFirstResponder()

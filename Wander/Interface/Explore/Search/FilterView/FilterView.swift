@@ -29,17 +29,16 @@ class FilterView: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sortView.accessibilityIdentifier = "sortView"
-        tagView.accessibilityIdentifier = "tagView"
-        
-        sortView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
-        tagView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
-        
         sortView.delegate = self
         sortView.dataSource = self
+        sortView.accessibilityIdentifier = "sortView"
+        sortView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
         
         tagView.delegate = self
         tagView.dataSource = self
+        tagView.accessibilityIdentifier = "tagView"
+        tagView.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,6 +82,13 @@ class FilterView: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! TagCell
+        
+        if indexPath == selectedTag {
+            cell.setSelected()
+        } else {
+            cell.setUnselected()
+        }
+    
         cell.layer.cornerRadius = (collectionView.frame.height / 2) - 2 * cell.layer.borderWidth
 
         switch collectionView.accessibilityIdentifier {
@@ -122,10 +128,10 @@ class FilterView: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
         var prevSelected = outIndex
     
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.1) {
             if prevSelected != nil {
-                let prevCell = collectionView.cellForItem(at: prevSelected!) as! TagCell
-                prevCell.setUnselected()
+                let prevCell = collectionView.cellForItem(at: prevSelected!) as? TagCell
+                prevCell?.setUnselected()
             }
             
             let newCell = collectionView.cellForItem(at: indexPath) as! TagCell

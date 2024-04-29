@@ -18,7 +18,7 @@ private var storage = Storage.storage().reference()
 
 func storeAfterSignup(managedContext: NSManagedObjectContext, userInfo: User, username: String) -> StoredUser {
     let newUser = StoredUser(context: managedContext, username: username, id: userInfo.uid)
-    try! managedContext.save()
+    try? managedContext.save()
     return newUser
 }
 

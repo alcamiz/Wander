@@ -118,7 +118,7 @@ class GameView: UIViewController, UINavigationControllerDelegate {
             publishGameButton.setTitle("Unpublish", for: .normal)
             deleteGameButton.isHidden = true
         }
-        try! GlobalInfo.managedContext?.save()
+        try? GlobalInfo.managedContext?.save()
     }
     
     @IBAction func editInfo(_ sender: Any) {
