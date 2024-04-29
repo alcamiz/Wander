@@ -62,7 +62,7 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        // tile's image
+
         cell.tileCellImageView.image = currentTile.fetchImage()
 
         return cell

@@ -12,8 +12,7 @@ import CoreData
 import CropViewController
 
 
-class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate,
-                             UIImagePickerControllerDelegate, CropViewControllerDelegate {
+class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     var publishedGames: [FirebaseGame] = []
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var publishedGamesCollectionView: UICollectionView!
@@ -81,6 +80,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         game = publishedGames[indexPath.row]
         
         cell.titleLabel.text = game.name
+        cell.authorLabel.text = game.authorUsername
         cell.imageView.backgroundColor = .secondarySystemBackground
         cell.imageView.image = if game.image != nil {
             UIImage(data: game.image!)
@@ -100,21 +100,79 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         return UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 0)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! ExploreCell
+        
+        Task {
+            await UIView.animateKeyframes(withDuration: 0.1, delay: 0) {
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/2) {
+                    cell.alpha = 0.6
+                }
+                UIView.addKeyframe(withRelativeStartTime: 1/2, relativeDuration: 1/2) {
+                    cell.alpha = 1
+                }
+            }
+        }
+        
+        let storyboard = UIStoryboard(name: "GameScreen", bundle: nil)
+        let gameScreen = storyboard.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
+        gameScreen.infoGame = InfoGame(firebaseGame: publishedGames[indexPath.row])
+        
+        self.navigationController?.pushViewController(gameScreen, animated: true)
+    }
+    
     @IBAction func onLogOutPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
-            let users = (try? GlobalInfo.managedContext?.fetch(StoredUser.fetchRequest())) ?? []
-            for user in users {
-                GlobalInfo.managedContext?.delete(user)
-            }
             
-            try? GlobalInfo.managedContext?.save()
-            navigateToLandingPage()
+            // Create the alert controller
+            let alert = UIAlertController(title: "Confirm Log Out",
+                message: "This action will delete all non-published games. Are you sure you want to continue?",
+                preferredStyle: .alert)
+                    
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            alert.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: { [self] _ in
+                clearCoreData()
+                navigateToLandingPage()
+            }))
+                    
+            // Present the alert
+            self.present(alert, animated: true, completion: nil)
             
         } catch _ as NSError {
             print("error signing out")
         }
     }
+
+    func clearCoreData() {
+        let entities = ["StoredUser", "StoredTile", "StoredGame"]
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+
+        entities.forEach { entityName in
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            fetchRequest.returnsObjectsAsFaults = false
+
+            do {
+                let items = try context.fetch(fetchRequest)
+                for item in items {
+                    if let managedObject = item as? NSManagedObject {
+                        context.delete(managedObject)
+                    }
+                }
+            } catch let error {
+                print("Error fetching \(entityName): \(error)")
+            }
+        }
+
+        do {
+            try context.save()
+        } catch {
+            print("Error saving after deleting entities: \(error)")
+        }
+    }
+
     
     func navigateToLandingPage() {
         let storyboard = UIStoryboard(name: "LoginFlow", bundle: nil)
@@ -141,8 +199,9 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let updateAction = UIAlertAction(title: "Update", style: .default) { (_) in
-            if let newPassword = alertController.textFields?[0].text {
-                self.updatePassword(newPassword: newPassword)
+            if let oldPassword = alertController.textFields?[0].text,
+               let newPassword = alertController.textFields?[1].text {
+                self.updatePassword(oldPassword: oldPassword, newPassword: newPassword)
             }
         }
 
@@ -152,20 +211,57 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         present(alertController, animated: true, completion: nil)
     }
     
-    func updatePassword(newPassword: String) {
-
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            print("User not authenticated")
+    func updatePassword(oldPassword: String, newPassword: String) {
+        guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
+            print("User not authenticated or email not found")
             return
         }
 
-//        // Update in Firebase
-//        GlobalInfo.db.collection("users").document(currentUserID)
-//            .updateData(["username":newPassword])
-//        
-//        // Update in CoreData
-//        GlobalInfo.currentUser?.username = newPassword
-//        try? GlobalInfo.managedContext?.save()
+        // Re-authenticate the user
+        let credential = EmailAuthProvider.credential(withEmail: email, password: oldPassword)
+        currentUser.reauthenticate(with: credential) { [weak self] authResult, error in
+            if let error = error {
+                print("Re-authentication failed:", error)
+                return
+            }
+
+            // Proceed to update the password
+            currentUser.updatePassword(to: newPassword) { error in
+                if let error = error {
+                    print("Password update failed:", error)
+                    return
+                }
+
+                print("Password updated successfully")
+                
+                // Optionally, update the password in Firestore
+                //self?.updateFirestorePassword(userID: currentUser.uid, newPassword: newPassword)
+                
+                // Update CoreData
+                //self?.updateCoreDataPassword(newPassword: newPassword)
+            }
+        }
+    }
+
+    func updateFirestorePassword(userID: String, newPassword: String) {
+        // Assuming you might want to store other user-related settings, but normally you should NOT store passwords in Firestore
+        GlobalInfo.db.collection("users").document(userID).updateData(["password": newPassword]) { error in
+            if let error = error {
+                print("Failed to update password in Firestore:", error)
+            } else {
+                print("Firestore password updated successfully")
+            }
+        }
+    }
+
+    func updateCoreDataPassword(newPassword: String) {
+        //GlobalInfo.currentUser?.password = newPassword
+        do {
+            try GlobalInfo.managedContext?.save()
+            print("CoreData password updated successfully")
+        } catch {
+            print("Failed to save updated password in CoreData:", error)
+        }
     }
     
     @IBAction func onHelpGuidePressed(_ sender: Any) {
@@ -225,11 +321,14 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         
         // Done button
         cropVC.doneButtonTitle = "Done"
-        cropVC.doneButtonColor = .systemRed
+        cropVC.doneButtonColor = Color.primary
         
         // Cancel button
-        cropVC.cancelButtonTitle = "Back"
+        cropVC.cancelButtonTitle = "Cancel"
         cropVC.cancelButtonColor = .systemRed
+        
+        cropVC.aspectRatioPickerButtonHidden = true
+        cropVC.resetAspectRatioEnabled = false
      
         cropVC.delegate = self
         present(cropVC, animated: true)
