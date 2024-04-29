@@ -8,14 +8,13 @@
 import UIKit
 import CropViewController
 
-class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate, UITextFieldDelegate, CropViewControllerDelegate {
+class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ModifyGameTagsDelegate, UITextFieldDelegate, CropViewControllerDelegate {
     
     // Updateable UI fields
     @IBOutlet weak var imageScene: UIImageView!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var titleEntry: UITextField!
     @IBOutlet weak var descriptionEntry: UITextView!
-    @IBOutlet weak var tagDisplay: UICollectionView!
     @IBOutlet weak var tagButton: UIButton!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
@@ -65,16 +64,12 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         }
         tags = storedGame!.tags ?? []
         
-        if self.navigationController != nil {
-            saveButton = UIBarButtonItem(title: "Save")
-            self.navigationItem.rightBarButtonItem = saveButton
-            saveButton?.target = self
-            saveButton?.action = #selector(saveInfo)
-        }
-        
-        tagDisplay.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: self.cellId)
-        tagDisplay.delegate = self
-        tagDisplay.dataSource = self
+//        if self.navigationController != nil {
+//            saveButton = UIBarButtonItem(title: "Save")
+//            self.navigationItem.rightBarButtonItem = saveButton
+//            saveButton?.target = self
+//            saveButton?.action = #selector(saveInfo)
+//        }
         
         tagButton.setTitle("Edit Tags", for: .normal)
         tagButton.setTitleColor(.white, for: .normal)
@@ -93,10 +88,11 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
    }
    
    override func viewWillDisappear(_ animated: Bool) {
-      super.viewWillDisappear(animated)
+       super.viewWillDisappear(animated)
      
-      // removing all the notification observers
-      NotificationCenter.default.removeObserver(self)
+       // removing all the notification observers
+       NotificationCenter.default.removeObserver(self)
+       saveInfo()
    }
     
     @objc
@@ -105,7 +101,6 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         descriptionEntry.endEditing(true)
     }
     
-    @objc
     func saveInfo() {
         storedGame?.name = titleEntry.text
         storedGame?.desc = descriptionEntry.text
@@ -115,21 +110,10 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         storedGame?.tags = tags
         
         try? storedGame?.managedObjectContext?.save()
-        navigationController?.popViewController(animated: true)
+//        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Tag Handling
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tags.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.tagDisplay.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! TagCell
-        cell.labelView.text = tags[indexPath.row]
-        cell.layer.cornerRadius = (collectionView.frame.height / 2) - 2 * cell.layer.borderWidth
-        return cell
-    }
     
     // Open TagList to modify currently selected tags
     @IBAction func tagAction(_ sender: Any) {
@@ -145,7 +129,6 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     // Send back selected tags, called from TagList
     func setGameTags(newTags: [String]) {
         tags = newTags
-        tagDisplay.reloadData()
     }
     
     // MARK: - Image Handling
@@ -158,12 +141,12 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        dismiss(animated: true)
+        picker.dismiss(animated: true)
         showCrop(image: info[.originalImage] as! UIImage)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
+        picker.dismiss(animated: true)
     }
     
     // Set up ViewController for cropping image
@@ -229,6 +212,7 @@ class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
        updateViewWithKeyboard(notification: notification, viewBottomConstraint: self.bottomConstraint!, keyboardWillShow: false)
     }
     
+    // Note: Code modified from https://www.tutorialspoint.com/move-the-text-field-when-the-keyboard-appears-in-swift
     private func updateViewWithKeyboard(notification: NSNotification,
     viewBottomConstraint: NSLayoutConstraint,
     keyboardWillShow: Bool) {

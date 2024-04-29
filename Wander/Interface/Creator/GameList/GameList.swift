@@ -23,6 +23,7 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         allGamesTableView.delegate = self
         allGamesTableView.dataSource = self
+        allGamesTableView.register(UINib(nibName: "GameCell", bundle: nil), forCellReuseIdentifier: "gameCell")
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -37,7 +38,7 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         createNewGameButton.tintColor = .white
                 
         gameList = user?.fetchAllGames() ?? []
-        self.navigationItem.title = "Create"
+        self.navigationItem.title = "Game Creator"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,9 +53,26 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
-        let row = indexPath.row
-        cell.textLabel?.text = gameList[row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "gameCell", for: indexPath) as! GameCell
+    
+        let game = gameList[indexPath.row]
+        cell.titleLabel.text = game.name
+        
+        if game.fetchImage() == nil {
+            cell.imageScene.image = UIImage(systemName: "questionmark")
+            cell.imageScene.contentMode = .scaleAspectFit
+        } else {
+            cell.imageScene.image = game.fetchImage()
+            cell.imageScene.contentMode = .scaleAspectFill
+        }
+        
+        if game.published {
+            cell.statusLabel.text = "Published"
+            cell.statusLabel.textColor = Color.primary
+        } else {
+            cell.statusLabel.text = "Unpublished"
+            cell.statusLabel.textColor = .lightGray
+        }
         return cell
     }
     
@@ -84,6 +102,19 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [action])
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let gameIndex = indexPath.row
+        let idxPath = IndexPath(row: gameIndex, section: 0)
+        
+        let storyboard = UIStoryboard(name: "GameView", bundle: nil)
+        let gameView = storyboard.instantiateViewController(withIdentifier: "GameView") as! GameView
+        
+        gameView.game = gameList[gameIndex]
+        selectedGameIndex = idxPath
+        
+        self.navigationController?.pushViewController(gameView, animated: true)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let nextVC = segue.destination as? GameView {
@@ -101,11 +132,6 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     print("user is nil")
                 }
                 
-            } else if segue.identifier == "OpenGameSegue" {
-                let gameIndex = allGamesTableView.indexPathForSelectedRow?.row
-                let idxPath = IndexPath(row: gameIndex!, section: 0)
-                nextVC.game = gameList[gameIndex!]
-                selectedGameIndex = idxPath
             }
         }
     }
