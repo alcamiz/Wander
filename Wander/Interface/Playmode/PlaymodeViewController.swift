@@ -10,9 +10,7 @@ import UIKit
 class PlaymodeViewController: UIViewController {
     var game: StoredGame?
     var currentTile: StoredTile?
-    
-    //var currentTileID: UUID?
-    
+        
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tileImageView: UIImageView!
     @IBOutlet weak var tileTextView: UITextView!
@@ -32,12 +30,6 @@ class PlaymodeViewController: UIViewController {
             currentTile = game?.root
         }
         
-        /*else {
-            let alert = UIAlertController(title: "Invalid Game", message: "game is nil", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }*/
-        
         // Create a custom back button
         let exitGameButton = UIBarButtonItem(title: "Exit Game", style: .plain, target: nil, action: nil)
         exitGameButton.tintColor = .red
@@ -45,19 +37,11 @@ class PlaymodeViewController: UIViewController {
         // Set the custom back button for the previous view controller
         navigationController?.navigationBar.topItem?.backBarButtonItem = exitGameButton
 
-        //if let tileID = currentTile?.id {
-          //  displayTile(tileID: tileID)
-      //  }
         if (currentTile != nil) {
             displayTile(tile: currentTile)
         }
-        /*else {
-            let alert = UIAlertController(title: "Invalid Tile", message: "tile ID is nil", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            return
-        }*/
-            
+        
+        // Set up endTileView
         endTileView.backgroundColor = Color.secondary
         completeGameLabel.textColor = .white
         winButton.setTitleColor(Color.secondary, for: .normal)
@@ -66,8 +50,8 @@ class PlaymodeViewController: UIViewController {
         loseButton.setTitle("Try Again", for: .normal)
     }
     
+    // Displays contents of tile
     func displayTile(tile: StoredTile?) {
-        //currentTileID = tileID
         if game == nil {
             print("game is nil")
             return
@@ -78,26 +62,39 @@ class PlaymodeViewController: UIViewController {
             return
         }
         
+        // Set tile's title
         currentTile = tile
         titleLabel.text = currentTile!.title
-        tileImageView.image = currentTile!.fetchImage()
-        tileTextView.text = currentTile!.text
         
+        // Display tile's image, if any
+        tileImageView.image = currentTile!.fetchImage()
+        
+        // Display tile's text and make the TextView uneditable by user/player
+        tileTextView.text = currentTile!.text
+        tileTextView.isEditable = false
+        
+        // If the current tile is an end tile, display accordingly
         if currentTile!.type == TileType.win.rawValue || currentTile!.type == TileType.lose.rawValue {
+            // Hide button options (linked to other tiles)
             tileButton1.isHidden = true
             tileButton2.isHidden = true
+            // Display end tile view
             endTileView.isHidden = false
             
             if currentTile!.type == TileType.win.rawValue {
+                // Current tile is a win tile, set up win messages
                 displayWinTile()
             }
             else {
+                // Current tile is a lose tile, set up lose messages
                 displayLoseTile()
             }
         }
         else {
+            // Current tile links to other tiles, display linking buttons
             tileButton1.isHidden = false
             tileButton2.isHidden = false
+            
             // Button names are option desc for button1, button 2
             tileButton1.setTitle(currentTile!.leftButton, for: .normal)
             tileButton2.setTitle(currentTile!.rightButton, for: .normal)
@@ -105,6 +102,7 @@ class PlaymodeViewController: UIViewController {
         }
     }
     
+    // Set up win tile
     func displayWinTile() {
         if let currentGame = game {
             loseButton.isHidden = true
@@ -115,6 +113,7 @@ class PlaymodeViewController: UIViewController {
         }
     }
     
+    // Set up lose tile
     func displayLoseTile() {
         if let currentGame = game {
             loseButton.isHidden = false
@@ -125,14 +124,15 @@ class PlaymodeViewController: UIViewController {
         }
     }
     
+    // On win end tile. When button pressed, exit playmode screen
     @IBAction func winButtonPressed(_ sender: Any) {
-        
         if let navigationController = self.navigationController {
             // `PlayMode` is embedded in a navigation controller
             navigationController.popViewController(animated: true)
         }
     }
     
+    // On lose tile. When button pressed, redirect to beginning of game/root tile
     @IBAction func loseButtonPressed(_ sender: Any) {
         if let rootTile = game?.root {
             displayTile(tile: rootTile)
@@ -142,28 +142,25 @@ class PlaymodeViewController: UIViewController {
         }
     }
     
+    // On in-between tile. When button pressed, redirect to tile associated with first child
     @IBAction func button1Pressed(_ sender: Any) {
         guard let displayedTile = currentTile else {
-            print("current is nil")
             return
         }
         guard let leftTile = displayedTile.leftTile else {
-            print("left child is nil")
             return
         }
-        displayTile(tile: leftTile)//currentTile?.leftTile)
+        displayTile(tile: leftTile)
     }
     
+    // On in-between tile. When button pressed, redirect to tile associated with second child
     @IBAction func button2Pressed(_ sender: Any) {
         guard let displayedTile = currentTile else {
-            print("current is nil")
             return
         }
         guard let rightTile = displayedTile.rightTile else {
-            print("right child is nil")
             return
         }
         displayTile(tile: rightTile)
-//        displayTile(tile: currentTile?.rightTile)
     }
 }
