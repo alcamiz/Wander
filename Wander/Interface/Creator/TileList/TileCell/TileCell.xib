@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,6 +20,7 @@
                         <rect key="frame" x="10" y="10" width="105" height="105"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="pxU-GK-fqE" secondAttribute="height" multiplier="1:1" id="AhY-Ns-TVn"/>
+                            <constraint firstAttribute="width" constant="105" id="dg3-IH-OkA"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tFC-sx-jDu">
@@ -33,16 +33,16 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ajs-8b-q3d">
-                        <rect key="frame" x="374" y="53.666666666666664" width="80" height="17.999999999999993"/>
+                        <rect key="frame" x="354" y="53.666666666666664" width="100" height="17.999999999999993"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="AgT-YX-ULh"/>
+                            <constraint firstAttribute="width" constant="100" id="AgT-YX-ULh"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HuB-yB-PvY">
-                        <rect key="frame" x="132" y="131" width="90" height="17"/>
+                        <rect key="frame" x="112" y="131" width="90" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="90" id="tfR-87-rvq"/>
                         </constraints>
@@ -51,7 +51,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAR-l6-qB3">
-                        <rect key="frame" x="252" y="131" width="90" height="17"/>
+                        <rect key="frame" x="272" y="131" width="90" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -62,14 +62,14 @@
                     <constraint firstAttribute="bottom" secondItem="HuB-yB-PvY" secondAttribute="bottom" constant="16" id="4mC-K6-V3S"/>
                     <constraint firstItem="tFC-sx-jDu" firstAttribute="leading" secondItem="pxU-GK-fqE" secondAttribute="trailing" constant="20" id="5qm-F6-0Wi"/>
                     <constraint firstItem="HuB-yB-PvY" firstAttribute="top" secondItem="pxU-GK-fqE" secondAttribute="bottom" constant="16" id="Fjx-kr-ZAv"/>
-                    <constraint firstItem="cAR-l6-qB3" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="60" id="Iiy-s7-UvH"/>
+                    <constraint firstItem="cAR-l6-qB3" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="80" id="Iiy-s7-UvH"/>
                     <constraint firstAttribute="trailing" secondItem="Ajs-8b-q3d" secondAttribute="trailing" constant="20" symbolic="YES" id="Kgd-FA-oxY"/>
                     <constraint firstAttribute="bottom" secondItem="cAR-l6-qB3" secondAttribute="bottom" constant="16" id="MwU-9V-HZm"/>
                     <constraint firstItem="pxU-GK-fqE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Teh-lm-NKc"/>
                     <constraint firstItem="Ajs-8b-q3d" firstAttribute="centerY" secondItem="pxU-GK-fqE" secondAttribute="centerY" id="XHW-Xw-l96"/>
                     <constraint firstItem="HuB-yB-PvY" firstAttribute="width" secondItem="cAR-l6-qB3" secondAttribute="width" id="oBq-cy-uhv"/>
                     <constraint firstItem="pxU-GK-fqE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="sh8-UO-uW9"/>
-                    <constraint firstItem="HuB-yB-PvY" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-60" id="zZT-GY-2IV"/>
+                    <constraint firstItem="HuB-yB-PvY" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-80" id="zZT-GY-2IV"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

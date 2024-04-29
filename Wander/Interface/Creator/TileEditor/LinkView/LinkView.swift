@@ -40,13 +40,13 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         // tile's type
         if currentTile.getType().rawValue == TileType.root.rawValue {
-            cell.typeLabel.text = "ORIGIN TILE"
+            cell.typeLabel.text = "ORIGIN"
         }
         else if currentTile.getType().rawValue == TileType.win.rawValue {
-            cell.typeLabel.text = "WIN TILE"
+            cell.typeLabel.text = "WIN"
         }
         else if currentTile.getType().rawValue == TileType.lose.rawValue {
-            cell.typeLabel.text = "LOSE TILE"
+            cell.typeLabel.text = "LOSE"
         }
         
         // tile's children (NOT for end tiles)
@@ -56,14 +56,26 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if let firstChild = tileChildren[0] {
                 cell.firstLinkLabel.text = firstChild.title!
             }
+            else {
+                cell.firstLinkLabel.text = "No first link"
+            }
             // set second child
             if let secondChild = tileChildren[1] {
                 cell.secondLinkLabel.text = secondChild.title!
             }
+            else {
+                cell.firstLinkLabel.text = "No second link"
+            }
         }
-        
 
-        cell.tileCellImageView.image = currentTile.fetchImage()
+        // display tile's image
+        let currentTileImage = currentTile.fetchImage()
+        if currentTileImage != nil {
+            cell.tileCellImageView.image = currentTileImage
+        }
+        else {
+            cell.tileCellImageView.image = UIImage(systemName: "questionmark")
+        }
 
         return cell
     }
