@@ -156,7 +156,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
 //        
 //        // Update in CoreData
 //        GlobalInfo.currentUser?.username = newPassword
-//        try! GlobalInfo.managedContext?.save()
+//        try? GlobalInfo.managedContext?.save()
     }
     
     @IBAction func onHelpGuidePressed(_ sender: Any) {
@@ -256,7 +256,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
             profilePictureImageView.image = UIImage(data: compressedData)
             
             GlobalInfo.currentUser?.picture = compressedData
-            try! GlobalInfo.managedContext?.save()
+            try? GlobalInfo.managedContext?.save()
             
             let imagePathRef = GlobalInfo.storage.child("userProfiles/\(userID).jpeg")
             let _ = imagePathRef.putData(compressedData, metadata: nil)

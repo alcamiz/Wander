@@ -1,14 +1,16 @@
 //
-//  EditForm.swift
+//  GameEditor.swift
 //  Wander
 //
 //  Created by Alex Cabrera on 4/14/24.
 //
 
 import UIKit
+import CropViewController
 
-class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate {
+class GameEditor: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, ModifyGameTagsDelegate, UITextFieldDelegate, UITextViewDelegate, CropViewControllerDelegate {
     
+    // Updateable UI fields
     @IBOutlet weak var imageScene: UIImageView!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var titleEntry: UITextField!
@@ -47,6 +49,9 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         imageScene.clipsToBounds = true
         imageScene.tintColor = .lightGray
         
+        titleEntry.delegate = self
+        descriptionEntry.delegate = self
+        
         if storedGame!.name != nil && storedGame!.name!.count != 0 {
             titleEntry.text = storedGame!.name!
         }
@@ -55,7 +60,6 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             descriptionEntry.text = storedGame!.desc!
         }
         tags = storedGame!.tags ?? []
-//        tags = GlobalInfo.tagList // TODO: Change with proper list for final
         
         if self.navigationController != nil {
             saveButton = UIBarButtonItem(title: "Save")
@@ -82,23 +86,13 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         if shouldSaveImage {
             storedGame?.image = imageScene.image?.jpegData(compressionQuality: 0.9)
         }
+        storedGame?.tags = tags
         
-        try! storedGame?.managedObjectContext?.save()
+        try? storedGame?.managedObjectContext?.save()
         navigationController?.popViewController(animated: true)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        shouldSaveImage = true
-        imageScene.image = info[.originalImage] as? UIImage
-        imageScene.contentMode = .scaleAspectFill
-        imageButton.setTitle("Change Image", for: .normal)
-        dismiss(animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
+    // MARK: - Tag Handling
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tags.count
@@ -111,41 +105,89 @@ class EditForm: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         return cell
     }
     
+    // Open TagList to modify currently selected tags
+    @IBAction func tagAction(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "TagView", bundle: nil)
+        let tagView = storyboard.instantiateViewController(withIdentifier: "tagViewController") as! TagViewController
+        
+        tagView.delegate = self
+        tagView.currentTags = tags
+        
+        self.navigationController?.pushViewController(tagView, animated: true)
+    }
+    
+    // Send back selected tags, called from TagList
+    func setGameTags(newTags: [String]) {
+        tags = newTags
+        tagDisplay.reloadData()
+    }
+    
+    // MARK: - Image Handling
+    
     @IBAction func changeImage(_ sender: Any) {
         picker.allowsEditing = false
         picker.sourceType = .photoLibrary
         present(picker, animated:true)
     }
     
-    @IBAction func tagAction(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "TagView", bundle: nil)
-        let tagView = storyboard.instantiateViewController(withIdentifier: "tagViewController") as! TagViewController
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        tagView.delegate = self
-        tagView.currentTags = storedGame?.tags
-        
-        self.navigationController?.pushViewController(tagView, animated: true)
+        dismiss(animated: true)
+        showCrop(image: info[.originalImage] as! UIImage)
     }
     
-    func setGameTags(newTags: [String]) {
-        if storedGame != nil {
-            storedGame!.tags = newTags.map { $0 }
-            tags = storedGame!.tags ?? []
-            tagDisplay.reloadData()
-        }
-        else {
-            print("storedGame is nil when trying to set tags")
-        }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // Set up ViewController for cropping image
+    func showCrop(image: UIImage) {
+        let cropVC = CropViewController(croppingStyle: .default, image: image)
+        cropVC.toolbarPosition = .top
+        
+        // Aspect ratio
+        cropVC.aspectRatioPreset = .presetSquare
+        cropVC.aspectRatioLockEnabled = true
+        
+        // Done button
+        cropVC.doneButtonTitle = "Done"
+        cropVC.doneButtonColor = Color.primary
+        
+        // Cancel button
+        cropVC.cancelButtonTitle = "Cancel"
+        cropVC.cancelButtonColor = .systemRed
+        
+        cropVC.aspectRatioPickerButtonHidden = true
+        cropVC.resetAspectRatioEnabled = false
+     
+        cropVC.delegate = self
+        present(cropVC, animated: true)
     }
-    */
+    
+    // Dismiss CropViewController if "Cancel" tapped
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true)
+    }
+    
+    // When "Done" tapped, dismiss CropViewController and update imageView and selectedImage
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        
+        shouldSaveImage = true
+        imageScene.image = image
+        imageScene.contentMode = .scaleAspectFill
+        imageButton.setTitle("Change Image", for: .normal)
 
+        cropViewController.dismiss(animated: true)
+    }
+    
+    // MARK: - Keyboard Handling
+
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }

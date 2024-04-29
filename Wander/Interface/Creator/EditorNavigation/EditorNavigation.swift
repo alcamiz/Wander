@@ -15,9 +15,9 @@ class EditorNavigation: UINavigationController {
         let navAppearance = UINavigationBarAppearance()
         navAppearance.configureWithOpaqueBackground()
         navAppearance.backgroundColor = Color.secondary
-        navAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        navAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navAppearance.titleTextAttributes = [.foregroundColor: Color.complementary]
+        navAppearance.largeTitleTextAttributes = [.foregroundColor: Color.complementary]
+        navAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: Color.primary]
 
         self.navigationBar.standardAppearance = navAppearance
         self.navigationBar.scrollEdgeAppearance = navAppearance

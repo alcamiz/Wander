@@ -48,7 +48,7 @@ public class FirebaseGame: Codable, ImageableFirebase {
         for i in 0...storedTiles.count-1 {
             storedTiles[i].initializeOptions(webVersion: firebaseTiles[i])
         }
-        try! storedGame.managedObjectContext!.save()
+        try? storedGame.managedObjectContext!.save()
         
         var downloadCount = 0
         for i in 0...storedTiles.count - 1 {
@@ -56,7 +56,7 @@ public class FirebaseGame: Codable, ImageableFirebase {
                 storedTiles[i].image = data
                 downloadCount += 1
                 if (downloadCount == storedTiles.count) {
-                    try! storedGame.managedObjectContext!.save()
+                    try? storedGame.managedObjectContext!.save()
                 }
             }
         }
@@ -67,7 +67,7 @@ public class FirebaseGame: Codable, ImageableFirebase {
         let game = StoredGame(webVersion: self, managedContext: managedContext)
         await downloadTiles(game)
         game.root = game.fetchTile(tileID: UUID(uuidString: self.root)!)
-        try! managedContext.save()
+        try? managedContext.save()
         return game
     }
     
