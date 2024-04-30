@@ -23,41 +23,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8U-z3-Ql7">
-                                <rect key="frame" x="26.666666666666671" y="518.33333333333337" width="160" height="98"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Playtest"/>
-                                <connections>
-                                    <segue destination="7qm-Yy-dDP" kind="show" identifier="PlaytestGameSegue" id="AH2-w7-S4x"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dmo-Gu-gKN">
-                                <rect key="frame" x="206.66666666666663" y="518.33333333333337" width="160" height="98"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Edit"/>
-                                <connections>
-                                    <segue destination="rIP-k9-ZWu" kind="show" identifier="EditGameSegue" id="F3I-RW-sJX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C7T-bV-ytc">
-                                <rect key="frame" x="26.666666666666671" y="626.33333333333337" width="160" height="97.666666666666629"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Publish"/>
-                                <connections>
-                                    <action selector="publishButtonPressed:" destination="rTk-Zp-AoY" eventType="touchUpInside" id="LTT-RM-3vf"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfc-MZ-ITX">
-                                <rect key="frame" x="206.66666666666663" y="626.33333333333337" width="160" height="97.666666666666629"/>
-                                <color key="tintColor" systemColor="systemGray6Color"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Delete">
-                                    <color key="baseBackgroundColor" systemColor="systemPinkColor"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="deleteGameButtonPressed:" destination="rTk-Zp-AoY" eventType="touchUpInside" id="jSV-tF-fhl"/>
-                                </connections>
-                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hwx-08-fPK">
                                 <rect key="frame" x="56.666666666666657" y="173.33333333333337" width="280" height="280"/>
                                 <constraints>
@@ -65,32 +30,51 @@
                                     <constraint firstAttribute="height" constant="280" id="upg-2O-Pbs"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zaa-3s-xiU">
+                                <rect key="frame" x="30" y="523.33333333333337" width="156.66666666666666" height="55.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="PlayTest"/>
+                                <connections>
+                                    <segue destination="7qm-Yy-dDP" kind="show" identifier="PlaytestGameSegue" id="UGA-dv-82P"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqe-K1-wSM">
+                                <rect key="frame" x="206.66666666666663" y="523.33333333333337" width="156.33333333333337" height="55.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Construct"/>
+                                <connections>
+                                    <segue destination="rIP-k9-ZWu" kind="show" identifier="EditGameSegue" id="nPg-ci-bpc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyC-9G-sCd">
+                                <rect key="frame" x="118.33333333333333" y="593.66666666666663" width="156.33333333333337" height="55.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Publish"/>
+                                <connections>
+                                    <action selector="publishButtonPressed:" destination="rTk-Zp-AoY" eventType="touchUpInside" id="ucl-yx-Bbw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Lrp-LK-OQo"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="B8U-z3-Ql7" firstAttribute="centerX" secondItem="1XQ-lk-vVs" secondAttribute="centerX" constant="-90" id="0OF-yH-W9e"/>
-                            <constraint firstItem="cfc-MZ-ITX" firstAttribute="height" secondItem="B8U-z3-Ql7" secondAttribute="height" id="4bQ-2O-lme"/>
-                            <constraint firstItem="cfc-MZ-ITX" firstAttribute="centerX" secondItem="1XQ-lk-vVs" secondAttribute="centerX" constant="90" id="9jQ-Un-mNK"/>
-                            <constraint firstItem="cfc-MZ-ITX" firstAttribute="width" secondItem="B8U-z3-Ql7" secondAttribute="width" id="Ddu-cE-SEs"/>
-                            <constraint firstItem="C7T-bV-ytc" firstAttribute="centerX" secondItem="1XQ-lk-vVs" secondAttribute="centerX" constant="-90" id="Fhd-tK-odl"/>
+                            <constraint firstItem="xyC-9G-sCd" firstAttribute="width" secondItem="Zaa-3s-xiU" secondAttribute="width" id="1i7-gU-Lq1"/>
+                            <constraint firstItem="sqe-K1-wSM" firstAttribute="leading" secondItem="Zaa-3s-xiU" secondAttribute="trailing" constant="20" id="AZr-Hf-QUZ"/>
                             <constraint firstItem="eyv-As-zYb" firstAttribute="leading" secondItem="Lrp-LK-OQo" secondAttribute="leading" constant="20" id="JJu-ws-ejw"/>
-                            <constraint firstItem="Dmo-Gu-gKN" firstAttribute="centerX" secondItem="1XQ-lk-vVs" secondAttribute="centerX" constant="90" id="K3H-2I-GLL"/>
+                            <constraint firstItem="Lrp-LK-OQo" firstAttribute="bottom" secondItem="xyC-9G-sCd" secondAttribute="bottom" constant="120" id="KPv-ug-2qB"/>
                             <constraint firstItem="Lrp-LK-OQo" firstAttribute="trailing" secondItem="eyv-As-zYb" secondAttribute="trailing" constant="20" id="L8n-MN-dzb"/>
-                            <constraint firstItem="C7T-bV-ytc" firstAttribute="width" secondItem="B8U-z3-Ql7" secondAttribute="width" id="R94-0O-mSl"/>
-                            <constraint firstItem="cfc-MZ-ITX" firstAttribute="top" secondItem="Dmo-Gu-gKN" secondAttribute="bottom" constant="10" id="Tyt-SJ-CYf"/>
+                            <constraint firstItem="xyC-9G-sCd" firstAttribute="height" secondItem="Zaa-3s-xiU" secondAttribute="height" id="MfY-OV-zYN"/>
+                            <constraint firstItem="xyC-9G-sCd" firstAttribute="top" secondItem="Zaa-3s-xiU" secondAttribute="bottom" constant="15" id="PxN-kN-ik1"/>
                             <constraint firstItem="hwx-08-fPK" firstAttribute="centerX" secondItem="1XQ-lk-vVs" secondAttribute="centerX" id="WWP-fV-Kpf"/>
-                            <constraint firstItem="Lrp-LK-OQo" firstAttribute="bottom" secondItem="C7T-bV-ytc" secondAttribute="bottom" constant="45" id="c9i-9u-ehD"/>
                             <constraint firstItem="eyv-As-zYb" firstAttribute="top" secondItem="Lrp-LK-OQo" secondAttribute="top" constant="25" id="cXi-IH-e51"/>
-                            <constraint firstItem="Dmo-Gu-gKN" firstAttribute="top" secondItem="hwx-08-fPK" secondAttribute="bottom" constant="65" id="fFC-nt-Mpw"/>
-                            <constraint firstItem="Dmo-Gu-gKN" firstAttribute="width" secondItem="B8U-z3-Ql7" secondAttribute="width" id="hos-NG-Axw"/>
-                            <constraint firstItem="Dmo-Gu-gKN" firstAttribute="leading" secondItem="B8U-z3-Ql7" secondAttribute="trailing" constant="20" id="j7z-J2-Mah"/>
-                            <constraint firstItem="Dmo-Gu-gKN" firstAttribute="height" secondItem="B8U-z3-Ql7" secondAttribute="height" id="n9g-GO-sAC"/>
-                            <constraint firstItem="C7T-bV-ytc" firstAttribute="height" secondItem="B8U-z3-Ql7" secondAttribute="height" id="oFm-K8-JqQ"/>
-                            <constraint firstItem="Lrp-LK-OQo" firstAttribute="bottom" secondItem="cfc-MZ-ITX" secondAttribute="bottom" constant="45" id="qL9-hJ-K63"/>
+                            <constraint firstItem="Zaa-3s-xiU" firstAttribute="top" secondItem="hwx-08-fPK" secondAttribute="bottom" constant="70" id="cwX-an-dUK"/>
+                            <constraint firstItem="Lrp-LK-OQo" firstAttribute="trailing" secondItem="sqe-K1-wSM" secondAttribute="trailing" constant="30" id="f8f-U7-3nq"/>
+                            <constraint firstItem="sqe-K1-wSM" firstAttribute="centerY" secondItem="Zaa-3s-xiU" secondAttribute="centerY" id="jj5-fg-ejk"/>
+                            <constraint firstItem="sqe-K1-wSM" firstAttribute="width" secondItem="Zaa-3s-xiU" secondAttribute="width" id="lOv-qU-ZTl"/>
+                            <constraint firstItem="Zaa-3s-xiU" firstAttribute="leading" secondItem="Lrp-LK-OQo" secondAttribute="leading" constant="30" id="rO6-Op-tCF"/>
+                            <constraint firstItem="xyC-9G-sCd" firstAttribute="centerX" secondItem="1XQ-lk-vVs" secondAttribute="centerX" id="sEn-cb-usO"/>
                             <constraint firstItem="hwx-08-fPK" firstAttribute="top" secondItem="eyv-As-zYb" secondAttribute="bottom" constant="25" id="tIi-m9-GHl"/>
-                            <constraint firstItem="C7T-bV-ytc" firstAttribute="top" secondItem="B8U-z3-Ql7" secondAttribute="bottom" constant="10" id="u1S-Sk-wWR"/>
-                            <constraint firstItem="B8U-z3-Ql7" firstAttribute="top" secondItem="hwx-08-fPK" secondAttribute="bottom" constant="65" id="xht-BG-gzc"/>
+                            <constraint firstItem="sqe-K1-wSM" firstAttribute="height" secondItem="Zaa-3s-xiU" secondAttribute="height" id="txe-q4-uBf"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="RzB-GU-jye">
@@ -103,12 +87,11 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="deleteGameButton" destination="cfc-MZ-ITX" id="FdZ-7G-UAO"/>
-                        <outlet property="editGameButton" destination="Dmo-Gu-gKN" id="aZb-B5-Ruo"/>
+                        <outlet property="editGameButton" destination="sqe-K1-wSM" id="jcI-op-QA5"/>
                         <outlet property="gameImageView" destination="hwx-08-fPK" id="Q4j-qP-pl5"/>
                         <outlet property="gameTitleLabel" destination="eyv-As-zYb" id="ae9-dQ-pi1"/>
-                        <outlet property="playtestGameButton" destination="B8U-z3-Ql7" id="l8V-et-IoM"/>
-                        <outlet property="publishGameButton" destination="C7T-bV-ytc" id="4HA-rv-Klq"/>
+                        <outlet property="playtestGameButton" destination="Zaa-3s-xiU" id="J2e-k1-Cwa"/>
+                        <outlet property="publishGameButton" destination="xyC-9G-sCd" id="ck6-Lf-nwa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QBd-1s-UVj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -139,12 +122,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

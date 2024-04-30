@@ -77,29 +77,54 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "Delete") { action, view, handler in
-            
-            let deleteAlertVC = UIAlertController(
-                title: "Are you sure?",
-                message: "If you delete the game \"\(self.gameList[indexPath.row].name!)\", it cannot be undone.",
-                preferredStyle: .alert)
-            
-            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-                (alert) in
-                _ = self.user?.deleteGame(game: self.gameList[indexPath.row])
-                self.gameList.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                handler(true)
-            })
-            deleteAlertVC.addAction(deleteAction)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-            deleteAlertVC.addAction(cancelAction)
-            
-            self.present(deleteAlertVC, animated: true)
-            
+        
+        let game = self.gameList[indexPath.row]
+        var action: UIContextualAction?
+        
+        if game.published {
+            action = UIContextualAction(style: .destructive, title: "Delete") { action, view, handler in
+                
+                let deleteAlertVC = UIAlertController(
+                    title: "Notice",
+                    message: "A game needs to be unpublished before it can be deleted",
+                    preferredStyle: .alert)
+                
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel)
+                deleteAlertVC.addAction(cancelAction)
+                
+                self.present(deleteAlertVC, animated: true)
+                
+            }
+        } else {
+            action = UIContextualAction(style: .destructive, title: "Delete") { action, view, handler in
+                
+                let deleteAlertVC = UIAlertController(
+                    title: "Are you sure?",
+                    message: "If you delete the game \"\(self.gameList[indexPath.row].name!)\", it cannot be undone.",
+                    preferredStyle: .alert)
+                
+                let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                    (alert) in
+                    _ = self.user?.deleteGame(game: self.gameList[indexPath.row])
+                    self.gameList.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    handler(true)
+                })
+                deleteAlertVC.addAction(deleteAction)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                deleteAlertVC.addAction(cancelAction)
+                
+                self.present(deleteAlertVC, animated: true)
+                
+            }
         }
-        return UISwipeActionsConfiguration(actions: [action])
+        
+        if action != nil {
+            return UISwipeActionsConfiguration(actions: [action!])
+        } else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

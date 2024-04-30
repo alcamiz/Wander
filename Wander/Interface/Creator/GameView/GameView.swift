@@ -26,7 +26,6 @@ class GameView: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var playtestGameButton: UIButton!
     @IBOutlet weak var editGameButton: UIButton!
     @IBOutlet weak var publishGameButton: UIButton!
-    @IBOutlet weak var deleteGameButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,19 +35,26 @@ class GameView: UIViewController, UINavigationControllerDelegate {
         gameImageView.layer.cornerRadius = 12
         gameImageView.clipsToBounds = true
         
-        playtestGameButton.backgroundColor = Color.primary
-        editGameButton.backgroundColor = Color.primary
+        playtestGameButton.layer.cornerRadius = 10
+        playtestGameButton.clipsToBounds = true
+        playtestGameButton.backgroundColor = .systemGray5
+        playtestGameButton.tintColor = Color.primary
         
-        playtestGameButton.tintColor = .white
-        editGameButton.tintColor = .white
-        publishGameButton.tintColor = .white
+        editGameButton.layer.cornerRadius = 10
+        editGameButton.clipsToBounds = true
+        editGameButton.backgroundColor = .systemGray5
+        editGameButton.tintColor = Color.primary
+        
+        publishGameButton.layer.cornerRadius = 10
+        publishGameButton.clipsToBounds = true
         
         if game.published {
             publishGameButton.setTitle("Unpublish", for: .normal)
             publishGameButton.backgroundColor = Color.systemPink
-            deleteGameButton.isHidden = true
+            publishGameButton.tintColor = .white
         } else {
-            publishGameButton.backgroundColor = Color.primary
+            publishGameButton.backgroundColor = .systemGray5
+            publishGameButton.tintColor = Color.primary
         }
     }
     
@@ -63,30 +69,6 @@ class GameView: UIViewController, UINavigationControllerDelegate {
             gameImageView.image = game.fetchImage()
             gameImageView.contentMode = .scaleAspectFill
         }
-    }
-    
-    @IBAction func deleteGameButtonPressed(_ sender: Any) {
-        if game.published {
-            
-        } else {
-            let deleteAlertVC = UIAlertController(
-                title: "Are you sure?",
-                message: "If you delete the game \"\(self.game.name!)\", it cannot be undone.",
-                preferredStyle: .alert)
-            
-            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-                (alert) in
-                self.delegate.deleteGame(game: self.game)
-                self.navigationController?.popViewController(animated: true)
-            })
-            deleteAlertVC.addAction(deleteAction)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-            deleteAlertVC.addAction(cancelAction)
-            
-            present(deleteAlertVC, animated: true)
-        }
-       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -108,15 +90,15 @@ class GameView: UIViewController, UINavigationControllerDelegate {
     @IBAction func publishButtonPressed(_ sender: Any) {
         if game.published {
             publishGameButton.setTitle("Publish", for: .normal)
-            publishGameButton.backgroundColor = Color.primary
-            deleteGameButton.isHidden = false
+            publishGameButton.backgroundColor = .systemGray5
+            publishGameButton.tintColor = Color.primary
             game.unpublish()
             
         } else {
             game.uploadToFirebase(db, storage)
             publishGameButton.backgroundColor = Color.systemPink
+            publishGameButton.tintColor = .white
             publishGameButton.setTitle("Unpublish", for: .normal)
-            deleteGameButton.isHidden = true
         }
         try? GlobalInfo.managedContext?.save()
     }
