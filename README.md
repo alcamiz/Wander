@@ -44,6 +44,22 @@ Beta
     * Dealt with asynchronous functions 
 * Downloading Games to Core Data
 
+Final
+* Refactored Core Data models
+    * Made the game structure an explicit binary tree (each tile has 2 children, rather than an array)
+    * Removed the option class and unnecessary DateTime fields
+    * Added fields for advanced queries, i.e. a publishedOn Date field to StoredGame, along with liking/disliking information
+* Improved downloading of games, tiles, and users
+    * StoredUsers attached to downloaded StoredGames
+* Liking and dislking games
+    * GameScreen UI
+    * New data structure in the users Firestore collection 
+* Firebase query: sorting games by published date and number of likes
+* Firebase query: filtering games by tags
+* Firebase query: searching for games by author's username
+* Allowing users to see published games after signing back in, after core data has been cleared
+* JPEG images instead of PNG (slightly improves download speeds)
+
 #### Alex Cabrera (Release 25%, Overall 25%)
 
 * Alpha:
