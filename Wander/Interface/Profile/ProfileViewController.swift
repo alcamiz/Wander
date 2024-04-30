@@ -10,7 +10,10 @@ import UIKit
 import FirebaseAuth
 import CoreData
 import CropViewController
-
+import FirebaseCore
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseStorage
 
 class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     var publishedGames: [FirebaseGame] = []
@@ -47,7 +50,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         usernameLabel.textColor = .gray
 
     }
-    
+        
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2
@@ -57,6 +60,17 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         //publishedGames
         guard let userID = GlobalInfo.currentUser?.id else {return}
         Task {
+            let tUser = try await Firestore.firestore().collection("users").document(GlobalInfo.currentUser!.id!).getDocument(as: FirebaseUser.self)
+            usernameLabel.text = tUser.username
+            
+            let tRef = GlobalInfo.storage.child("userProfiles/\(GlobalInfo.currentUser!.id!).jpeg")
+            tRef.getData(maxSize: (5 * 1024 * 1024)) { (data, error) in
+                if error == nil && data != nil {
+                    self.profilePictureImageView.image = UIImage(data: data!)
+                    self.pfpLabel.isHidden = true
+                }
+            }
+            
             publishedGames = await FirebaseHelper.gamesByAuthor(userID: userID)
             publishedGamesCollectionView.reloadData()
             FirebaseHelper.loadPictures(imageList: publishedGames, basepath: "gamePreviews") { (index, data) in

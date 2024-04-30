@@ -53,10 +53,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if (error as NSError?) != nil {
                     self.showAlert(message: "Invalid username or password")
                 } else {
-                    Task {
-                        await storeAfterLogin(managedContext: GlobalInfo.managedContext!, userInfo: authResult!.user)
-                        self.performSegue(withIdentifier: "SuccessfulLoginSegue", sender: nil)
-                    }
+                    let user = StoredUser(context: GlobalInfo.managedContext!, username: "", id: authResult?.user.uid ?? "000000")
+                    try? GlobalInfo.managedContext!.save()
+                    self.performSegue(withIdentifier: "SuccessfulLoginSegue", sender: nil)
+//                    Task {
+//                        await storeAfterLogin(managedContext: GlobalInfo.managedContext!, userInfo: authResult!.user)
+//                        self.performSegue(withIdentifier: "SuccessfulLoginSegue", sender: nil)
+//                    }
                 }
             }
         } else {
