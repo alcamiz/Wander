@@ -15,7 +15,7 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var linkTitle: String!
     var tileList:[StoredTile] = []
     
-    var textCellIdentifier = "TileCell"
+    var textCellIdentifier = "NewCell"
     var parentTile:StoredTile?
     
     override func viewDidLoad() {
@@ -23,6 +23,7 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         allTilesTableView.delegate = self
         allTilesTableView.dataSource = self
         tileList = parentTile?.game?.fetchAllTiles() ?? []
+        allTilesTableView.register(UINib(nibName: "NewCell", bundle: nil), forCellReuseIdentifier: "NewCell")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -31,52 +32,42 @@ class LinkView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Display TableView in form of TileCells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TileCell", for: indexPath) as! TileCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as! NewCell
         let row = indexPath.row
         let currentTile = tileList[row]
         
         // tile's title (for origin tile and end tiles)
-        cell.titleLabel.text = currentTile.title!
+        if currentTile.title == nil || currentTile.title?.count == 0 {
+            cell.titleLabel.text = "Untitled"
+        } else {
+            cell.titleLabel.text = currentTile.title!
+        }
         
         // tile's type
-        if currentTile.getType().rawValue == TileType.root.rawValue {
-            cell.typeLabel.text = "ORIGIN"
+        if currentTile.getType() == TileType.root {
+            cell.statusLabel.text = "Origin Tile"
         }
-        else if currentTile.getType().rawValue == TileType.win.rawValue {
-            cell.typeLabel.text = "WIN"
+        else if currentTile.getType() == TileType.win {
+            cell.statusLabel.text = "Win Tile"
         }
-        else if currentTile.getType().rawValue == TileType.lose.rawValue {
-            cell.typeLabel.text = "LOSE"
+        else if currentTile.getType() == TileType.lose {
+            cell.statusLabel.text = "Lose Tile"
         }
-        
-        // tile's children (NOT for end tiles)
-        if currentTile.getType().rawValue != TileType.win.rawValue && currentTile.getType().rawValue != TileType.lose.rawValue {
-            let tileChildren = currentTile.fetchAllChildren()
-            // set first child
-            if let firstChild = tileChildren[0] {
-                cell.firstLinkLabel.text = firstChild.title!
-            }
-            else {
-                cell.firstLinkLabel.text = "No first link"
-            }
-            // set second child
-            if let secondChild = tileChildren[1] {
-                cell.secondLinkLabel.text = secondChild.title!
-            }
-            else {
-                cell.firstLinkLabel.text = "No second link"
-            }
+        else {
+            cell.statusLabel.text = "Normal Tile"
         }
 
         // display tile's image
         let currentTileImage = currentTile.fetchImage()
         if currentTileImage != nil {
-            cell.tileCellImageView.image = currentTileImage
+            cell.imageScene.image = currentTileImage
+            cell.imageScene.contentMode = .scaleAspectFill
         }
         else {
-            cell.tileCellImageView.image = UIImage(systemName: "questionmark")
+            cell.imageScene.image = UIImage(systemName: "questionmark")
+            cell.imageScene.contentMode = .scaleAspectFit
         }
-
+        
         return cell
     }
     

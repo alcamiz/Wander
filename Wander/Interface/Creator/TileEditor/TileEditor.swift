@@ -94,8 +94,6 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if storedTile != nil {
             if storedTile!.title != nil && storedTile!.title!.count > 0 {
                 titleEntry.text = storedTile!.title!
-            } else {
-                titleEntry.text = "Unknown"
             }
             
             if storedTile!.text != nil && storedTile!.text!.count > 0 {
@@ -195,7 +193,9 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if titleEntry.text != nil && titleEntry.text!.count != 0 {
             storedTile?.title = titleEntry!.text
         } else {
-            storedTile?.title = "Untitled"
+            if storedGame != nil {
+                storedTile?.title = "Tile #\(storedGame?.createCount ?? 0)"
+            }
         }
         storedTile?.text = textEntry.text
         
@@ -203,16 +203,18 @@ class TileEditor: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             storedTile?.image = imageScene.image?.jpegData(compressionQuality: 1.0)
         }
         
-        let text = typeSelector.titleForSegment(at: typeSelector.selectedSegmentIndex)
-        switch text {
-            case "Default":
-                storedTile?.type = TileType.between.rawValue
-            case "Win":
-                storedTile?.type = TileType.win.rawValue
-            case "Lose":
-                storedTile?.type = TileType.lose.rawValue
-            default:
-                break
+        if storedTile?.type != TileType.root.rawValue {
+            let text = typeSelector.titleForSegment(at: typeSelector.selectedSegmentIndex)
+            switch text {
+                case "Default":
+                    storedTile?.type = TileType.between.rawValue
+                case "Win":
+                    storedTile?.type = TileType.win.rawValue
+                case "Lose":
+                    storedTile?.type = TileType.lose.rawValue
+                default:
+                    break
+            }
         }
         
         if linkedTiles.0 != nil {

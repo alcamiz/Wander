@@ -1,5 +1,5 @@
 //
-//  GameCell.swift
+//  NewCell.swift
 //  Wander
 //
 //  Created by Alex Cabrera on 4/8/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GameCell: UITableViewCell {
+class NewCell: UITableViewCell {
     
     @IBOutlet weak var imageScene: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
