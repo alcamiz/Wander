@@ -41,6 +41,11 @@ class PlaymodeViewController: UIViewController {
             displayTile(tile: currentTile)
         }
         
+        tileImageView.backgroundColor = .systemGray5
+        tileImageView.layer.cornerRadius = 12
+        tileImageView.clipsToBounds = true
+        tileImageView.tintColor = .lightGray
+        
         // Set up endTileView
         endTileView.backgroundColor = Color.secondary
         completeGameLabel.textColor = .white
@@ -67,7 +72,13 @@ class PlaymodeViewController: UIViewController {
         titleLabel.text = currentTile!.title
         
         // Display tile's image, if any
-        tileImageView.image = currentTile!.fetchImage()
+        if currentTile!.fetchImage() == nil {
+            tileImageView.image = UIImage(systemName: "questionmark")
+            tileImageView.contentMode = .scaleAspectFit
+        } else {
+            tileImageView.image = currentTile!.fetchImage()
+            tileImageView.contentMode = .scaleAspectFill
+        }
         
         // Display tile's text and make the TextView uneditable by user/player
         tileTextView.text = currentTile!.text

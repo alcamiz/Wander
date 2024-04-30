@@ -48,7 +48,16 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         if !debug {
             titleLabel.text = infoGame!.title
             authorLabel.text = infoGame!.author
-            imageScreen.image = infoGame!.image
+            
+            if infoGame!.image == nil {
+                imageScreen.image = UIImage(systemName: "questionmark")
+                imageScreen.contentMode = .scaleAspectFit
+            } else {
+                imageScreen.image = infoGame!.image
+                imageScreen.contentMode = .scaleAspectFill
+            }
+            
+//            imageScreen.image = infoGame!.image
 
             if infoGame!.tags.count == 0 {
                 tagHeight.constant = 0
@@ -57,6 +66,7 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
             descriptionLabel.text = infoGame!.desc
             likeCount.text = String(infoGame!.likes)
             dislikeCount.text = String(infoGame!.dislikes)
+
         } else {
             titleLabel.text = "Empty"
             authorLabel.text = "User"
@@ -175,14 +185,13 @@ class GameScreen: UIViewController, UICollectionViewDataSource, UICollectionView
         let availableWidth = self.view.frame.width
         let availableHeight = tagHeight.constant
         
-        let cellWidth = availableWidth / 3.5
+        let cellWidth = availableWidth / 4.0
         let cellHeight = availableHeight
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
 
     
-
     @IBAction func likeButtonPressed(_ sender: Any) {
         if !debug {
             Task {

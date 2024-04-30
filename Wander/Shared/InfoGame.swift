@@ -63,8 +63,6 @@ class InfoGame {
          */
         if storedGame.image != nil {
             self.image = UIImage(data: storedGame.image!)
-        } else {
-            self.image = UIImage(systemName: "questionmark")
         }
         self.storedGame = storedGame
         self.idString = storedGame.id?.uuidString
@@ -80,8 +78,6 @@ class InfoGame {
         self.dislikes = firebaseGame.dislikes
         if firebaseGame.image != nil {
             self.image = UIImage(data: firebaseGame.image!)
-        } else {
-            self.image = UIImage(systemName: "questionmark")
         }
         
         //self.liked = LikeType.neither
