@@ -38,7 +38,15 @@ public class StoredGame: NSManagedObject {
         self.init(context: managedContext)
         //self.author = webVersion.author (change model!)
         self.published = true
-        self.author = StoredUser(webVersion: FirebaseUser(id: webVersion.author, username: webVersion.authorUsername!), managedContext: managedContext)
+        
+        let fetchRequest = StoredUser.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", webVersion.author)
+        if let res = try? managedContext.fetch(fetchRequest), res.count > 0 {
+            self.author = res[0]
+        } else {
+            self.author = StoredUser(webVersion: FirebaseUser(id: webVersion.author, username: webVersion.authorUsername!), managedContext: managedContext)
+        }
+       
         //self.root = something (fetch the tiles)
         self.id = UUID(uuidString: webVersion.id!)
         self.name = webVersion.name

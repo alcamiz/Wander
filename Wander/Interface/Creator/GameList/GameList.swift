@@ -15,7 +15,7 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var textCellIdentifier = "GameCell"
     let segueID = "GameTitleSegueIdentifier"
-    var gameList:[StoredGame] = []
+    var gameList:[InfoGame] = []
     var user:StoredUser?
     var selectedGameIndex: IndexPath?
 
@@ -36,10 +36,31 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         createNewGameButton.backgroundColor = Color.primary
         createNewGameButton.tintColor = .white
-                
-        gameList = user?.fetchAllGames() ?? []
+        
+        if let storedGames = user?.fetchAllGames() {
+            gameList = storedGames.map {InfoGame(storedGame: $0)}
+        }
+        
+        if let userID = user?.id {
+            Task {
+                let savedIDs = gameList.map {$0.storedGame!.id!.uuidString}
+                let webGames = await FirebaseHelper.nonDownloadedPublished(userID: userID, alreadySaved: savedIDs)
+                var counter = 0
+                FirebaseHelper.loadPictures(imageList: webGames, basepath: "gamePreviews") {(int, data) in
+                    webGames[int].image = data
+                    self.gameList.append(InfoGame(firebaseGame: webGames[int]))
+                    counter += 1
+                    if counter == webGames.count {
+                        self.allGamesTableView.reloadData()
+                    }
+                }
+            }
+        }
+        
         self.navigationItem.title = "Game Creator"
     }
+    
+   
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -56,17 +77,24 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gameCell", for: indexPath) as! GameCell
     
         let game = gameList[indexPath.row]
-        cell.titleLabel.text = game.name
+        cell.titleLabel.text = game.title
         
-        if game.fetchImage() == nil {
+        if game.image == nil {
             cell.imageScene.image = UIImage(systemName: "questionmark")
             cell.imageScene.contentMode = .scaleAspectFit
         } else {
-            cell.imageScene.image = game.fetchImage()
+            cell.imageScene.image = game.image
             cell.imageScene.contentMode = .scaleAspectFill
         }
+        var isPublished = false
+        if let storedGame = game.storedGame,
+           storedGame.published {
+            isPublished = true
+        } else if let firebaseGame = game.firebaseGame {
+            isPublished = true
+        }
         
-        if game.published {
+        if isPublished {
             cell.statusLabel.text = "Published"
             cell.statusLabel.textColor = Color.primary
         } else {
@@ -81,15 +109,18 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             let deleteAlertVC = UIAlertController(
                 title: "Are you sure?",
-                message: "If you delete the game \"\(self.gameList[indexPath.row].name!)\", it cannot be undone.",
+                message: "If you delete the game \"\(self.gameList[indexPath.row].title)\", it cannot be undone.",
                 preferredStyle: .alert)
             
             let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
                 (alert) in
-                _ = self.user?.deleteGame(game: self.gameList[indexPath.row])
-                self.gameList.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                handler(true)
+                if let storedGame = self.gameList[indexPath.row].storedGame {
+                    _ = self.user?.deleteGame(game: storedGame)
+                    self.gameList.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    handler(true)
+                }
+               
             })
             deleteAlertVC.addAction(deleteAction)
             
@@ -109,10 +140,32 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let storyboard = UIStoryboard(name: "GameView", bundle: nil)
         let gameView = storyboard.instantiateViewController(withIdentifier: "GameView") as! GameView
         
-        gameView.game = gameList[gameIndex]
         selectedGameIndex = idxPath
+        if let storedGame = gameList[gameIndex].storedGame {
+            gameView.game = storedGame
+            self.navigationController?.pushViewController(gameView, animated: true)
+        } else if let firebaseGame = gameList[gameIndex].firebaseGame {
+            Task {
+                let storedGame = await firebaseGame.download(managedContext: GlobalInfo.managedContext!)
+                gameList[gameIndex] = InfoGame(storedGame: storedGame)
+                try! GlobalInfo.managedContext!.save()
+                gameView.game = storedGame
+                
+                allGamesTableView.reloadRows(at: [indexPath], with: .automatic)
+                if let documentID = storedGame.id?.uuidString {
+                    let path = "gamePreviews/\(documentID).jpeg"
+                    let reference = GlobalInfo.storage.child(path)
+                    reference.getData(maxSize: (5 * 1024 * 1024)) { (data, error) in
+                        if let picData = data {
+                            storedGame.image = picData
+                            try? GlobalInfo.managedContext?.save()
+                        }
+                    }
+                }
+                self.navigationController?.pushViewController(gameView, animated: true)
+            }
+        }
         
-        self.navigationController?.pushViewController(gameView, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -122,7 +175,7 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if segue.identifier == "CreateGameSegue"{
                 if let user = user {
                     let newGame = user.createGame()
-                    gameList.append(newGame)
+                    gameList.append(InfoGame(storedGame: newGame))
                     let idxPath = IndexPath(row: allGamesTableView.numberOfRows(inSection: 0), section: 0)
                     allGamesTableView.insertRows(at: [idxPath], with: .automatic)
                     nextVC.game = newGame
@@ -140,9 +193,11 @@ class GameList: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if let gameIndex = allGamesTableView.indexPathForSelectedRow?.row {
             // Deleting game that was not just created
             let idxPath = IndexPath(row: gameIndex, section: 0)
-            _ = self.user?.deleteGame(game: self.gameList[idxPath.row])
-            self.gameList.remove(at: idxPath.row)
-            allGamesTableView.reloadData()
+            if let storedGame = self.gameList[idxPath.row].storedGame {
+                _ = self.user?.deleteGame(game: storedGame)
+                self.gameList.remove(at: idxPath.row)
+                allGamesTableView.reloadData()
+            }
         }
         else {
             // Deleting game that was just created

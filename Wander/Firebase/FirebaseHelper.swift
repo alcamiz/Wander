@@ -108,6 +108,28 @@ class FirebaseHelper {
         return queriedGames
     }
     
+    static func nonDownloadedPublished(userID: String, alreadySaved: [String]) async -> [FirebaseGame] {
+        var queriedGames: [FirebaseGame] = []
+        var querySnapshot = db.collection("games")
+            .whereField("author", isEqualTo: userID)
+        
+        let docList = try? await querySnapshot.getDocuments()
+         
+        for document in docList?.documents ?? [] {
+            if let gameObj = try? document.data(as: FirebaseGame.self) {
+                if !alreadySaved.contains(gameObj.id!) {
+                    if let author = try? await db.collection("users").document(gameObj.author).getDocument(as: FirebaseUser.self) {
+                        gameObj.authorUsername = author.username
+                    }
+                    queriedGames.append(gameObj)
+
+                }
+               
+            }
+        }
+        return queriedGames
+    }
+    
     static func usernameAlreadyExists(username: String) async -> Bool {
         let querySnapshot = try? await db.collection("users").whereField("username", isEqualTo: username).getDocuments()
         if let snapshot = querySnapshot, snapshot.count > 0 {

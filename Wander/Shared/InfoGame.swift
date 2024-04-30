@@ -71,7 +71,7 @@ class InfoGame {
     
     init (firebaseGame: FirebaseGame) {
         self.title = firebaseGame.name
-        self.author = firebaseGame.authorUsername!
+        self.author = firebaseGame.authorUsername ?? ""
         self.desc = firebaseGame.desc
         self.tags = firebaseGame.tags
         self.likes = firebaseGame.likes

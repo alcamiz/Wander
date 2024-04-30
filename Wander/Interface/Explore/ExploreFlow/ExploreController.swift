@@ -59,6 +59,24 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
         wanderLabel.text = "Press the button to learn more about the app!"
         
         // Load popular/new games from Firebase
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Fetch previously played games from core data (recently played)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = StoredGame.fetchRequest()
+        let predicate = NSPredicate(format: "author != %@", GlobalInfo.currentUser!)
+        fetchRequest.predicate = predicate
+        
+        let res = try! managedContext.fetch(fetchRequest)
+        self.historyGames = res
+
+        historyView.reloadData()
+        
         Task {
             popularGames = await FirebaseHelper.queryGames(domain: "", query: "", tag: "", sort: "Most Popular")
             popularView.reloadData()
@@ -77,22 +95,6 @@ class ExploreController: UIViewController, UICollectionViewDataSource, UICollect
             }
             
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Fetch previously played games from core data (recently played)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = StoredGame.fetchRequest()
-        let predicate = NSPredicate(format: "author != %@", GlobalInfo.currentUser!)
-        fetchRequest.predicate = predicate
-        
-        let res = try! managedContext.fetch(fetchRequest)
-        self.historyGames = res
-
-        historyView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
